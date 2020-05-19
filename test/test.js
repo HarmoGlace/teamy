@@ -24,7 +24,7 @@ const manager = new TeamsManager({
         ],
     functions: {
         setPoints: (team, points) => 0,
-        getPoints: (team, points) => 0
+        getPoints: (team) => 0
     }
 });
 

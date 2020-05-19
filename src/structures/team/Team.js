@@ -22,7 +22,7 @@ class Team {
 
             this.points = {
                 get: () => {
-                    return this.database.get(id, 'points')
+                    return manager.functions.getPoints(this);
                 },
                 add: (points) => {
                     return this.points.set(this.points.get() + points);
@@ -31,7 +31,7 @@ class Team {
                     return this.points.set(this.points.get() - points);
                 },
                 set: (points) => {
-                    return this.database.set(id, points, 'points');
+                    return manager.functions.setPoints(this, points);
                 }
             };
 

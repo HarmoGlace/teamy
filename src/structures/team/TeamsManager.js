@@ -23,6 +23,8 @@ class TeamsManager {
 
             this.type = type;
 
+            this.functions = { setPoints, getPoints };
+
             if (type === 'basic') {
                 for (const team of teams) {
                     if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`Paramater teams should be an array of objects, instead received an array of ${typeof team === 'object' ? 'array' : typeof team}`);
