@@ -4,12 +4,9 @@ class Team {
         name = id,
         aliases = [],
         color = 0x000000,
-        database = manager.database,
         roleId = null
     } = {}) {
         this.manager = manager;
-
-        this.database = database;
 
         this.id = id;
         this.name = name;
@@ -18,11 +15,9 @@ class Team {
 
         if (roleId) this.roleId = roleId;
 
-        if (manager.type === 'basic') {
-
             this.points = {
                 get: () => {
-                    return manager.functions.getPoints(this);
+                    return manager.functions.getPoints(this) || 0;
                 },
                 add: (points) => {
                     return this.points.set(this.points.get() + points);
@@ -35,7 +30,6 @@ class Team {
                 }
             };
 
-        }
 
     }
 }

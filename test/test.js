@@ -1,6 +1,8 @@
 const { TeamsManager } = require('../src/index');
 const { Client } = require('discord.js');
 const client = new Client();
+const Enmap = require('enmap');
+const pointsDB = new Enmap({name: 'points'});
 
 const manager = new TeamsManager({
     type: 'advanced',
@@ -23,9 +25,13 @@ const manager = new TeamsManager({
             }
         ],
     functions: {
-        setPoints: (team, points) => 0,
-        getPoints: (team) => 0
-    }
+        setPoints: (team, points) => pointsDB.set(team.id, points),
+        getPoints: (team) => pointsDB.get(team.id)
+    },
+    client
 });
 
-console.log(manager.teams, manager.teams.length, manager.teams.filter(team => team.type === 'sub'), manager.teams.filter(team => team.type === 'parent'));
+const sub1 = manager.teams.get('sub1');
+
+sub1.points.add(153);
+

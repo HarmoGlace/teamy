@@ -24,5 +24,9 @@
   "dependencies": {},
   "optionalDependencies": {
     "discord.js": "^12.2.0"
+  },
+  "devDependencies": {
+    "better-sqlite3": "^7.0.1",
+    "enmap": "^5.2.4"
   }
 }
