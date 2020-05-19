@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/HarmoGlace/teamy/issues"
   },
-  "homepage": "https://github.com/HarmoGlace/teamy#readme"
+  "homepage": "https://github.com/HarmoGlace/teamy#readme",
+  "dependencies": {},
+  "optionalDependencies": {
+    "discord.js": "^12.2.0"
+  }
 }
