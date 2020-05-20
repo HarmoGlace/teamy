@@ -5,16 +5,18 @@ const SubTeam = require('./SubTeam');
 
 class TeamsManager {
     constructor({
-            client = null,
-            teams = [],
-            type = 'basic',
-            functions: {
-                setPoints ,
-                getPoints
-            } = {}
+                    teams = [],
+                    type = 'basic',
+                    functions: {
+                    setPoints ,
+                    getPoints
+            } = {},
+                    client = null,
+                    guildId = null
                 } = {}) {
 
             if (client) this.client = client;
+            if (guildId) this.guildId = guildId;
 
             if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
             if (!(teams instanceof Array)) throw new TeamyError(`Paramater teams should be an array, received ${typeof teams}`);
@@ -82,6 +84,24 @@ class TeamsManager {
 
 
 
+    }
+
+    initialize() {
+        if (this.client && this.client.user && this.guildId) {
+            const guild = client.guilds.cache.get(this.guildId);
+            if (guild) {
+                for (const team of this.teams) {
+                    if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
+                }
+            }
+
+        }
+
+    }
+
+    getMemberTeam(member) {
+        const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
+        return teams.find(team => member.roles.cache.has(team.roleId));
     }
 }
 
