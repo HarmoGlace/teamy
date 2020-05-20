@@ -170,7 +170,7 @@ Return all subs teams (if the type of the TeamsManager is ```advanced```)
 Finds a team with a function with each team as parameter. See [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)\
 Example: 
 ```js
-teams.find(team => team.name === 'Cool team'); // Returns cool team
+manager.teams.find(team => team.name === 'Cool team'); // Returns cool team
 ```
 
 ##### teams.get
@@ -179,7 +179,7 @@ Finds a team with an ID. See above for more informations
 ##### teams.resolve
 Resolves a team with a string
 ```js
-teams.resolve('cool team') // returns cool team
+manager.teams.resolve('cool team') // returns cool team
 ```
 
 ##### initialize
