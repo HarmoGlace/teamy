@@ -1,9 +1,9 @@
 # teamy
  A powerful library to manage teams. You can use your own database !
  
- ## Installation
+## Install
  ```
-npm install teamy
+$ npm install teamy
  ```
 
 ## Example usage
@@ -153,7 +153,7 @@ Used to find the team of a GuildMember. Needs the ```guildId``` parameter to wor
 
 ##### guildId [optional]
 Type : String (Guild ID)\
-ID of the guild where roles of the TeamsManager will be searched. Needs the ```client````parameter to work.
+ID of the guild where roles of the TeamsManager will be searched. Needs the ```client```parameter to work.
 
 #### Methods
 
