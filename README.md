@@ -130,8 +130,8 @@ Parameters: team
 Example :
 ```js
 {
-    setPoints: (team, points) => database.set(team.id, points),
-    getPoints: (team) => database.get(team.id)
+    setPoints = (team, points) => database.set(team.id, points),
+    getPoints = (team) => database.get(team.id)
 }
 ```
 
