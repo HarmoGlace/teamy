@@ -6,6 +6,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "exports": {
+    ".": [
+      {
+        "require": "./src/index.js",
+        "import": "./esm/teamy.mjs"
+      },
+      "./src/index.js"
+    ],
+    "./esm": "./esm/teamy.mjs"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HarmoGlace/teamy.git"
