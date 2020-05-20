@@ -178,4 +178,4 @@ Parameters: points to remove\
 Remove points to a team
 
 #####points.parent
-Returns the points of the parent team, if the type of the manager is set to ``advanced``
+Returns the points of the parent team, if the type of the manager is set to ```advanced```
