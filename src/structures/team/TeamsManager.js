@@ -86,7 +86,7 @@ class TeamsManager {
 
     }
 
-    initialize() {
+    initialize () {
         if (this.client && this.client.user && this.guildId) {
             const guild = client.guilds.cache.get(this.guildId);
             if (guild) {
@@ -99,9 +99,9 @@ class TeamsManager {
 
     }
 
-    getMemberTeam(member) {
+    getMemberTeam (member) {
         const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
-        return teams.find(team => member.roles.cache.has(team.roleId));
+        return teams.find(team => member.roles.cache.has(team.roleId)) || null;
     }
 }
 
