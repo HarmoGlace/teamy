@@ -24,10 +24,21 @@ class TeamsManager {
             this.teams = {
                 all: [],
                 parents: () => {
-                    return this.teams.parents.filter(team => team.type === 'parent');
+                    return this.teams.all.filter(team => team.type === 'parent');
                 },
                 subs: () => {
                     return this.teams.all.filter(team => team.type === 'sub');
+                },
+                sorted: () => {
+                    if (this.type === 'basic') return this.teams.all.sort((a, b) => b.points.get() - a.points.get());
+
+                    const parents = this.teams.parents();
+
+                    for (const parent of parents) {
+                        parent.subs.sort((a, b) => b.points.get() - a.points.get());
+                    }
+
+                    return parents.sort((a, b) => b.points.get() - a.points.get());
                 },
                 get: (id) => {
                     return this.teams.all.find(team => team.id === id) || null;
