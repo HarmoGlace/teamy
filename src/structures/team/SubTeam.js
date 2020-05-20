@@ -14,6 +14,7 @@ class SubTeam extends Team {
             current: () => {
                 return manager.functions.getPoints(this) || 0;
             },
+            get: this.points.current,
             add: (points) => {
                 this.parent.points.add(points);
                 return this.points.setLocal(this.points.current() + points);
