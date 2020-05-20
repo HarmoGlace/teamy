@@ -100,7 +100,8 @@ client.login('secretToken');
 
 ## API : 
 
-### TeamsManager options
+### TeamsManager
+#### Options
 
 ##### teams
 Type: Array of objects\
@@ -154,9 +155,42 @@ Used to find the team of a GuildMember. Needs the ```guildId``` parameter to wor
 Type : String (Guild ID)\
 ID of the guild where roles of the TeamsManager will be searched. Needs the ```client````parameter to work.
 
+#### Methods
+
+##### teams.all
+Returns all teams
+
+##### teams.parents
+Return all parent teams (if the type of the TeamsManager is ```advanced```)
+
+##### teams.subs
+Return all subs teams (if the type of the TeamsManager is ```advanced```)
+
+##### teams.find
+Finds a team with a function with each team as parameter. See [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)\
+Example: 
+```js
+teams.find(team => team.name === 'Cool team'); // Returns cool team
+```
+
+##### teams.get
+Finds a team with an ID. See above for more informations
+
+##### teams.resolve
+Resolves a team with a string
+```js
+teams.resolve('cool team') // returns cool team
+```
+
+##### initialize
+Creates ```role``` property for each team. Needs the ```client``` and ```guildId``` options when creating this manager. Not needed to use the ```getMemberTeam``` method
+
+##### getMemberTeam
+Returns the team of a discord.js ```GuildMember```. Needs the ````client```` and ```guildId``` options, but doesn't need to use the above method before.
+
 ### Team
 
-#### Methods :
+#### Methods
 
 ##### points.get
 Return the current points of the team\

@@ -30,14 +30,14 @@ class TeamsManager {
                     return this.teams.all.filter(team => team.type === 'sub');
                 },
                 get: (id) => {
-                    return this.teams.all.find(team => team.id === id);
+                    return this.teams.all.find(team => team.id === id) || null;
                 },
                 find: (findFunction) => {
-                    return this.teams.all.find(findFunction);
+                    return this.teams.all.find(findFunction) || null;
                 },
                 resolve: (resolvable) => {
                     resolvable = resolvable.toLowerCase();
-                    return this.teams.all.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.teams.all.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase()));
+                    return this.teams.all.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.teams.all.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
                 },
             };
 
