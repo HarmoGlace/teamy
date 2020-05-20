@@ -1,12 +1,12 @@
 # teamy
  A powerful library to manage teams. You can use your own database !
  
- ##Installtion
+ ## Installtion
  ```
 npm install teamy
  ```
 
-##Example usage
+## Example usage
 For a basic teams system using enmap as database :
 ```js
 const { TeamsManager } = require('teamy');
@@ -98,11 +98,11 @@ client.on('message', message => {
 client.login('secretToken');
 ```
 
-##API : 
+## API : 
 
-###TeamsManager options
+### TeamsManager options
 
-#####teams
+##### teams
 Type: Array of objects\
 Example :
 ```js
@@ -117,14 +117,14 @@ Example :
 ]
 ```
 
-####functions
+#### functions
 Type : Object\
 Functions to save points in your database
 
 Functions: 
-######setPoints
+###### setPoints
 Parameters: team, points
-######getPoints
+###### getPoints
 Parameters: team
 
 Example :
@@ -135,47 +135,47 @@ Example :
 }
 ```
 
-####type [optional]
+#### type [optional]
 Type : String\
 Type of TeamsManager. Is either 'basic' or 'advanced'.
 
 Types :
-######basic (default)
+###### basic (default)
 Basic teams system where all teams has the same status
 
-######advanced
+###### advanced
 Advanced teams system where there are ParentTeams and SubTeams
 
-#####client [optional]
+##### client [optional]
 Type : Instance of discord.js client\
 Used to find the team of a GuildMember. Needs the ```guildId``` parameter to work.
 
-#####guildId [optional]
+##### guildId [optional]
 Type : String (Guild ID)\
 ID of the guild where roles of the TeamsManager will be searched. Needs the ```client````parameter to work.
 
-###Class Team
+### Team
 
-####Methods :
+#### Methods :
 
-#####points.get
+##### points.get
 Return the current points of the team\
 Example: 
 ```js
 team.points.get(); // returns the current points of the team
 ```
 
-#####points.set
+##### points.set
 Parameters : points to set\
 Sets the points of the team
 
-#####points.add
+##### points.add
 Parameters: points to add\
 Add points to a team
 
-#####points.remove
+##### points.remove
 Parameters: points to remove\
 Remove points to a team
 
-#####points.parent
+##### points.parent
 Returns the points of the parent team, if the type of the manager is set to ```advanced```
