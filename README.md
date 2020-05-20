@@ -1,7 +1,7 @@
 # teamy
  A powerful library to manage teams. You can use your own database !
  
- ## Installtion
+ ## Installation
  ```
 npm install teamy
  ```
