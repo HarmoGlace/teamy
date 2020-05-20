@@ -1,5 +1,5 @@
 # teamy
- A powerful library to manage teams. You can use your own database !
+ A powerful library to manage teams with your own database
  
 ## Install
  ```
