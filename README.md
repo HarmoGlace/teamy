@@ -98,7 +98,7 @@ client.on('message', message => {
 client.login('secretToken');
 ```
 
-## API : 
+## API
 
 ### TeamsManager
 #### Options
