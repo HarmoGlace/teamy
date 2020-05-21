@@ -242,7 +242,7 @@ Type: ```!String```
 Returns the team name if set
 
 ##### aliases
-Type: ```Array``` of ```String```s\
+Type: ```Array``` of ```String```\
 Default: ```[]```\
 Returns team name aliases
 
