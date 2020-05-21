@@ -248,11 +248,11 @@ Returns team name aliases
 
 ##### color
 Type: ```Number```\
-Default: ```0x000000```
+Default: ```0x000000```\
 Returns the team color
 
 ##### roleId
-Type: ```!String```
+Type: ```!String```\
 Returns the role ID of the team if set
 
 ##### role
