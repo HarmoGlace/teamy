@@ -128,7 +128,7 @@ const teamResolvable = {
 
 #### Options
 
-##### teams
+##### teams [optional]
 Type: ```Array``` of [TeamResolvable](#teamresolvable)\
 Teams added when creating the ```TeamsManager```\
 Even after creating the ```TeamsManager``` you  can add new teams with [manager.teams.add](#teamsadd)
