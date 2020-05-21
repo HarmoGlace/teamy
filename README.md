@@ -257,7 +257,7 @@ Returns the role ID of the team if set
 
 ##### role
 Type: ```Role``` (from discord.js)\
-Returns the role of the team if ```roleId``` of this team is set and if ```client``` and ```guildId``` parameters are supplied to the ```TeamsManager````and if it is initialized 
+Returns the role of the team if ```roleId``` of this team is set and if ```client``` and ```guildId``` parameters are supplied to the ```TeamsManager```and if it is initialized 
 
 #### Methods
 
