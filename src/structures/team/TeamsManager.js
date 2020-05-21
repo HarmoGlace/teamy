@@ -103,6 +103,8 @@ class TeamsManager {
                 set: (teams) => {
                     if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array in <TeamsManager>.teams.set, instead received ${teams.constructor.name})`);
 
+                    this.teams = [];
+
                         for (const team of teams) {
                             this.teams.add(team);
                         }
