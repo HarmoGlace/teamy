@@ -1,3 +1,5 @@
+const TeamyError = require('../TeamyError');
+
 class Team {
     constructor(manager, {
         id,
@@ -26,6 +28,7 @@ class Team {
                     return this.points.set(this.points.get() - points);
                 },
                 set: (points) => {
+                    if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`)
                     return manager.functions.setPoints(this, points);
                 }
             };

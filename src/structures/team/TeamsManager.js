@@ -16,6 +16,8 @@ class TeamsManager {
                     autoInitialize = false
                 } = {}) {
 
+            this.initialized = false;
+
             if (client) this.client = client;
             if (guildId) this.guildId = guildId;
 
@@ -24,6 +26,89 @@ class TeamsManager {
 
             this.teams = {
                 all: [],
+                add: (team) => {
+
+                    if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`You need to specify an object in <TeamsManager>.teams.add`)
+                    if (this.teams.get(team.id)) throw new TeamyError(`There is already a team with id ${team.id}`);
+
+                    if (type === 'basic') {
+
+                            this.teams.all.push(new Team(this, team));
+
+                    } else if (type === 'advanced') {
+
+                            if (!team.hasOwnProperty('type')) {
+                                if (team.subs) team.type = 'parent'
+                                else team.type = 'sub'
+                            }
+
+                            if (team.type === 'parent') {
+                                if (!team.hasOwnProperty('subs')) {
+                                    process.emitWarning(`You didn't provide any sub teams for the ${team.id} team`);
+                                    team.subs = [];
+                                }
+
+                                const parentTeam = new ParentTeam(this, team);
+
+                                const subs = team.subs.slice();
+
+                                for (const sub of subs) {
+                                    if (typeof sub !== 'object' || sub instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${sub.constructor.name}`);
+
+                                    if (this.teams.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}`);
+
+                                    const subTeam = new SubTeam(this, sub, parentTeam);
+
+                                    this.teams.all.push(subTeam);
+                                    parentTeam.subs.push(subTeam);
+                                }
+
+                                this.teams.all.push(parentTeam);
+
+                                } else if (team.type === 'sub') {
+
+                                const parentRaw = team.parentId || team.parent;
+
+                                if (!parent) throw new TeamyError(`No ParentTeam provided for ${team.id} SubTeam`);
+
+                                const parent = parentRaw instanceof ParentTeam ? parentRaw : this.teams.all.get(parentRaw);
+
+                                if (!parent) throw new TeamyError(`Cannot find a ParentTeam for ${team.id} SubTeam`);
+
+                                const subTeam = new SubTeam(this, team, parent);
+
+                                this.teams.all.push(subTeam);
+                                parent.subs = parent.subs.push(subTeam);
+
+                            }
+                    }
+
+                    if (this.initialized) this.initialize();
+
+                },
+                remove: (teamRaw) => {
+
+                    if (!teamRaw || !(teamRaw instanceof Team)) throw new TeamyError(`You need to provide a valid Team to delete`);
+
+                    const team = this.teams.get(teamRaw.id);
+                    const index = this.teams.all.indexOf(team);
+
+                    this.teams.all.splice(index, 1);
+
+                    return this.teams.all;
+
+                },
+                set: (teams) => {
+                    if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array in <TeamsManager>.teams.set, instead received ${teams.constructor.name})`);
+
+                        for (const team of teams) {
+                            this.teams.add(team);
+                        }
+
+                        return this.teams.all;
+
+
+                },
                 parents: () => {
                     return this.teams.all.filter(team => team.type === 'parent');
                 },
@@ -57,42 +142,11 @@ class TeamsManager {
 
             this.functions = { setPoints, getPoints };
 
-            if (type === 'basic') {
-                for (const team of teams) {
-                    if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${typeof team === 'object' ? 'array' : typeof team}`);
-                    if (this.teams.all.find(team => team.id === parent.id)) throw new TeamyError(`Duplicated team with id ${team.id}`);
 
-                    this.teams.all.push(new Team(this, team));
-                }
-            } else if (type === 'advanced') {
+                if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
-                for (const parent of teams) {
-                    if (typeof parent !== 'object' || parent instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${typeof parent === 'object' ? 'array' : typeof parent}`);
-                    if (this.teams.all.find(team => team.id === parent.id)) throw new TeamyError(`Duplicated Parent team with id ${parent.id}`);
+                this.teams.set(teams);
 
-                    const parentTeam = new ParentTeam(this, parent);
-
-                    const subs = parent.subs.slice();
-
-                    for (const sub of subs) {
-                        if (typeof sub !== 'object' || sub instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${typeof sub === 'object' ? 'array' : typeof sub}`);
-
-                        if (this.teams.all.filter(team => team.type === 'sub').find(team => team.id === sub.id)) throw new TeamyError(`Duplicated Sub team with id ${sub.id}`);
-
-                        const subTeam = new SubTeam(this, sub, parentTeam);
-
-                        this.teams.all.push(subTeam);
-                        parentTeam.subs.push(subTeam);
-                    }
-
-                    console.log(parentTeam)
-
-                    this.teams.all.push(parentTeam);
-                }
-
-            } else {
-                throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
-            }
 
         if (autoInitialize) this.initialize();
 
@@ -108,6 +162,7 @@ class TeamsManager {
             }
 
         }
+        this.initialized = true;
         return this;
 
     }
