@@ -12,7 +12,8 @@ class TeamsManager {
                     getPoints
             } = {},
                     client = null,
-                    guildId = null
+                    guildId = null,
+                    autoInitialize = false
                 } = {}) {
 
             if (client) this.client = client;
@@ -93,7 +94,7 @@ class TeamsManager {
                 throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
             }
 
-
+        if (autoInitialize) this.initialize();
 
     }
 
@@ -107,6 +108,7 @@ class TeamsManager {
             }
 
         }
+        return this;
 
     }
 

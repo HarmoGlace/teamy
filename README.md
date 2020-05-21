@@ -7,7 +7,7 @@ $ npm install teamy
  ```
 
 ## Example usage
-For a basic teams system using enmap as database :
+For a basic teams system using enmap as database:
 ```js
 const { TeamsManager } = require('teamy');
 const Enmap = require('enmap');
@@ -104,8 +104,8 @@ client.login('secretToken');
 #### Options
 
 ##### teams
-Type: Array of objects\
-Example :
+Type: ```Array``` of ```objects```\
+Example:
 ```js
 [
     {
@@ -119,16 +119,16 @@ Example :
 ```
 
 #### functions
-Type : Object\
+Type: ```Object```\
 Functions to save points in your database
 
 Functions: 
 ###### setPoints
-Parameters: team, points
+Parameters: ```team```, ```points```
 ###### getPoints
-Parameters: team
+Parameters: ```team```
 
-Example :
+Example:
 ```js
 {
     setPoints = (team, points) => database.set(team.id, points),
@@ -137,23 +137,28 @@ Example :
 ```
 
 #### type [optional]
-Type : String\
+Type: ```String```\
 Type of TeamsManager. Is either 'basic' or 'advanced'.
 
-Types :
+Types:
 ###### basic (default)
-Basic teams system where all teams has the same status
+Basic teams system where all teams have the same status
 
 ###### advanced
 Advanced teams system where there are ParentTeams and SubTeams
 
 ##### client [optional]
-Type : Instance of discord.js client\
+Type: Instance of discord.js ```Client```\
 Used to find the team of a GuildMember. Needs the ```guildId``` parameter to work.
 
 ##### guildId [optional]
-Type : String (Guild ID)\
-ID of the guild where roles of the TeamsManager will be searched. Needs the ```client```parameter to work.
+Type: ```String``` (Guild ID)\
+ID of the guild where roles of the TeamsManager will be searched. Needs the ```client``` parameter to work.
+
+##### autoInitialize [optional]
+Type: ```Boolean```\
+Default: ```false```\
+If set to true it will automatically set up role property on each team. Do this only if your bot is already launched when you are creating the ```TeamsManager```
 
 #### Methods
 
@@ -183,12 +188,43 @@ manager.teams.resolve('cool team') // returns cool team
 ```
 
 ##### initialize
-Creates ```role``` property for each team. Needs the ```client``` and ```guildId``` options when creating this manager. Not needed to use the ```getMemberTeam``` method
+Creates ```role``` property for each team. Needs the ```client``` and ```guildId``` options when creating this manager. Not needed to use the ```getMemberTeam``` method.
+Do it once your bot is launched.\
+Note that if your initialize the ```TeamsManager``` once your bot is launched you can use the ````autoInitialize```` option when creating the ```TeamsManager```.
 
 ##### getMemberTeam
 Returns the team of a discord.js ```GuildMember```. Needs the ````client```` and ```guildId``` options, but doesn't need to use the above method before.
 
 ### Team
+
+#### Properties
+
+##### id
+Type: ```String```\
+Returns the team id
+
+##### name
+Type: ```!String```
+
+Returns the team name if set
+
+##### aliases
+Type: ```Array``` of ```String```s\
+Default: ```[]```\
+Returns team name aliases
+
+##### color
+Type: ```Number```\
+Default: ```0x000000```
+Returns the team color
+
+##### roleId
+Type: ```!String```
+Returns the role ID of the team if set
+
+##### role
+Type: ```Role``` (from discord.js)\
+Returns the role of the team if ```roleId``` of this team is set and if ```client``` and ```guildId``` parameters are supplied to the ```TeamsManager````and if it is initialized 
 
 #### Methods
 
@@ -200,7 +236,7 @@ team.points.get(); // returns the current points of the team
 ```
 
 ##### points.set
-Parameters : points to set\
+Parameters: points to set\
 Sets the points of the team
 
 ##### points.add
