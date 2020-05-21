@@ -19,7 +19,7 @@ class TeamsManager {
             if (guildId) this.guildId = guildId;
 
             if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
-            if (!(teams instanceof Array)) throw new TeamyError(`Paramater teams should be an array, received ${typeof teams}`);
+            if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
 
             this.teams = {
                 all: [],
@@ -58,7 +58,7 @@ class TeamsManager {
 
             if (type === 'basic') {
                 for (const team of teams) {
-                    if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`Paramater teams should be an array of objects, instead received an array of ${typeof team === 'object' ? 'array' : typeof team}`);
+                    if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${typeof team === 'object' ? 'array' : typeof team}`);
                     if (this.teams.all.find(team => team.id === parent.id)) throw new TeamyError(`Duplicated team with id ${team.id}`);
 
                     this.teams.all.push(new Team(this, team));
