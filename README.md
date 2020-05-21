@@ -1,10 +1,23 @@
 # teamy
- A powerful library to manage teams with your own database
+ A powerful library to manage teams with your own database\
+ Made by HarmoGlace
+ 
+# Table of Contents
+* [Installation](#install)
+* [Examples](#example-usage)
+* [API Reference](#api-reference)
+* [How to contribute and Suggestions/Problems](#how-to-contribute)
+* [Support](#support)
  
 ## Install
+With npm
  ```
 $ npm install teamy
  ```
+With yarn
+```
+$ yarn add teamy
+```
 
 ## Example usage
 For a basic teams system using enmap as database:
@@ -98,7 +111,7 @@ client.on('message', message => {
 client.login('secretToken');
 ```
 
-## API
+## API Reference
 
 ### TeamsManager
 
@@ -282,3 +295,16 @@ Remove points to a team
 
 ##### points.parent
 Returns the points of the parent team, if the type of the manager is set to ```advanced```
+
+## How to contribute
+
+Please note that teamy is still in developement.\
+If you are here it means that you want to help me, thank you !
+
+To contribute, create a fork of your project, edit the things that you want and create a Pull Request.
+If you want to suggest something or report a bug, create an issue
+
+## Support
+You can contact me here :\
+Discord : HarmoGlace#7746\
+Twitter: [@HarmoGlace](https://twitter.com/HarmoGlace)
