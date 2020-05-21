@@ -16,6 +16,8 @@ class TeamsManager {
                     autoInitialize = false
                 } = {}) {
 
+            type = type.toLowerCase();
+
             this.initialized = false;
 
             if (client) this.client = client;
@@ -138,7 +140,7 @@ class TeamsManager {
                 },
             };
 
-            this.type = type.toLowerCase();
+            this.type = type;
 
             this.functions = { setPoints, getPoints };
 
