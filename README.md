@@ -139,9 +139,9 @@ Functions to save points in your database
 
 Functions: 
 ###### setPoints
-Parameters: ```team```, ```points```
+Parameters: [Team](#team), ```points``` (number)
 ###### getPoints
-Parameters: ```team```
+Parameters: [Team](#team)
 
 Example:
 ```js
