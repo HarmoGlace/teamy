@@ -298,10 +298,10 @@ Returns the points of the parent team, if the type of the manager is set to ```a
 
 ## How to contribute
 
-Please note that teamy is still in developement.\
+Please note that teamy is still in development.\
 If you are here it means that you want to help me, thank you !
 
-To contribute, create a fork of your project, edit the things that you want and create a Pull Request.
+To contribute, create a fork of your [this project](https://github.com/HarmoGlace/teamy), edit the things that you want and create a Pull Request.
 If you want to suggest something or report a bug, create an issue
 
 ## Support
