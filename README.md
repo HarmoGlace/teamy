@@ -101,22 +101,37 @@ client.login('secretToken');
 ## API
 
 ### TeamsManager
-#### Options
 
-##### teams
-Type: ```Array``` of ```objects```\
-Example:
+#### TeamResolvable
+Type: ```Object```\
+A TeamResolvable is an ```Object``` that can be resolved to a ```Team```, ```SubTeam``` or ```ParentTeam```, depending of your manager type.
+
 ```js
-[
-    {
+const teamResolvable = {
         id: 'id', // Needed id of the team, will be used internally
         name: 'name', // Optional, common name, it is the id by default
         aliases: ['anotherName'], // Optional Array of string with all aliases of this team
         color: 0x0000, // Optional Hex color of this team
-        roleId: '123456789' // Optional Role ID of this team
+        roleId: '123456789', // Optional Role ID of this team
+        type: 'parent', // or 'sub'. Optional, only if you add it manually with an advanced manager
+        subs: [ // Needed only if the manager type is advanced
+                { // Team resolvable like above but without subs and type properties.
+                    id: 'id', // Needed id of the team, will be used internally
+                    name: 'name', // Optional, common name, it is the id by default
+                    aliases: ['anotherName'], // Optional Array of string with all aliases of this team
+                    color: 0x0000, // Optional Hex color of this team
+                    roleId: '123456789', // Optional Role ID of this team
+                }
+            ]
     }
-]
 ```
+
+#### Options
+
+##### teams
+Type: ```Array``` of [TeamResolvable](#teamresolvable)\
+Teams added when creating the ```TeamsManager```\
+Even after creating the ```TeamsManager``` you  can add new teams with [manager.teams.add](#teamsadd)
 
 #### functions
 Type: ```Object```\
@@ -130,9 +145,9 @@ Parameters: ```team```
 
 Example:
 ```js
-{
-    setPoints = (team, points) => database.set(team.id, points),
-    getPoints = (team) => database.get(team.id)
+const functions = {
+    setPoints: (team, points) => database.set(team.id, points),
+    getPoints: (team) => database.get(team.id)
 }
 ```
 
@@ -160,6 +175,12 @@ Type: ```Boolean```\
 Default: ```false```\
 If set to true it will automatically set up role property on each team. Do this only if your bot is already launched when you are creating the ```TeamsManager```
 
+#### Properties
+
+#### initialized
+Type: ```Boolean```\
+Returns ```true``` if the manager has been initialized with the [initialize](#initialize) method
+
 #### Methods
 
 ##### teams.all
@@ -179,13 +200,25 @@ manager.teams.find(team => team.name === 'Cool team'); // Returns cool team
 ```
 
 ##### teams.get
-Finds a team with an ID. See above for more informations
+Finds a team with an ID. See [above](#teamsfind) for more informations
 
 ##### teams.resolve
 Resolves a team with a string
 ```js
 manager.teams.resolve('cool team') // returns cool team
 ```
+
+##### teams.add
+Parameter: [TeamResolvable](#teamresolvable)\
+Adds a team to the [TeamsManager](#teamsmanager)
+
+##### teams.remove
+Parameter: [TeamResolvable](#teamresolvable)\
+Removes a team from the [TeamsManager](#teamsmanager)
+
+##### teams.set
+Parameter: ```Array``` of [TeamResolvable](#teamresolvable)\
+Removes every team to add these teams. Use this carefully
 
 ##### initialize
 Creates ```role``` property for each team. Needs the ```client``` and ```guildId``` options when creating this manager. Not needed to use the ```getMemberTeam``` method.
