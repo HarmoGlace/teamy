@@ -1,4 +1,5 @@
 const Team = require('./Team');
+const TeamyError = require('../TeamyError');
 
 class SubTeam extends Team {
     constructor(manager, options, parent) {
