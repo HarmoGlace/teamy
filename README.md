@@ -175,6 +175,45 @@ Basic teams system where all teams have the same status
 ###### advanced
 Advanced teams system where there are ParentTeams and SubTeams
 
+##### implementMember [optional]
+Type: ```Boolean```\
+If set to true, it will enable a ```team``` property on each GuildMember.\
+For that you need to instantiate your client after creating the [TeamsManager](#teamsmanager)\
+Example (using a basic manager and with enmap as DB provider):
+````js
+const { TeamsManager } = require('teamy');
+const Enmap = require('enmap');
+const points = new Enmap({name: 'points'});
+
+const manager = new TeamsManager({
+        teams: [
+            {
+                id: 'cool_team',
+                name: 'A pretty cool team'
+            },
+            {
+                id: 'another_cool_team',
+                name: 'Another cool team'
+            }
+        ],
+        functions: {
+            setPoints: (team, points) => points.set(team.id, points),
+            getPoints: (team) => points.get(team)
+        },
+        guildId: '123456',  // guildId where all roles are from
+        implementMembers: true
+});
+
+const { Client } = require('discord.js');
+const client = new Client();
+
+manager.setClient(client);
+
+client.on('message', message => {
+    message.member.team // Returns the member team or null if none is found
+})
+````
+
 ##### client [optional]
 Type: Instance of discord.js ```Client```\
 Used to find the team of a GuildMember. Needs the ```guildId``` parameter to work.
@@ -243,6 +282,10 @@ Note that if your initialize the [TeamsManager](#teamsmanager) once your bot is 
 
 ##### getMemberTeam
 Returns the team of a discord.js ```GuildMember```. Needs the ````client```` and ```guildId``` options, but doesn't need to use the above method before.
+
+##### setClient
+Parameters: New ```Client``` (from discord.js)\
+Sets the client of the [TeamsManager](#teamsmanager). Needed if you want to use the [implementMember](#implementmember-optional) property
 
 ### Team
 
