@@ -171,11 +171,12 @@ class TeamsManager {
                 for (const team of this.teams) {
                     if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
                 }
+                this.initialized = true;
             }
 
         }
-        this.initialized = true;
-        return this;
+        
+        return this.initialized;
 
     }
 
