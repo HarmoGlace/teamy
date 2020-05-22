@@ -141,7 +141,7 @@ class TeamsManager {
                     return parents.sort((a, b) => b.points.get() - a.points.get());
                 },
                 get: (id) => {
-                    return this.teams.all.find(team => team.id === id) || null;
+                    return this.teams.find(team => team.id === id);
                 },
                 find: (findFunction) => {
                     return this.teams.all.find(findFunction) || null;
