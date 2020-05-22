@@ -1,0 +1,9 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "strict": true,
+    "removeComments": false,
+    "module": "commonjs",
+    "target": "es2019"
+  }
+}
