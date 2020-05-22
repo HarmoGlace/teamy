@@ -35,7 +35,11 @@ class TeamsManager {
 
                     if (type === 'basic') {
 
-                            this.teams.all.push(new Team(this, team));
+                            const teamCreated = new Team(this, team)
+
+                            this.teams.all.push(teamCreated);
+
+                            return teamCreated;
 
                     } else if (type === 'advanced') {
 
@@ -67,6 +71,8 @@ class TeamsManager {
 
                                 this.teams.all.push(parentTeam);
 
+                                return parentTeam;
+
                                 } else if (team.type === 'sub') {
 
                                 const parentRaw = team.parentId || team.parent;
@@ -82,7 +88,11 @@ class TeamsManager {
                                 this.teams.all.push(subTeam);
                                 parent.subs = parent.subs.push(subTeam);
 
+                                return subTeam;
+
                             }
+
+
                     }
 
                     if (this.initialized) this.initialize();
