@@ -223,20 +223,22 @@ manager.teams.resolve('cool team') // Returns cool team
 
 ##### teams.add
 Parameter: [TeamResolvable](#teamresolvable)\
+Returns: [Team](#team) created
 Adds a team to the [TeamsManager](#teamsmanager)
 
 ##### teams.remove
 Parameter: [TeamResolvable](#teamresolvable)\
+Returns: All teams
 Removes a team from the [TeamsManager](#teamsmanager)
 
 ##### teams.set
 Parameter: ```Array``` of [TeamResolvable](#teamresolvable)\
-Removes every team to add these teams. Use this carefully
+Removes every team to add these teams. Use this carefully.
 
 ##### initialize
 Creates ```role``` property for each team. Needs the ```client``` and ```guildId``` options when creating this manager. Not needed to use the ```getMemberTeam``` method.
 Do it once your bot is launched.\
-Note that if your initialize the ```TeamsManager``` once your bot is launched you can use the ````autoInitialize```` option when creating the ```TeamsManager```.
+Note that if your initialize the [TeamsManager](#teamsmanager) once your bot is launched you can use the [autoInitialize](#autoinitialize-optional) option when creating the [TeamsManager](#teamsmanager).
 
 ##### getMemberTeam
 Returns the team of a discord.js ```GuildMember```. Needs the ````client```` and ```guildId``` options, but doesn't need to use the above method before.
