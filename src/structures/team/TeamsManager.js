@@ -146,11 +146,9 @@ class TeamsManager {
 
             this.functions = { setPoints, getPoints };
 
+            if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
-                if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
-
-                this.teams.set(teams);
-
+            if (teams) this.teams.set(teams);
 
         if (autoInitialize) this.initialize();
 
