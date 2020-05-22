@@ -117,7 +117,7 @@ client.login('secretToken');
 
 #### TeamResolvable
 Type: ```Object```\
-A TeamResolvable is an ```Object``` that can be resolved to a ```Team```, ```SubTeam``` or ```ParentTeam```, depending of your manager type.
+A TeamResolvable is an ```Object``` that can be resolved to a ```Team```, ```SubTeam``` or ```ParentTeam``` (or them), depending of your manager type.
 
 ```js
 const teamResolvable = {
@@ -206,7 +206,7 @@ Return all parent teams (if the type of the TeamsManager is ```advanced```)
 Return all subs teams (if the type of the TeamsManager is ```advanced```)
 
 ##### teams.find
-Finds a team with a function with each team as parameter. See [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find)\
+Finds a team with a function with each team as parameter. See [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) \
 Example: 
 ```js
 manager.teams.find(team => team.name === 'Cool team'); // Returns cool team
@@ -218,7 +218,7 @@ Finds a team with an ID. See [above](#teamsfind) for more informations
 ##### teams.resolve
 Resolves a team with a string
 ```js
-manager.teams.resolve('cool team') // returns cool team
+manager.teams.resolve('cool team') // Returns cool team
 ```
 
 ##### teams.add
@@ -275,22 +275,22 @@ Returns the role of the team if ```roleId``` of this team is set and if ```clien
 #### Methods
 
 ##### points.get
-Return the current points of the team\
+Return the current points of the [Team](#team)\
 Example: 
 ```js
 team.points.get(); // returns the current points of the team
 ```
 
 ##### points.set
-Parameters: points to set\
+Parameters: points to set(```Number```)\
 Sets the points of the team
 
 ##### points.add
-Parameters: points to add\
+Parameters: points to add (```Number```)\
 Add points to a team
 
 ##### points.remove
-Parameters: points to remove\
+Parameters: points to remove (```Number```)\
 Remove points to a team
 
 ##### points.parent
