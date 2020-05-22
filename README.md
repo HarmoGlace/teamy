@@ -3,13 +3,16 @@
  Made by HarmoGlace
  
 # Table of Contents
-* [Installation](#install)
+* [Installation](#installation)
 * [Examples](#example-usage)
 * [API Reference](#api-reference)
-* [How to contribute and Suggestions/Problems](#how-to-contribute)
+* [How to contribute](#how-to-contribute)
+* [Feedback](#feedback)
+    * [Report an issue](#report-an-issue)
+    * [Suggest something](#suggest-something)
 * [Support](#support)
  
-## Install
+## Installation
 With npm
  ```
 $ npm install teamy
@@ -18,6 +21,9 @@ With yarn
 ```
 $ yarn add teamy
 ```
+
+Recommended node version: 14.3.0 (current)\
+Required node version: 12.16.3 (lts)
 
 ## Example usage
 For a basic teams system using enmap as database:
@@ -356,7 +362,18 @@ Please note that teamy is still in development.\
 If you are here it means that you want to help me, thank you !
 
 To contribute, create a fork of your [this project](https://github.com/HarmoGlace/teamy), edit the things that you want and create a Pull Request.
-If you want to suggest something or report a bug, create an issue
+
+## Feedback
+
+### Report an issue
+
+If you want to report an issue, open an issue [here](https://github.com/HarmoGlace/teamy/issues/new/choose) using the bug report template\
+Please check that you have the [required node version](#installation) at least and that you have the latest version of teamy
+
+### Suggest something
+
+If you want to suggest something you are welcome !
+Open an issue [here](https://github.com/HarmoGlace/teamy/issues/new/choose) using the suggestion template.
 
 ## Support
 You can contact me here :\
