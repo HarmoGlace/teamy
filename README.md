@@ -236,6 +236,7 @@ Parameter: ```Array``` of [TeamResolvable](#teamresolvable)\
 Removes every team to add these teams. Use this carefully.
 
 ##### initialize
+Returns: ```Boolean``` (true if successful)\
 Creates ```role``` property for each team. Needs the ```client``` and ```guildId``` options when creating this manager. Not needed to use the ```getMemberTeam``` method.
 Do it once your bot is launched.\
 Note that if your initialize the [TeamsManager](#teamsmanager) once your bot is launched you can use the [autoInitialize](#autoinitialize-optional) option when creating the [TeamsManager](#teamsmanager).
