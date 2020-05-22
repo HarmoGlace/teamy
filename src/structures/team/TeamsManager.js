@@ -167,7 +167,7 @@ class TeamsManager {
         if (this.implementMember) {
             const { Structures } = require('discord.js');
             const parent = this;
-            const { getMemberTeam } = this;
+            const { getMemberTeam, getMemberTeams } = this;
 
 
             Structures.extend('GuildMember', GuildMember => {
@@ -176,8 +176,12 @@ class TeamsManager {
                         super(client, data, guild);
                     }
 
-                    get team() {
+                    get team () {
                         return getMemberTeam.bind(parent)(this);
+                    }
+
+                    get teams () {
+                        return getMemberTeams.bind(parent)(this);
                     }
                 }
 
@@ -206,6 +210,11 @@ class TeamsManager {
     getMemberTeam (member) {
         const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
         return teams.find(team => member.roles.cache.has(team.roleId)) || null;
+    }
+
+    getMemberTeams (member) {
+        const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
+        return teams.filter(team => member.roles.cache.has(team.roleId));
     }
 
     setClient (client) {

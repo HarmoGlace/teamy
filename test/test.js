@@ -52,7 +52,7 @@ client.once('ready', () => {
 
 client.on('message', message => {
     console.log('a')
-    console.log(message.member.team) // returns the member team or null if none is found
+    console.log(message.member.teams, message.member.team) // returns the member team or null if none is found
 })
 
 client.login(config.token);
