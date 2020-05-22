@@ -126,10 +126,10 @@ class TeamsManager {
 
                 },
                 parents: () => {
-                    return this.teams.all.filter(team => team.type === 'parent');
+                    return this.teams.all.filter(team => team.type && team.type === 'parent');
                 },
                 subs: () => {
-                    return this.teams.all.filter(team => team.type === 'sub');
+                    return this.teams.all.filter(team => team.type && team.type === 'sub');
                 },
                 sorted: () => {
                     if (this.type === 'basic') return this.teams.all.sort((a, b) => b.points.get() - a.points.get());

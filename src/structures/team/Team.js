@@ -15,9 +15,9 @@ class Team {
         this.aliases = aliases;
         this.color = color;
 
-        if (roleId) this.roleId = roleId;
+        this.roleId = roleId || null;
 
-            this.points = {
+        this.points = {
                 get: () => {
                     return manager.functions.getPoints(this) || 0;
                 },
@@ -31,7 +31,7 @@ class Team {
                     if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`)
                     return manager.functions.setPoints(this, points);
                 }
-            };
+        };
 
 
     }
