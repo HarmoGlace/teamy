@@ -166,8 +166,9 @@ class TeamsManager {
 
         if (this.implementMember) {
             const { Structures } = require('discord.js');
-            const getMemberTeam = this.getMemberTeam;
             const parent = this;
+            const { getMemberTeam } = this;
+            
 
             Structures.extend('GuildMember', GuildMember => {
                 class TeamyGuildMember extends GuildMember {
