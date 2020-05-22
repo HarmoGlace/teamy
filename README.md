@@ -372,7 +372,7 @@ Please check that you have the [required node version](#installation) at least a
 
 ### Suggest something
 
-If you want to suggest something you are welcome !
+If you want to suggest something you are welcome !\
 Open an issue [here](https://github.com/HarmoGlace/teamy/issues/new/choose) using the suggestion template.
 
 ## Support
