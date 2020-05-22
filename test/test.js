@@ -1,6 +1,5 @@
 const { TeamsManager } = require('../src/index');
 const { Client } = require('discord.js');
-const client = new Client();
 const Enmap = require('enmap');
 const pointsDB = new Enmap({name: 'points'});
 
@@ -12,7 +11,7 @@ const manager = new TeamsManager({
                 subs: [
                     {
                         id: 'sub1',
-                        roleId: '123456789' // optional, used to detect member role if a client and a guildId are given
+                        roleId: '577899952244523028' // optional, used to detect member role if a client and a guildId are given
                     }
                 ]
             },
@@ -30,9 +29,13 @@ const manager = new TeamsManager({
         setPoints: (team, points) => pointsDB.set(team.id, points),
         getPoints: (team) => pointsDB.get(team.id)
     },
-    client,
-    guildId: '123456789' // guildId where these teams belong to. It will be used to get roles
+    guildId: '123456789', // guildId where these teams belong to. It will be used to get roles
+    implementMember: true
 });
+
+const client = new Client();
+
+manager.setClient(client);
 
 const sub1 = manager.teams.get('sub1');
 
@@ -47,7 +50,8 @@ client.once('ready', () => {
 })
 
 client.on('message', message => {
-    const team = manager.getMemberTeam(message.member); // returns the member team or null if none is found
+    console.log('a')
+    console.log(message.member.team) // returns the member team or null if none is found
 })
 
 client.login('secretToken');

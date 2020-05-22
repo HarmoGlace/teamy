@@ -13,12 +13,14 @@ class TeamsManager {
             } = {},
                     client = null,
                     guildId = null,
-                    autoInitialize = false
+                    autoInitialize = false,
+                    implementMember = false
                 } = {}) {
 
             type = type.toLowerCase();
 
             this.initialized = false;
+            this.implementMember = implementMember;
 
             if (client) this.client = client;
             if (guildId) this.guildId = guildId;
@@ -113,7 +115,7 @@ class TeamsManager {
                 set: (teams) => {
                     if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array in <TeamsManager>.teams.set, instead received ${teams.constructor.name})`);
 
-                    this.teams = [];
+                    this.teams.all = [];
 
                         for (const team of teams) {
                             this.teams.add(team);
@@ -162,11 +164,31 @@ class TeamsManager {
 
         if (autoInitialize) this.initialize();
 
+        if (this.implementMember) {
+            const { Structures } = require('discord.js');
+            const getMemberTeam = this.getMemberTeam;
+            const parent = this;
+
+            Structures.extend('GuildMember', GuildMember => {
+                class TeamyGuildMember extends GuildMember {
+                    constructor(client, data, guild) {
+                        super(client, data, guild);
+                    }
+
+                    get team() {
+                        return getMemberTeam.bind(parent, this)(this);
+                    }
+                }
+
+                return TeamyGuildMember;
+            });
+        }
+
     }
 
     initialize () {
         if (this.client && this.client.user && this.guildId) {
-            const guild = client.guilds.cache.get(this.guildId);
+            const guild = this.client.guilds.cache.get(this.guildId);
             if (guild) {
                 for (const team of this.teams) {
                     if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
@@ -175,7 +197,7 @@ class TeamsManager {
             }
 
         }
-        
+
         return this.initialized;
 
     }
@@ -183,6 +205,10 @@ class TeamsManager {
     getMemberTeam (member) {
         const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
         return teams.find(team => member.roles.cache.has(team.roleId)) || null;
+    }
+
+    setClient (client) {
+        return this.client = client;
     }
 }
 
