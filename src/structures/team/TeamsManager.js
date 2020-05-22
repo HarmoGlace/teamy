@@ -168,7 +168,7 @@ class TeamsManager {
             const { Structures } = require('discord.js');
             const parent = this;
             const { getMemberTeam } = this;
-            
+
 
             Structures.extend('GuildMember', GuildMember => {
                 class TeamyGuildMember extends GuildMember {
@@ -177,7 +177,7 @@ class TeamsManager {
                     }
 
                     get team() {
-                        return getMemberTeam.bind(parent, this)(this);
+                        return getMemberTeam.bind(parent)(this);
                     }
                 }
 

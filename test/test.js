@@ -2,6 +2,7 @@ const { TeamsManager } = require('../src/index');
 const { Client } = require('discord.js');
 const Enmap = require('enmap');
 const pointsDB = new Enmap({name: 'points'});
+const config = require('./config');
 
 const manager = new TeamsManager({
     type: 'advanced',
@@ -54,7 +55,7 @@ client.on('message', message => {
     console.log(message.member.team) // returns the member team or null if none is found
 })
 
-client.login('secretToken');
+client.login(config.token);
 
 
 const test = {
