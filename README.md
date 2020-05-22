@@ -177,7 +177,7 @@ Advanced teams system where there are ParentTeams and SubTeams
 
 ##### implementMember [optional]
 Type: ```Boolean```\
-If set to true, it will enable a ```team``` property on each GuildMember.\
+If set to true, it will enable [team](#getmemberteam) and [teams](#getmemberteams) properties on each GuildMember.\
 For that you need to instantiate your client after creating the [TeamsManager](#teamsmanager)\
 Example (using a basic manager and with enmap as DB provider):
 ````js
@@ -210,7 +210,9 @@ const client = new Client();
 manager.setClient(client);
 
 client.on('message', message => {
-    message.member.team // Returns the member team or null if none is found
+    message.member.team; // Returns the member team or null if none is found
+    
+    message.member.teams; // Returns an array with all member teams or an empty array if none is found.
 })
 ````
 
@@ -281,10 +283,16 @@ Do it once your bot is launched.\
 Note that if your initialize the [TeamsManager](#teamsmanager) once your bot is launched you can use the [autoInitialize](#autoinitialize-optional) option when creating the [TeamsManager](#teamsmanager).
 
 ##### getMemberTeam
+Type: ![Team](#team)
 Returns the team of a discord.js ```GuildMember```. Needs the ````client```` and ```guildId``` options, but doesn't need to use the above method before.
+
+##### getMemberTeams
+Type: ```Array``` of [Team][#team]\
+Same as above but returns all member teams. If none is found it will return an empty array
 
 ##### setClient
 Parameters: New ```Client``` (from discord.js)\
+Returns: New ```Client``` (from discord.js)\
 Sets the client of the [TeamsManager](#teamsmanager). Needed if you want to use the [implementMember](#implementmember-optional) property
 
 ### Team
