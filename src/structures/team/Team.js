@@ -1,6 +1,18 @@
 const TeamyError = require('../TeamyError');
+const PointsHandler = require('../handlers/PointsHandler');
+
+/**
+ * A teamy basic team
+ */
 
 class Team {
+
+    /**
+     *
+     * @param {TeamsManager} manager The TeamsManager this team belong to
+     * @param {TeamData} data The data of this team
+     */
+
     constructor(manager, {
         id,
         name = id,
@@ -8,30 +20,57 @@ class Team {
         color = 0x000000,
         roleId = null
     } = {}) {
+
+        /**
+         * The TeamsManager this team belong to
+         * @type {TeamsManager}
+         */
         this.manager = manager;
 
+        /**
+         * The ID of this team
+         * @type {String}
+         */
         this.id = id;
+
+
+        /**
+         * The name of this team
+         * @type {!String}
+         */
+
         this.name = name;
+
+
+        /**
+         * The name aliases of this team
+         * @type {String[]}
+         */
+
         this.aliases = aliases;
+
+
+        /**
+         * The color of this team
+         * @type {Number}
+         */
+
         this.color = color;
 
-        this.roleId = roleId || null;
+        /**
+         * The role id of this team
+         * @type {!String}
+         */
 
-        this.points = {
-                get: () => {
-                    return manager.functions.getPoints(this) || 0;
-                },
-                add: (points) => {
-                    return this.points.set(this.points.get() + points);
-                },
-                remove: (points) => {
-                    return this.points.set(this.points.get() - points);
-                },
-                set: (points) => {
-                    if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`)
-                    return manager.functions.setPoints(this, points);
-                }
-        };
+        this.roleId = roleId;
+
+
+        /**
+         * The PointsHandler of this team
+         * @type {PointsHandler}
+         */
+
+        this.points = new PointsHandler(this);
 
 
     }

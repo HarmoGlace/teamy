@@ -22,16 +22,18 @@ declare module 'teamy' {
     }
 
     interface TeamsManagerOptions {
-        type?: TeamsManagerType
-        teams?: TeamResolvable[],
-        functions: {
-            setPoints: { (team: Team, points: number) : void };
-            getPoints: { (team: Team) : number };
-        }
-        client?: any,
+        type?: TeamsManagerType;
+        teams?: TeamResolvable[];
+        functions: TeamsManagerFunctions;
+        client?: any;
         guildId?: string;
         implementMember?: boolean;
         autoInitialize?: boolean;
+    }
+
+    interface TeamsManagerFunctions {
+        setPoints: { (team: Team, points: number) : void };
+        getPoints: { (team: Team) : number };
     }
 
     interface TeamsHandler {
