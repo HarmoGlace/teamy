@@ -21,6 +21,15 @@ exports.TeamsManagerType = [
         'advanced'
     ]
 
+/**
+ * A TeamResolvable can be :
+ * * {@link TeamData}
+ * * {@link Team}
+ * * {@link SubTeam}
+ * * {@link ParentTeam}
+ * @typedef TeamResolvable
+ */
+
 
 /**
  * @typedef {Object} TeamData
@@ -36,3 +45,5 @@ exports.TeamsManagerType = [
  @property setPoints {function} Used to set the points of a team. Parameters : `team` and `points`
  @property getPoints {function} Used to get the points of a team. Parameter: `team`
  */
+
+

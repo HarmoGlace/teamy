@@ -30,32 +30,50 @@ class PointsHandler {
     /**
      * Add points to the team
      * @param {number} points Points to add
-     * @returns {*}
+     * @returns {Number} points New team points
      */
 
     add (points) {
-        return this.set(this.get() + points);
+        this.set(this.get() + points);
+
+        return this.get();
     }
 
     /**
      * Remove points to the team
      * @param {number} points Points to remove
-     * @returns {*}
+     * @returns {Number} points New team points
      */
 
     remove (points) {
-        return this.set(this.get() - points);
+        this.set(this.get() - points);
+
+        return this.get();
     }
 
     /**
      * Set points to this team
      * @param {Number} points Points to set
-     * @returns {*}
+     * @returns {Number} points New team points
      */
 
     set (points) {
-        if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`)
-        return this.team.manager.functions.setPoints(this, points);
+        if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
+
+        this.team.manager.functions.setPoints(this, points);
+
+        return this.get();
+    }
+
+    /**
+      *  Clear (reset) the points of this team. Use this carefully
+      * @returns {Number} points New points of the team (0)
+     */
+
+    clear () {
+        this.set(0);
+
+        return this.get();
     }
 }
 

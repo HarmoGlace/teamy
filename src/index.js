@@ -4,6 +4,7 @@ module.exports = {
     ParentTeam: require('./structures/team/ParentTeam'),
     SubTeam: require('./structures/team/SubTeam'),
     PointsHandler: require('./structures/handlers/TeamsHandler'),
+    ParentPointsHandler: require('./structures/handlers/ParentPointsHandler'),
     SubPointsHandler: require('./structures/handlers/SubPointsHandler'),
     TeamsHandler: require('./structures/handlers/TeamsHandler')
 };
