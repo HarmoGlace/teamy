@@ -262,7 +262,7 @@ class TeamsHandler {
      * @returns {Team[]|ParentTeam[]}
      */
 
-    get sorted() {
+    sorted() {
         if (this.manager.type === 'basic') return this.all.sort((a, b) => b.points.get() - a.points.get());
 
         const parents = this.parents();
