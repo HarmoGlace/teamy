@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> structures/team/ParentTeam.js</title>
+  <title> structures/handlers/ParentPointsHandler.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -92,7 +92,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/team/ParentTeam.js</h1>
+                    <h1>structures/handlers/ParentPointsHandler.js</h1>
                 </header>
                 
 
@@ -101,42 +101,35 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const Team = require('./Team');
+            <pre class="prettyprint source linenums"><code>const PointsHandler = require('./PointsHandler');
 
 /**
- * A Parent Team
- * @extends Team
+ * Parent points handler
  */
 
-class ParentTeam extends Team {
+class ParentPointsHandler extends PointsHandler {
 
     /**
-     *
-     * @param {TeamsManager} manager TeamsManager this ParentTeam belong to
-     * @param {TeamData} data The data for this team
+     * @extends PointsHandler
+     * @param {ParentTeam} team ParentTeam this points belong to
      */
 
-    constructor(manager, data) {
-        super(manager, data);
-
-        /**
-         * The type of this team
-         * @type {TeamType}
-         */
-
-        this.type = 'parent';
-
-
-        /**
-         * The list of all sub teams of this team
-         * @type {SubTeam[]}
-         */
-
-        this.subs = [];
+    constructor(team) {
+        super(team);
     }
-}
 
-module.exports = ParentTeam;</code></pre>
+    /**
+     * Clear (reset) the points of this team. Use this carefully
+     * @returns {Number} points New points of the team (0)
+     */
+
+    clear () {
+        this.set(0);
+
+        return this.get();
+    }
+
+}</code></pre>
         </article>
     </section>
 

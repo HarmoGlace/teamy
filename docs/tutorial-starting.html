@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Starting</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                <div class="dropdown is-hoverable is-right">
+                    <a class="dropdown-trigger link">
+                        Tutorials
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-content">
+                        
+                            
+                                <a class="dropdown-item" href="tutorial-starting.html">
+                                    Starting
+                                </a>
+                            
+                        
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar tutorials"
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-starting.html">Starting</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Tutorial</p>
+                    <h1>Starting</h1>
+                </header>
+                <section>
+
+<header>
+    
+</header>
+
+<article>
+    <p>In this tutorial you will learn how to use teamy with node.js (12 at least), in javascript.</p>
+<p>We will start by importing the <a href="TeamsManager.html">TeamsManager</a> class (in your main file) :</p>
+<pre class="prettyprint source lang-js"><code>const { TeamsManager } = require('teamy');
+</code></pre>
+<p>A <a href="TeamsManager.html">TeamsManager</a> is a class that will manage for you all your teams. You can manually create team but it is hader than using the <a href="TeamsManager.html">TeamsManager</a></p>
+<p>Now you will have to create a new instance of this class, here we will name it manager.
+There is only one thing needed : The points functions. To save points and get it you will need to provide functions that will do it with your database. Teamy doesn't provide this by default. In this example we will use enmap, an easy-to-use database provider</p>
+<p>So the needed parameter is named <code>functions</code> (see <a href="global.html#TeamsManagerFunctions">TeamsManagerFunctions</a>). It is an object that have 2 functions:</p>
+<ul>
+<li>setPoints function with 2 parameters : <code>team</code> and <code>points</code> to set. The team parameter can be a <a href="Team.html">Team</a> or a <a href="ParentTeam.html">ParentTeam</a>/<a href="SubTeam.html">SubTeam</a>, depending of your TeamsManager type. We will see this after</li>
+<li>getPoints function with 1 parameter: <code>team</code>. It can be a <a href="Team.html">Team</a> or a <a href="ParentTeam.html">ParentTeam</a>/<a href="SubTeam.html">SubTeam</a>, depending of your TeamsManager type too.</li>
+</ul>
+<pre class="prettyprint source lang-js"><code>const Enmap = require('enmap'); // Do NOT put this line if you do not use enmap
+const database = new Enmap({name: 'teamy'}); // Do NOT put this line if you do not use enmap
+
+const manager = new TeamsManager({
+    functions: {
+        setPoints: (team, points) => database.set(team.id, points), // your setPoints function
+        getPoints: (team) => database.get(team.id) // your getPoints function
+    }
+})
+</code></pre>
+<p>The above example contains the needed options for the TeamsManager, but you can also provide directly your teams.</p>
+<p>The option is named <code>teams</code> and it takes an <code>Array</code> of <a href="global.html#TeamResolvable">TeamResolvable</a> as parameter.</p>
+<pre class="prettyprint source lang-js"><code>const manager = new TeamsManager({
+    teams: [
+        {
+                id: 'id', // Needed, id of the team, will be used internally or to get a team
+                name: 'name', // Optional, common name, it is the id by default
+                aliases: ['anotherName'], // Optional Array of string with all aliases of this team
+                color: 0x0000, // Optional Hex color of this team
+                roleId: '123456789', // Optional Role ID of this team
+                type: 'parent', // or 'sub'. Optional, only if you add it manually with an advanced manager
+                subs: [ // Needed only if the manager type is advanced
+                        { // Team resolvable like above but without subs and type properties.
+                            id: 'id', // Needed id of the team, will be used internally
+                            name: 'name', // Optional, common name, it is the id by default
+                            aliases: ['anotherName'], // Optional Array of string with all aliases of this team
+                            color: 0x0000, // Optional Hex color of this team
+                            roleId: '123456789', // Optional Role ID of this team
+                        }
+                    ]
+        }
+    ]
+})
+</code></pre>
+<p>You have now a basic teamy configuration.</p>
+<h3>How can I get a team ?</h3>
+<p>If you want to find a team, it is easy. You can use the <code>find</code> function on the <a href="TeamsHandler.html">TeamsHandler</a> of the <a href="TeamsManager.html">TeamsManager</a>. It is like the find function on an array <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">(see mdn)</a> :</p>
+<pre class="prettyprint source lang-js"><code>const team = manager.teams.find(team => team.id === 'first team'); // returns 'first team' Team or null if none is found
+</code></pre>
+<p>It will return a <a href="Team.html">Team</a> or null if none is found.</p>
+<p>If it returns a <a href="Team.html">Team</a>, you can manage the team points easily like that :</p>
+<pre class="prettyprint source lang-js"><code>team.points.add(5) // add 5 points to the team
+
+team.points.remove(3) // remove 3 points
+
+team.points.set(15) // Set the team points to 15
+</code></pre>
+<p>Now you know how to use teamy !
+If you want an advanced configuration with Parent Teams and Sub Teams, look at <a href="./tutorial-starting.html">the advanced configuration tutorial</a> (coming soon)</p>
+</article>
+
+</section>
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

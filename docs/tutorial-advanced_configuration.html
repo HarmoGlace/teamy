@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> structures/team/ParentTeam.js</title>
+  <title> Advanced configuration</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -62,6 +60,10 @@
                         <div class="dropdown-content">
                         
                             
+                                <a class="dropdown-item" href="tutorial-advanced_configuration.html">
+                                    Advanced configuration
+                                </a>
+                            
                                 <a class="dropdown-item" href="tutorial-starting.html">
                                     Starting
                                 </a>
@@ -78,70 +80,33 @@
 </div>
     <div id="main">
         <div
-            class="sidebar "
+            class="sidebar tutorials"
             id="sidebarNav"
         >
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-advanced_configuration.html">Advanced configuration</a></li><li><a href="tutorial-starting.html">Starting</a></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>structures/team/ParentTeam.js</h1>
+                    <p>Tutorial</p>
+                    <h1>Advanced configuration</h1>
                 </header>
-                
+                <section>
 
-
-
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const Team = require('./Team');
+</header>
 
-/**
- * A Parent Team
- * @extends Team
- */
+<article>
+    <p>n</p>
+</article>
 
-class ParentTeam extends Team {
-
-    /**
-     *
-     * @param {TeamsManager} manager TeamsManager this ParentTeam belong to
-     * @param {TeamData} data The data for this team
-     */
-
-    constructor(manager, data) {
-        super(manager, data);
-
-        /**
-         * The type of this team
-         * @type {TeamType}
-         */
-
-        this.type = 'parent';
-
-
-        /**
-         * The list of all sub teams of this team
-         * @type {SubTeam[]}
-         */
-
-        this.subs = [];
-    }
-}
-
-module.exports = ParentTeam;</code></pre>
-        </article>
-    </section>
-
-
-
+</section>
 
             </div>
             

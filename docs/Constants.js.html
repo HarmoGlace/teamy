@@ -61,6 +61,12 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
+                            
+                                <a class="dropdown-item" href="tutorial-starting.html">
+                                    Starting
+                                </a>
+                            
+                        
                         </div>
                     </div>
                 </div>
@@ -78,7 +84,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -118,6 +124,15 @@ exports.TeamsManagerType = [
         'advanced'
     ]
 
+/**
+ * A TeamResolvable can be :
+ * * {@link TeamData}
+ * * {@link Team}
+ * * {@link SubTeam}
+ * * {@link ParentTeam}
+ * @typedef TeamResolvable
+ */
+
 
 /**
  * @typedef {Object} TeamData
@@ -133,6 +148,8 @@ exports.TeamsManagerType = [
  @property setPoints {function} Used to set the points of a team. Parameters : `team` and `points`
  @property getPoints {function} Used to get the points of a team. Parameter: `team`
  */
+
+
 </code></pre>
         </article>
     </section>
