@@ -67,7 +67,7 @@ class PointsHandler {
 
     /**
       *  Clear (reset) the points of this team. Use this carefully
-      * @returns {Number} New points of the team (0)
+      * @returns {Number} New team points (should be 0)
      */
 
     clear () {
