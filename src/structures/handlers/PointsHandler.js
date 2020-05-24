@@ -30,7 +30,7 @@ class PointsHandler {
     /**
      * Add points to the team
      * @param {number} points Points to add
-     * @returns {Number} points New team points
+     * @returns {Number} New team points
      */
 
     add (points) {
@@ -42,7 +42,7 @@ class PointsHandler {
     /**
      * Remove points to the team
      * @param {number} points Points to remove
-     * @returns {Number} points New team points
+     * @returns {Number} New team points
      */
 
     remove (points) {
@@ -54,7 +54,7 @@ class PointsHandler {
     /**
      * Set points to this team
      * @param {Number} points Points to set
-     * @returns {Number} points New team points
+     * @returns {Number} New team points
      */
 
     set (points) {
@@ -67,7 +67,7 @@ class PointsHandler {
 
     /**
       *  Clear (reset) the points of this team. Use this carefully
-      * @returns {Number} points New points of the team (0)
+      * @returns {Number} New points of the team (0)
      */
 
     clear () {
