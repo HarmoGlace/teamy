@@ -119,6 +119,8 @@ client.login('secretToken');
 
 ## API Reference
 
+**This api reference will be moved to the documentation at [teamy.harmoglace.fr](https://teamy.harmoglace.fr) soon**
+
 ### TeamsManager
 
 #### TeamResolvable

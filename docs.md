@@ -18,4 +18,4 @@ Installation with yarn :
 yarn add teamy
 ```
 
-After doing that you can read the tutorials on your right.
+After doing that you can read the [starting tutorial](./tutorial-starting.html).

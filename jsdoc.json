@@ -13,6 +13,7 @@
     "readme": "./docs.md",
     "destination": "docs/",
     "recurse": true,
-    "template": "node_modules/better-docs"
+    "template": "node_modules/better-docs",
+    "tutorials": "tutorials/"
   }
 }
