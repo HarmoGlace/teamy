@@ -78,7 +78,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="global.html#TeamsHandler">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -99,6 +99,7 @@
 const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');
+const TeamsHandler = require('../handlers/TeamsHandler');
 
 /**
  * A TeamsManager
@@ -151,11 +152,20 @@ class TeamsManager {
          * @type {TeamsHandler}
          */
 
-        this.teams = {
+        this.teams = new TeamsHandler(this);
 
-        };
+        /**
+         * TeamsManager type, either
+         * * `basic`
+         * * `advanced`
+         */
 
         this.type = type;
+
+        /**
+         * setPoints and getPoints functions of this TeamsManager
+         * @type {TeamsManagerFunctions}
+         */
 
         this.functions = {setPoints, getPoints};
 

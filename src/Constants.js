@@ -21,12 +21,6 @@ exports.TeamsManagerType = [
         'advanced'
     ]
 
-/**
- * @typedef {Object} TeamsHandler
- * @property {Team[] | Array.<ParentTeam, SubTeam>} all All teams
- */
-
-
 
 /**
  * @typedef {Object} TeamData
