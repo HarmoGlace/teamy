@@ -15,5 +15,19 @@
     "recurse": true,
     "template": "node_modules/better-docs",
     "tutorials": "tutorials/"
+  },
+  "templates": {
+    "search": true,
+    "better-docs": {
+      "name": "Teamy documentation",
+      "title": "Teamy |",
+      "hideGenerator": true,
+      "navLinks": [
+        {
+          "label": "Github",
+          "href": "https://github.com/HarmoGlace/teamy/"
+        }
+      ]
+    }
   }
 }
