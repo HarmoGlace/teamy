@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> structures/team/TeamsManager.js</title>
+  <title> structures/handlers/TeamsHandler.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -86,7 +86,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/team/TeamsManager.js</h1>
+                    <h1>structures/handlers/TeamsHandler.js</h1>
                 </header>
                 
 
@@ -96,159 +96,162 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>const TeamyError = require('../TeamyError');
-const Team = require('./Team');
-const ParentTeam = require('./ParentTeam');
-const SubTeam = require('./SubTeam');
+const Team = require('../team/Team');
+const ParentTeam = require('../team/ParentTeam');
+const SubTeam = require('../team/SubTeam');
+
 
 /**
- * A TeamsManager
+ * Teams Handler used by the TeamsManager class
  */
 
-class TeamsManager {
-
+class TeamsHandler {
 
     /**
-     * @param {TeamsManagerData} data TeamsManager data
+     *
+     * @param {TeamsManager} manager TeamsManager this TeamsHandler belong to
      */
 
-    constructor({
-                    teams = [],
-                    type = 'basic',
-                    functions: {
-                        setPoints,
-                        getPoints
-                    } = {},
-                    client = null,
-                    guildId = null,
-                    autoInitialize = false,
-                    implementMember = false
-                } = {}) {
+    constructor(manager) {
+        this.manager = manager;
 
-        type = type.toLowerCase();
-
-        /**
-         * Whatever this manager has been initialized with the initialize method
-         * @type {Boolean}
-         */
-        this.initialized = false;
-
-
-        /**
-         * Client option. If enabled it will add the `team` and `teams` properties on GuildMembers
-         * @type {Boolean}
-         * @private
-         */
-        this.implementMember = implementMember;
-
-        if (client) this.client = client;
-        if (guildId) this.guildId = guildId;
-
-        if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
-        if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
-
-        /**
-         * Teams handled by this TeamsManager
-         * @type {TeamsHandler}
-         */
-
-        this.teams = {
-
-        };
-
-        this.type = type;
-
-        this.functions = {setPoints, getPoints};
-
-        if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
-
-        if (teams) this.teams.set(teams);
-
-        if (autoInitialize) this.initialize();
-
-        if (this.implementMember) {
-            const {Structures} = require('discord.js');
-            const parent = this;
-            const {getMemberTeam, getMemberTeams} = this;
-
-
-            Structures.extend('GuildMember', GuildMember => {
-                class TeamyGuildMember extends GuildMember {
-                    constructor(client, data, guild) {
-                        super(client, data, guild);
-                    }
-
-                    get team() {
-                        return getMemberTeam.bind(parent)(this);
-                    }
-
-                    get teams() {
-                        return getMemberTeams.bind(parent)(this);
-                    }
-                }
-
-                return TeamyGuildMember;
-            });
-        }
-
+        this.all = [];
     }
 
-    /**
-     * Initialize this TeamsManager : Creates a role property for each Team
-     * @returns {Boolean} true if successful
-     */
+    add(team) {
 
-    initialize() {
-        if (this.client &amp;&amp; this.client.user &amp;&amp; this.guildId) {
-            const guild = this.client.guilds.cache.get(this.guildId);
-            if (guild) {
-                for (const team of this.teams) {
-                    if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
-                }
-                this.initialized = true;
+        if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`You need to specify an object in &lt;TeamsManager>.teams.add`)
+        if (this.get(team.id)) throw new TeamyError(`There is already a team with id ${team.id}`);
+
+        if (this.manager.type === 'basic') {
+
+            const teamCreated = new Team(this.manager, team)
+
+            this.all.push(teamCreated);
+
+            return teamCreated;
+
+        } else if (this.manager.type === 'advanced') {
+
+            if (!team.hasOwnProperty('type')) {
+                if (team.subs) team.type = 'parent'
+                else team.type = 'sub'
             }
 
+            if (team.type === 'parent') {
+                if (!team.hasOwnProperty('subs')) {
+                    process.emitWarning(`You didn't provide any sub teams for the ${team.id} team`);
+                    team.subs = [];
+                }
+
+                const parentTeam = new ParentTeam(this.manager, team);
+
+                const subs = team.subs.slice();
+
+                for (const sub of subs) {
+                    if (typeof sub !== 'object' || sub instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${sub.constructor.name}`);
+
+                    if (this.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}`);
+
+                    const subTeam = new SubTeam(this.manager, sub, parentTeam);
+
+                    this.all.push(subTeam);
+                    parentTeam.subs.push(subTeam);
+                }
+
+                this.all.push(parentTeam);
+
+                return parentTeam;
+
+            } else if (team.type === 'sub') {
+
+                const parentRaw = team.parentId || team.parent;
+
+                if (!parent) throw new TeamyError(`No ParentTeam provided for ${team.id} SubTeam`);
+
+                const parent = parentRaw instanceof ParentTeam ? parentRaw : this.all.get(parentRaw);
+
+                if (!parent) throw new TeamyError(`Cannot find a ParentTeam for ${team.id} SubTeam`);
+
+                const subTeam = new SubTeam(this.manager, team, parent);
+
+                this.all.push(subTeam);
+                parent.subs = parent.subs.push(subTeam);
+
+                return subTeam;
+
+            }
+
+
         }
 
-        return this.initialized;
+        if (this.manager.initialized) this.manager.initialize();
+
+    }
+
+    remove(teamRaw) {
+
+        if (!teamRaw || !(teamRaw instanceof Team)) throw new TeamyError(`You need to provide a valid Team to delete`);
+
+        const team = this.get(teamRaw.id);
+        const index = this.all.indexOf(team);
+
+        this.all.splice(index, 1);
+
+        return this.all;
+
+    }
+
+    set(teams) {
+        if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array in &lt;TeamsManager>.teams.set, instead received ${teams.constructor.name})`);
+
+        this.all = [];
+
+        for (const team of teams) {
+            this.add(team);
+        }
+
+        return this.all;
+
 
     }
 
 
-    /**
-     * Get a member team
-     * @param {GuildMember} member member to get team
-     * @returns {Team | SubTeam | null} The member team or null if none is found
-     */
 
-    getMemberTeam(member) {
-        const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
-        return teams.find(team => member.roles.cache.has(team.roleId)) || null;
+    get parents() {
+        return this.all.filter(team => team.type &amp;&amp; team.type === 'parent');
     }
 
-    /**
-     * Get a member teams
-     * @param { GuildMember } member member to get teams
-     * @returns {Team[] | SubTeam[]}
-     */
-
-    getMemberTeams(member) {
-        const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
-        return teams.filter(team => member.roles.cache.has(team.roleId));
+    get subs() {
+        return this.all.filter(team => team.type &amp;&amp; team.type === 'sub');
     }
 
-    /**
-     * Sets the client of this TeamsManager
-     * @param {Client} client Discord.js client
-     * @returns {Client} Client provided
-     */
 
-    setClient(client) {
-        return this.client = client;
+    get sorted() {
+        if (this.manager.type === 'basic') return this.all.sort((a, b) => b.points.get() - a.points.get());
+
+        const parents = this.parents;
+
+        for (const parent of parents) {
+            parent.subs.sort((a, b) => b.points.get() - a.points.get());
+        }
+
+        return parents.sort((a, b) => b.points.get() - a.points.get());
     }
-}
 
-module.exports = TeamsManager;
-</code></pre>
+    find(findFunction) {
+        return this.all.find(findFunction) || null;
+    }
+
+    get(id) {
+        return this.find(team => team.id === id);
+    }
+
+    resolve(resolvable) {
+        resolvable = resolvable.toLowerCase();
+        return this.all.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.all.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
+    }
+}</code></pre>
         </article>
     </section>
 

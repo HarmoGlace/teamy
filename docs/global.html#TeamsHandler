@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> structures/handlers/PointsHandler.js</title>
+  <title> TeamsHandler</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -85,80 +83,207 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>structures/handlers/PointsHandler.js</h1>
+                    <p>Class</p>
+                    <h1>TeamsHandler</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
- * Points Handler
- */
+        <h2><span class="attribs"><span class="type-signature"></span></span>TeamsHandler<span class="signature">(manager)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description"><p>Teams Handler used by the TeamsManager class</p></div>
+        
+    
+</header>
 
-class PointsHandler {
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
 
-    /**
-     * @param {Team} team Team this Handler belong to
-     */
 
-    constructor(team) {
+    
+    <h4 class="name" id="TeamsHandler">
+        <a class="href-link" href="#TeamsHandler">#</a>
+        
+        <span class="code-name">
+            
+                new TeamsHandler<span class="signature">(manager)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
 
-        /**
-         * Team this PointsHandler belong to
-         * @type {Team}
-         */
+    
+    
 
-        this.team = team;
-    }
 
-    /**
-     * Get the points of this team
-     * @returns {number}
-     */
 
-    get () {
-        return this.team.manager.functions.getPoints(this) || 0;
-    }
 
-    /**
-     * Add points to the team
-     * @param {number} points Points to add
-     * @returns {*}
-     */
 
-    add (points) {
-        return this.set(this.get() + points);
-    }
 
-    /**
-     * Remove points to the team
-     * @param {number} points Points to remove
-     * @returns {*}
-     */
 
-    remove (points) {
-        return this.set(this.get() - points);
-    }
 
-    /**
-     * Set points to this team
-     * @param {Number} points Points to set
-     * @returns {*}
-     */
 
-    set (points) {
-        if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`)
-        return this.team.manager.functions.setPoints(this, points);
-    }
-}
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
 
-module.exports = PointsHandler;</code></pre>
-        </article>
-    </section>
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>manager</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="TeamsManager.html">TeamsManager</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>TeamsManager this TeamsHandler belong to</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line18">line 18</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
