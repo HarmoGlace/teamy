@@ -34,7 +34,7 @@ class PointsHandler {
      */
 
     add (points) {
-        return this.set(this.points.get() + points);
+        return this.set(this.get() + points);
     }
 
     /**
@@ -44,7 +44,7 @@ class PointsHandler {
      */
 
     remove (points) {
-        return this.set(this.points.get() - points);
+        return this.set(this.get() - points);
     }
 
     /**
