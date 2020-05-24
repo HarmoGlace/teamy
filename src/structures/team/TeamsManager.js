@@ -2,6 +2,7 @@ const TeamyError = require('../TeamyError');
 const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');
+const TeamsHandler = require('../handlers/TeamsHandler');
 
 /**
  * A TeamsManager
@@ -54,9 +55,7 @@ class TeamsManager {
          * @type {TeamsHandler}
          */
 
-        this.teams = {
-
-        };
+        this.teams = new TeamsHandler(this);
 
         this.type = type;
 
