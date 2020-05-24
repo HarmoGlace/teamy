@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/teamy.png?compact=true)](https://nodei.co/npm/teamy/)
+
 ## Welcome
 Welcome to Teamy Documentation
 

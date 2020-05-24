@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/teamy.png?compact=true)](https://nodei.co/npm/teamy/)
+
 # teamy
  A powerful library to manage teams with your own database\
  Made by HarmoGlace
