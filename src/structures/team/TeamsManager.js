@@ -57,7 +57,18 @@ class TeamsManager {
 
         this.teams = new TeamsHandler(this);
 
+        /**
+         * TeamsManager type, either
+         * * `basic`
+         * * `advanced`
+         */
+
         this.type = type;
+
+        /**
+         * setPoints and getPoints functions of this TeamsManager
+         * @type {TeamsManagerFunctions}
+         */
 
         this.functions = {setPoints, getPoints};
 

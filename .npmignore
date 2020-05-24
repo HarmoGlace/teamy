@@ -3,5 +3,6 @@
 /.gitignore
 test/
 data/
+docs/
 node_modules/
 /package-lock.json
