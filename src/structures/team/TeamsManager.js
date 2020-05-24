@@ -61,6 +61,7 @@ class TeamsManager {
          * TeamsManager type, either
          * * `basic`
          * * `advanced`
+         * @type {TeamsManagerType}
          */
 
         this.type = type;
