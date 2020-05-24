@@ -121,11 +121,11 @@ class TeamsHandler {
 
 
 
-    get parents() {
+    parents() {
         return this.all.filter(team => team.type && team.type === 'parent');
     }
 
-    get subs() {
+    subs() {
         return this.all.filter(team => team.type && team.type === 'sub');
     }
 
@@ -133,7 +133,7 @@ class TeamsHandler {
     get sorted() {
         if (this.manager.type === 'basic') return this.all.sort((a, b) => b.points.get() - a.points.get());
 
-        const parents = this.parents;
+        const parents = this.parents();
 
         for (const parent of parents) {
             parent.subs.sort((a, b) => b.points.get() - a.points.get());
