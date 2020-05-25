@@ -115,7 +115,7 @@ class TeamsManager {
         if (this.client && this.client.user && this.guildId) {
             const guild = this.client.guilds.cache.get(this.guildId);
             if (guild) {
-                for (const team of this.teams) {
+                for (const team of this.teams.all) {
                     if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
                 }
                 this.initialized = true;
