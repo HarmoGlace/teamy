@@ -83,6 +83,13 @@
                             Github
                         </a>
                     
+                        <a
+                            class="link user-link "
+                            href="https://discord.gg/CnuKPMM"
+                        >
+                            Discord
+                        </a>
+                    
                 
                 
             </div>
@@ -297,6 +304,20 @@ class TeamsHandler {
         return parents.sort((a, b) => b.points.get() - a.points.get());
     }
 
+
+    /**
+     * Clear points of all teams
+     * @return {boolean} successful Return true if successful
+     */
+
+    clearAllPoints () {
+        for (const team of this.all) {
+            team.points.clear();
+        }
+
+        return true;
+    }
+
     /**
      * Find a team with a function
      * @param {String} findFunction function passed to find a team
@@ -323,7 +344,7 @@ class TeamsHandler {
      * @returns {Team|ParentTeam|SubTeam|null}
      */
 
-    resolve(resolvable) {
+    resolve (resolvable) {
         resolvable = resolvable.toLowerCase();
         return this.all.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.all.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
     }

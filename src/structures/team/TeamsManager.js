@@ -71,7 +71,7 @@ class TeamsManager {
          * @type {TeamsManagerFunctions}
          */
 
-        this.functions = {setPoints, getPoints};
+        this.functions = { setPoints, getPoints };
 
         if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
@@ -80,7 +80,7 @@ class TeamsManager {
         if (autoInitialize) this.initialize();
 
         if (this.implementMember) {
-            const {Structures} = require('discord.js');
+            const { Structures } = require('discord.js');
             const parent = this;
             const {getMemberTeam, getMemberTeams} = this;
 
