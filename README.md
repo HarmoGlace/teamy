@@ -380,6 +380,5 @@ If you want to suggest something you are welcome !\
 Open an issue [here](https://github.com/HarmoGlace/teamy/issues/new/choose) using the suggestion template.
 
 ## Support
-You can contact me here :\
-Discord : HarmoGlace#7746\
-Twitter: [@HarmoGlace](https://twitter.com/HarmoGlace)
+
+You can go on the [official discord support server (click here)](https://discord.gg/CnuKPMM) if you need help
