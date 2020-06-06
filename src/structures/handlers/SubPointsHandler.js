@@ -48,9 +48,9 @@ class SubPointsHandler extends PointsHandler {
      */
 
     add(points) {
-        this.parent.points.add(points);
+        this.team.parent.points.add(points);
 
-        return this.points.setLocal(this.points.current() + points);
+        return this.setLocal(this.current() + points);
     }
 
     /**
@@ -59,9 +59,9 @@ class SubPointsHandler extends PointsHandler {
      */
 
     remove(points) {
-        this.parent.points.remove(points);
+        this.team.parent.points.remove(points);
 
-        return this.points.setLocal(this.points.current() - points);
+        return this.setLocal(this.points.current() - points);
     }
 
     /**
@@ -73,9 +73,9 @@ class SubPointsHandler extends PointsHandler {
     set(points) {
         const diff = points - this.points.current();
 
-        this.parent.points.add(diff);
+        this.team.parent.points.add(diff);
 
-        return manager.functions.setPoints(this, points);
+        return this.team.manager.functions.setPoints(this.team, points);
     }
 
     /**
@@ -88,7 +88,7 @@ class SubPointsHandler extends PointsHandler {
 
         if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
-        return manager.functions.setPoints(this, points);
+        return this.team.manager.functions.setPoints(this.team, points);
     }
 
 

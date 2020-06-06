@@ -60,7 +60,7 @@ class PointsHandler {
     set (points) {
         if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
-        this.team.manager.functions.setPoints(this, points);
+        this.team.manager.functions.setPoints(this.team, points);
 
         return this.get();
     }
