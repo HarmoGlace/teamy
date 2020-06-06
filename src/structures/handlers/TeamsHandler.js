@@ -222,3 +222,5 @@ class TeamsHandler {
         return this.all.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.all.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
     }
 }
+
+module.exports = TeamsHandler;

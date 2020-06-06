@@ -93,3 +93,5 @@ class SubPointsHandler extends PointsHandler {
 
 
 }
+
+module.exports = SubPointsHandler;
