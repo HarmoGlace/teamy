@@ -8,7 +8,7 @@ Teamy is a powerful [Node.js](https://nodejs.org) module that manage teams for y
 You can have a basic configuration with basic teams or you can have an advanced configuration with Parent Teams and sub teams ; The parent teams points will be the addition of all of their sub teams points.
 
 ### Installation
-To install teamy you need node 12.0.0 at least. Teamy may not work with older versions
+To install teamy you need node 12.x at least. Teamy may not work with older versions
 
 Installation with npm :
 ```

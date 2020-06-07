@@ -24,8 +24,8 @@ With yarn
 $ yarn add teamy
 ```
 
-Recommended node version: 14.3.0 (current)\
-Required node version: 12.16.3 (lts)
+Recommended node version: 14.4.0 (Current)\
+Required node version: 12.x (LTS)
 
 ## Example usage
 For a basic teams system using enmap as database:
