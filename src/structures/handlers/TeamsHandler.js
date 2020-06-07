@@ -148,7 +148,7 @@ class TeamsHandler {
      */
 
     parents() {
-        return this.all.filter(team => team.type && team.type === 'parent');
+        return this.all.filter(team => team.type === 'parent');
     }
 
     /**
@@ -157,7 +157,7 @@ class TeamsHandler {
      */
 
     subs() {
-        return this.all.filter(team => team.type && team.type === 'sub');
+        return this.all.filter(team => team.type === 'sub');
     }
 
     /**
@@ -165,7 +165,7 @@ class TeamsHandler {
      * @returns {Team[]|ParentTeam[]}
      */
 
-    sorted() {
+    sorted () {
         if (this.manager.type === 'basic') return this.all.sort((a, b) => b.points.get() - a.points.get());
 
         const parents = this.parents();
@@ -208,7 +208,7 @@ class TeamsHandler {
      */
 
     get(id) {
-        return this.find(team => team.id === id);
+        return this.find(team => team.id === id) || null;
     }
 
     /**
