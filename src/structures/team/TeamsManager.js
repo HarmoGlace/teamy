@@ -69,7 +69,7 @@ class TeamsManager extends Map {
 
         if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
-        if (teams) this.teams.set(teams);
+        if (teams) this.set(teams);
 
         if (autoInitialize) this.initialize();
 
@@ -165,15 +165,15 @@ class TeamsManager extends Map {
         if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`You need to specify an object`)
         if (this.get(team.id)) throw new TeamyError(`There is already a team with id ${team.id}`);
 
-        if (this.manager.type === 'basic') {
+        if (this.type === 'basic') {
 
-            const teamCreated = new Team(this.manager, team)
+            const teamCreated = new Team(this, team)
 
-            this.set(teamCreated.id, teamCreated);
+            super.set(teamCreated.id, teamCreated);
 
             return teamCreated;
 
-        } else if (this.manager.type === 'advanced') {
+        } else if (this.type === 'advanced') {
 
             if (!team.hasOwnProperty('type')) {
                 if (team.subs) team.type = 'parent'
@@ -186,7 +186,7 @@ class TeamsManager extends Map {
                     team.subs = [];
                 }
 
-                const parentTeam = new ParentTeam(this.manager, team);
+                const parentTeam = new ParentTeam(this, team);
 
                 const subs = team.subs.slice();
 
@@ -195,13 +195,13 @@ class TeamsManager extends Map {
 
                     if (this.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}`);
 
-                    const subTeam = new SubTeam(this.manager, sub, parentTeam);
+                    const subTeam = new SubTeam(this, sub, parentTeam);
 
-                    this.all.push(subTeam);
+                    super.set(subTeam.id, subTeam);
                     parentTeam.subs.push(subTeam);
                 }
 
-                this.set(parentTeam.id, parentTeam);
+                super.set(parentTeam.id, parentTeam);
 
                 return parentTeam;
 
@@ -211,11 +211,11 @@ class TeamsManager extends Map {
 
                 if (!parent) throw new TeamyError(`No ParentTeam provided for ${team.id} SubTeam`);
 
-                const parent = parentRaw instanceof ParentTeam ? parentRaw : this.all.get(parentRaw);
+                const parent = parentRaw instanceof ParentTeam ? parentRaw : this.get(parentRaw);
 
                 if (!parent) throw new TeamyError(`Cannot find a ParentTeam for ${team.id} SubTeam`);
 
-                const subTeam = new SubTeam(this.manager, team, parent);
+                const subTeam = new SubTeam(this, team, parent);
 
                 super.set(subTeam.id, subTeam);
                 parent.subs = parent.subs.push(subTeam);
@@ -248,6 +248,12 @@ class TeamsManager extends Map {
     }
 
     /**
+     * Gets a Team with its id
+     * @param {String} id Team Id
+     * @returns {Team|SubTeam|ParentTeam|null} the team or null if none was found
+     */
+
+    /**
      * Remove all teams to keep have given teams
      * @param {Team|ParentTeam|SubTeam} teams Teams to keep
      * @returns {Team[]|Array<ParentTeam|SubTeam>}
@@ -259,10 +265,10 @@ class TeamsManager extends Map {
         this.clear();
 
         for (const team of teams) {
-            super.set(team.id, team);
+            this.add(team);
         }
 
-        return this.all;
+        return this;
 
 
     }

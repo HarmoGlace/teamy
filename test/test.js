@@ -38,7 +38,8 @@ const client = new Client();
 
 manager.setClient(client);
 
-const sub1 = manager.teams.get('sub1');
+const sub1 = manager.get('sub1');
+console.log(manager, sub1);
 
 sub1.points.add(153);
 
