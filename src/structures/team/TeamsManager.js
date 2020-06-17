@@ -35,6 +35,7 @@ class TeamsManager extends Map {
          * Whatever this manager has been initialized with the initialize method
          * @type {Boolean}
          */
+
         this.initialized = false;
 
 
@@ -98,7 +99,11 @@ class TeamsManager extends Map {
             });
         }
 
+
+
     }
+
+
 
     /**
      * Initialize this TeamsManager : Creates a role property for each Team
@@ -260,13 +265,13 @@ class TeamsManager extends Map {
     /**
      * Remove all teams to keep have given teams
      * @param {Team|ParentTeam|SubTeam} teams Teams to keep
-     * @returns {Team[]|Array<ParentTeam|SubTeam>}
+     * @returns {TeamsManager}
      */
 
     set (teams) {
         if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array in <TeamsManager>.teams.set, instead received ${teams.constructor.name})`);
 
-        this.clear();
+        super.clear();
 
         for (const team of teams) {
             this.add(team);
