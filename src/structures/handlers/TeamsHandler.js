@@ -6,9 +6,10 @@ const SubTeam = require('../team/SubTeam');
 
 /**
  * Teams Handler used by the TeamsManager class
+ * @extends Map
  */
 
-class TeamsHandler {
+class TeamsHandler extends Map {
 
     /**
      *
@@ -16,14 +17,9 @@ class TeamsHandler {
      */
 
     constructor(manager) {
+        super();
+
         this.manager = manager;
-
-        /**
-         * All teams of this TeamsManager
-         * @returns {Team[]|Array<ParentTeam|SubTeam>}
-         */
-
-        this.all = [];
     }
 
     /**
@@ -34,14 +30,14 @@ class TeamsHandler {
 
     add(team) {
 
-        if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`You need to specify an object in <TeamsManager>.teams.add`)
+        if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`You need to specify an object`)
         if (this.get(team.id)) throw new TeamyError(`There is already a team with id ${team.id}`);
 
         if (this.manager.type === 'basic') {
 
             const teamCreated = new Team(this.manager, team)
 
-            this.all.push(teamCreated);
+            this.set(teamCreated.id, teamCreated);
 
             return teamCreated;
 
@@ -73,7 +69,7 @@ class TeamsHandler {
                     parentTeam.subs.push(subTeam);
                 }
 
-                this.all.push(parentTeam);
+                this.set(parentTeam.id, parentTeam);
 
                 return parentTeam;
 
@@ -89,7 +85,7 @@ class TeamsHandler {
 
                 const subTeam = new SubTeam(this.manager, team, parent);
 
-                this.all.push(subTeam);
+                this.set(subTeam.id, subTeam);
                 parent.subs = parent.subs.push(subTeam);
 
                 return subTeam;
@@ -111,14 +107,11 @@ class TeamsHandler {
 
     remove(teamRaw) {
 
-        if (!teamRaw || !(teamRaw instanceof Team)) throw new TeamyError(`You need to provide a valid Team to delete`);
+        if (!teamRaw || !(teamRaw instanceof Team) || !this.get(teamRaw.id)) throw new TeamyError(`You need to provide a valid Team to delete`);
 
-        const team = this.get(teamRaw.id);
-        const index = this.all.indexOf(team);
+        this.delete(teamRaw.id);
 
-        this.all.splice(index, 1);
-
-        return this.all;
+        return this;
 
     }
 
@@ -131,10 +124,10 @@ class TeamsHandler {
     set(teams) {
         if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array in <TeamsManager>.teams.set, instead received ${teams.constructor.name})`);
 
-        this.all = [];
+        this.clear();
 
         for (const team of teams) {
-            this.add(team);
+            this.set(team.id, team);
         }
 
         return this.all;
@@ -148,7 +141,7 @@ class TeamsHandler {
      */
 
     parents() {
-        return this.all.filter(team => team.type === 'parent');
+        return this.toArray().filter(team => team.type === 'parent');
     }
 
     /**
@@ -157,7 +150,7 @@ class TeamsHandler {
      */
 
     subs() {
-        return this.all.filter(team => team.type === 'sub');
+        return this.toArray().filter(team => team.type === 'sub');
     }
 
     /**
@@ -166,7 +159,7 @@ class TeamsHandler {
      */
 
     sorted () {
-        if (this.manager.type === 'basic') return this.all.sort((a, b) => b.points.get() - a.points.get());
+        if (this.manager.type === 'basic') return this.toArray().sort((a, b) => b.points.get() - a.points.get());
 
         const parents = this.parents();
 
@@ -184,7 +177,7 @@ class TeamsHandler {
      */
 
     clearAllPoints () {
-        for (const team of this.all) {
+        for (const team of this.toArray()) {
             team.points.clear();
         }
 
@@ -193,23 +186,15 @@ class TeamsHandler {
 
     /**
      * Find a team with a function
-     * @param {String} findFunction function passed to find a team
+     * @param {function} findFunction function passed to find a team
      * @returns {Team|ParentTeam|SubTeam|null}
      */
 
     find(findFunction) {
-        return this.all.find(findFunction) || null;
+        return this.toArray().find(findFunction) || null;
     }
 
-    /**
-     * Find a team with its id
-     * @param {String} id Id of the team to find
-     * @returns {Team|ParentTeam|SubTeam|null}
-     */
 
-    get(id) {
-        return this.find(team => team.id === id) || null;
-    }
 
     /**
      * Resolve a team with a string
@@ -219,7 +204,16 @@ class TeamsHandler {
 
     resolve (resolvable) {
         resolvable = resolvable.toLowerCase();
-        return this.all.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.all.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
+        return this.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
+    }
+
+    /**
+     * Convert this TeamsHandler to an Array
+     * @return {Team[]|Array<ParentTeam|SubTeam>}
+     */
+
+    toArray () {
+        return Array.from(this.values());
     }
 }
 
