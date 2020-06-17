@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -175,9 +175,9 @@ class SubPointsHandler extends PointsHandler {
      */
 
     add(points) {
-        this.parent.points.add(points);
+        this.team.parent.points.add(points);
 
-        return this.points.setLocal(this.points.current() + points);
+        return this.setLocal(this.current() + points);
     }
 
     /**
@@ -186,9 +186,9 @@ class SubPointsHandler extends PointsHandler {
      */
 
     remove(points) {
-        this.parent.points.remove(points);
+        this.team.parent.points.remove(points);
 
-        return this.points.setLocal(this.points.current() - points);
+        return this.setLocal(this.points.current() - points);
     }
 
     /**
@@ -200,9 +200,9 @@ class SubPointsHandler extends PointsHandler {
     set(points) {
         const diff = points - this.points.current();
 
-        this.parent.points.add(diff);
+        this.team.parent.points.add(diff);
 
-        return manager.functions.setPoints(this, points);
+        return this.team.manager.functions.setPoints(this.team, points);
     }
 
     /**
@@ -215,11 +215,13 @@ class SubPointsHandler extends PointsHandler {
 
         if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
-        return manager.functions.setPoints(this, points);
+        return this.team.manager.functions.setPoints(this.team, points);
     }
 
 
-}</code></pre>
+}
+
+module.exports = SubPointsHandler;</code></pre>
         </article>
     </section>
 

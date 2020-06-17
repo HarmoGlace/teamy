@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -129,13 +129,12 @@
 const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');
-const TeamsHandler = require('../handlers/TeamsHandler');
 
 /**
  * A TeamsManager
  */
 
-class TeamsManager {
+class TeamsManager extends Map {
 
 
     /**
@@ -154,6 +153,8 @@ class TeamsManager {
                     autoInitialize = false,
                     implementMember = false
                 } = {}) {
+
+        super();
 
         type = type.toLowerCase();
 
@@ -176,13 +177,6 @@ class TeamsManager {
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
         if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
-
-        /**
-         * Teams handled by this TeamsManager
-         * @type {TeamsHandler}
-         */
-
-        this.teams = new TeamsHandler(this);
 
         /**
          * TeamsManager type, either
@@ -242,7 +236,7 @@ class TeamsManager {
         if (this.client &amp;&amp; this.client.user &amp;&amp; this.guildId) {
             const guild = this.client.guilds.cache.get(this.guildId);
             if (guild) {
-                for (const team of this.teams) {
+                for (const team of this.teams.all) {
                     if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
                 }
                 this.initialized = true;
@@ -285,6 +279,200 @@ class TeamsManager {
 
     setClient(client) {
         return this.client = client;
+    }
+
+    /**
+     * Add a Team to this TeamsManager
+     * @param {TeamResolvable} team Team to add
+     * @returns {SubTeam|ParentTeam|Team}
+     */
+
+    add (team) {
+
+        if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`You need to specify an object`)
+        if (this.get(team.id)) throw new TeamyError(`There is already a team with id ${team.id}`);
+
+        if (this.manager.type === 'basic') {
+
+            const teamCreated = new Team(this.manager, team)
+
+            this.set(teamCreated.id, teamCreated);
+
+            return teamCreated;
+
+        } else if (this.manager.type === 'advanced') {
+
+            if (!team.hasOwnProperty('type')) {
+                if (team.subs) team.type = 'parent'
+                else team.type = 'sub'
+            }
+
+            if (team.type === 'parent') {
+                if (!team.hasOwnProperty('subs')) {
+                    process.emitWarning(`You didn't provide any sub teams for the ${team.id} team`);
+                    team.subs = [];
+                }
+
+                const parentTeam = new ParentTeam(this.manager, team);
+
+                const subs = team.subs.slice();
+
+                for (const sub of subs) {
+                    if (typeof sub !== 'object' || sub instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${sub.constructor.name}`);
+
+                    if (this.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}`);
+
+                    const subTeam = new SubTeam(this.manager, sub, parentTeam);
+
+                    this.all.push(subTeam);
+                    parentTeam.subs.push(subTeam);
+                }
+
+                this.set(parentTeam.id, parentTeam);
+
+                return parentTeam;
+
+            } else if (team.type === 'sub') {
+
+                const parentRaw = team.parentId || team.parent;
+
+                if (!parent) throw new TeamyError(`No ParentTeam provided for ${team.id} SubTeam`);
+
+                const parent = parentRaw instanceof ParentTeam ? parentRaw : this.all.get(parentRaw);
+
+                if (!parent) throw new TeamyError(`Cannot find a ParentTeam for ${team.id} SubTeam`);
+
+                const subTeam = new SubTeam(this.manager, team, parent);
+
+                super.set(subTeam.id, subTeam);
+                parent.subs = parent.subs.push(subTeam);
+
+                return subTeam;
+
+            }
+
+
+        }
+
+        if (this.initialized) this.initialize();
+
+    }
+
+    /**
+     * Remove a teams from this TeamsManager
+     * @param {TeamResolvable} team Team to remove
+     * @returns {Team[]|Array&lt;ParentTeam|SubTeam>}
+     */
+
+    remove (teamRaw) {
+
+        if (!teamRaw || !(teamRaw instanceof Team) || !this.get(teamRaw.id)) throw new TeamyError(`You need to provide a valid Team to delete`);
+
+        super.delete(teamRaw.id);
+
+        return this;
+
+    }
+
+    /**
+     * Remove all teams to keep have given teams
+     * @param {Team|ParentTeam|SubTeam} teams Teams to keep
+     * @returns {Team[]|Array&lt;ParentTeam|SubTeam>}
+     */
+
+    set (teams) {
+        if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array in &lt;TeamsManager>.teams.set, instead received ${teams.constructor.name})`);
+
+        this.clear();
+
+        for (const team of teams) {
+            super.set(team.id, team);
+        }
+
+        return this.all;
+
+
+    }
+
+    /**
+     * All ParentTeam of this TeamsHandler
+     * @returns {ParentTeam[]}
+     */
+
+    parents () {
+        return this.toArray().filter(team => team.type === 'parent');
+    }
+
+    /**
+     * All SubTeam of this TeamsHandler
+     * @returns {SubTeam[]}
+     */
+
+    subs () {
+        return this.toArray().filter(team => team.type === 'sub');
+    }
+
+    /**
+     * Teams sorted by their points
+     * @returns {Team[]|ParentTeam[]}
+     */
+
+    sorted () {
+        if (this.type === 'basic') return this.toArray().sort((a, b) => b.points.get() - a.points.get());
+
+        const parents = this.parents();
+
+        for (const parent of parents) {
+            parent.subs.sort((a, b) => b.points.get() - a.points.get());
+        }
+
+        return parents.sort((a, b) => b.points.get() - a.points.get());
+    }
+
+
+    /**
+     * Clear points of all teams
+     * @return {boolean} successful Return true if successful
+     */
+
+    clearAllPoints () {
+
+        for (const team of this.toArray()) {
+            team.points.clear();
+        }
+
+        return true;
+    }
+
+    /**
+     * Find a team with a function
+     * @param {function} findFunction function passed to find a team
+     * @returns {Team|ParentTeam|SubTeam|null}
+     */
+
+    find(findFunction) {
+        return this.toArray().find(findFunction) || null;
+    }
+
+
+    /**
+     * Resolve a team with a string
+     * @param {String} resolvable
+     * @returns {Team|ParentTeam|SubTeam|null}
+     */
+
+    resolve (resolvable) {
+        resolvable = resolvable.toLowerCase();
+        return this.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
+    }
+
+    /**
+     * Convert this TeamsHandler to an Array
+     * @return {Team[]|Array&lt;ParentTeam|SubTeam>}
+     */
+
+    toArray () {
+        return Array.from(this.values());
     }
 }
 
