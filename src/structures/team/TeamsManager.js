@@ -253,6 +253,10 @@ class TeamsManager extends Map {
      * @returns {Team|SubTeam|ParentTeam|null} the team or null if none was found
      */
 
+    get (id) {
+        return super.get(id) || null;
+    }
+
     /**
      * Remove all teams to keep have given teams
      * @param {Team|ParentTeam|SubTeam} teams Teams to keep
