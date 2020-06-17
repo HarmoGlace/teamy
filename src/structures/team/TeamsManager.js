@@ -86,11 +86,11 @@ class TeamsManager extends Map {
                         super(client, data, guild);
                     }
 
-                    get team() {
+                    get team () {
                         return getMemberTeam.bind(parent)(this);
                     }
 
-                    get teams() {
+                    get teams () {
                         return getMemberTeams.bind(parent)(this);
                     }
                 }
@@ -110,7 +110,7 @@ class TeamsManager extends Map {
      * @returns {Boolean} true if successful
      */
 
-    initialize() {
+    initialize () {
         if (this.client && this.client.user && this.guildId) {
             const guild = this.client.guilds.cache.get(this.guildId);
             if (guild) {
@@ -133,7 +133,7 @@ class TeamsManager extends Map {
      * @returns {Team | SubTeam | null} The member team or null if none is found
      */
 
-    getMemberTeam(member) {
+    getMemberTeam (member) {
         const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
         return teams.find(team => member.roles.cache.has(team.roleId)) || null;
     }
@@ -144,7 +144,7 @@ class TeamsManager extends Map {
      * @returns {Team[] | SubTeam[]}
      */
 
-    getMemberTeams(member) {
+    getMemberTeams (member) {
         const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
         return teams.filter(team => member.roles.cache.has(team.roleId));
     }
@@ -155,7 +155,7 @@ class TeamsManager extends Map {
      * @returns {Client} Client provided
      */
 
-    setClient(client) {
+    setClient (client) {
         return this.client = client;
     }
 
@@ -338,7 +338,7 @@ class TeamsManager extends Map {
      * @returns {Team|ParentTeam|SubTeam|null}
      */
 
-    find(findFunction) {
+    find (findFunction) {
         return this.toArray().find(findFunction) || null;
     }
 
