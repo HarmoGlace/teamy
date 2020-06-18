@@ -51,15 +51,15 @@ const manager = new TeamsManager({
         }
 });
 
-const coolTeam = manager.teams.get('cool_team');
+const coolTeam = manager.get('cool_team');
 
 coolTeam.points.add(500);
 
 coolTeam.points.get(); // returns 500
 
-manager.teams.all // returns all teams
+manager.toArray() // returns an array of all teams
 
-manager.teams.resolve('a pretty cool team') // returns 'a pretty cool team' Team
+manager.resolve('a pretty cool team') // returns 'a pretty cool team' Team
 ```
 
 For an advanced system with parent teams and sub teams and team detection with a role (using discord.js) :
@@ -100,7 +100,7 @@ const manager = new TeamsManager({
     guildId: '123456789' // guildId where these teams belong to. It will be used to get roles
 });
 
-const sub1 = manager.teams.get('sub1');
+const sub1 = manager.get('sub1');
 
 sub1.points.add(153);
 
@@ -121,73 +121,12 @@ client.login('secretToken');
 
 ## API Reference
 
-**This api reference will be moved to the documentation at [teamy.harmoglace.fr](https://teamy.harmoglace.fr) soon**
+**The api reference is available at [teamy.harmoglace.fr](https://teamy.harmoglace.fr)**
 
-### TeamsManager
 
-#### TeamResolvable
-Type: ```Object```\
-A TeamResolvable is an ```Object``` that can be resolved to a ```Team```, ```SubTeam``` or ```ParentTeam``` (or them), depending of your manager type.
-
-```js
-const teamResolvable = {
-        id: 'id', // Needed id of the team, will be used internally
-        name: 'name', // Optional, common name, it is the id by default
-        aliases: ['anotherName'], // Optional Array of string with all aliases of this team
-        color: 0x0000, // Optional Hex color of this team
-        roleId: '123456789', // Optional Role ID of this team
-        type: 'parent', // or 'sub'. Optional, only if you add it manually with an advanced manager
-        subs: [ // Needed only if the manager type is advanced
-                { // Team resolvable like above but without subs and type properties.
-                    id: 'id', // Needed id of the team, will be used internally
-                    name: 'name', // Optional, common name, it is the id by default
-                    aliases: ['anotherName'], // Optional Array of string with all aliases of this team
-                    color: 0x0000, // Optional Hex color of this team
-                    roleId: '123456789', // Optional Role ID of this team
-                }
-            ]
-    }
-```
-
-#### Options
-
-##### teams [optional]
-Type: ```Array``` of [TeamResolvable](#teamresolvable)\
-Teams added when creating the ```TeamsManager```\
-Even after creating the ```TeamsManager``` you  can add new teams with [manager.teams.add](#teamsadd)
-
-#### functions
-Type: ```Object```\
-Functions to save points in your database
-
-Functions: 
-###### setPoints
-Parameters: [Team](#team), ```points``` (number)
-###### getPoints
-Parameters: [Team](#team)
-
-Example:
-```js
-const functions = {
-    setPoints: (team, points) => database.set(team.id, points),
-    getPoints: (team) => database.get(team.id)
-}
-```
-
-#### type [optional]
-Type: ```String```\
-Type of TeamsManager. Is either 'basic' or 'advanced'.
-
-Types:
-###### basic (default)
-Basic teams system where all teams have the same status
-
-###### advanced
-Advanced teams system where there are ParentTeams and SubTeams
-
-##### implementMember [optional]
+##### How to have a team property on GuildMembers with implementMember [optional]
 Type: ```Boolean```\
-If set to true, it will enable [team](#getmemberteam) and [teams](#getmemberteams) properties on each GuildMember.\
+Options passed to the TeamsManager, if set to true, it will enable [team](#getmemberteam) and [teams](#getmemberteams) properties on each GuildMember.\
 For that you need to instantiate your client after creating the [TeamsManager](#teamsmanager)\
 Example (using a basic manager and with enmap as DB provider):
 ````js
@@ -225,140 +164,6 @@ client.on('message', message => {
     message.member.teams; // Returns an array with all member teams or an empty array if none is found.
 })
 ````
-
-##### client [optional]
-Type: Instance of discord.js ```Client```\
-Used to find the team of a GuildMember. Needs the ```guildId``` parameter to work.
-
-##### guildId [optional]
-Type: ```String``` (Guild ID)\
-ID of the guild where roles of the TeamsManager will be searched. Needs the ```client``` parameter to work.
-
-##### autoInitialize [optional]
-Type: ```Boolean```\
-Default: ```false```\
-If set to true it will automatically set up role property on each team. Do this only if your bot is already launched when you are creating the ```TeamsManager```
-
-#### Properties
-
-#### initialized
-Type: ```Boolean```\
-Returns ```true``` if the manager has been initialized with the [initialize](#initialize) method
-
-#### Methods
-
-##### teams.all
-Returns all teams
-
-##### teams.parents
-Return all parent teams (if the type of the TeamsManager is ```advanced```)
-
-##### teams.subs
-Return all subs teams (if the type of the TeamsManager is ```advanced```)
-
-##### teams.find
-Finds a team with a function with each team as parameter. See [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) \
-Example: 
-```js
-manager.teams.find(team => team.name === 'Cool team'); // Returns cool team
-```
-
-##### teams.get
-Finds a team with an ID. See [above](#teamsfind) for more informations
-
-##### teams.resolve
-Resolves a team with a string
-```js
-manager.teams.resolve('cool team') // Returns cool team
-```
-
-##### teams.add
-Parameter: [TeamResolvable](#teamresolvable)\
-Returns: [Team](#team) created
-Adds a team to the [TeamsManager](#teamsmanager)
-
-##### teams.remove
-Parameter: [TeamResolvable](#teamresolvable)\
-Returns: All teams
-Removes a team from the [TeamsManager](#teamsmanager)
-
-##### teams.set
-Parameter: ```Array``` of [TeamResolvable](#teamresolvable)\
-Removes every team to add these teams. Use this carefully.
-
-##### initialize
-Returns: ```Boolean``` (true if successful)\
-Creates ```role``` property for each team. Needs the ```client``` and ```guildId``` options when creating this manager. Not needed to use the ```getMemberTeam``` method.
-Do it once your bot is launched.\
-Note that if your initialize the [TeamsManager](#teamsmanager) once your bot is launched you can use the [autoInitialize](#autoinitialize-optional) option when creating the [TeamsManager](#teamsmanager).
-
-##### getMemberTeam
-Type: ![Team](#team)
-Returns the team of a discord.js ```GuildMember```. Needs the ````client```` and ```guildId``` options, but doesn't need to use the above method before.
-
-##### getMemberTeams
-Type: ```Array``` of [Team][#team]\
-Same as above but returns all member teams. If none is found it will return an empty array
-
-##### setClient
-Parameters: New ```Client``` (from discord.js)\
-Returns: New ```Client``` (from discord.js)\
-Sets the client of the [TeamsManager](#teamsmanager). Needed if you want to use the [implementMember](#implementmember-optional) property
-
-### Team
-
-#### Properties
-
-##### id
-Type: ```String```\
-Returns the team id
-
-##### name
-Type: ```!String```
-
-Returns the team name if set
-
-##### aliases
-Type: ```Array``` of ```String```\
-Default: ```[]```\
-Returns team name aliases
-
-##### color
-Type: ```Number```\
-Default: ```0x000000```\
-Returns the team color
-
-##### roleId
-Type: ```!String```\
-Returns the role ID of the team if set
-
-##### role
-Type: ```Role``` (from discord.js)\
-Returns the role of the team if ```roleId``` of this team is set and if ```client``` and ```guildId``` parameters are supplied to the ```TeamsManager```and if it is initialized 
-
-#### Methods
-
-##### points.get
-Return the current points of the [Team](#team)\
-Example: 
-```js
-team.points.get(); // returns the current points of the team
-```
-
-##### points.set
-Parameters: points to set(```Number```)\
-Sets the points of the team
-
-##### points.add
-Parameters: points to add (```Number```)\
-Add points to a team
-
-##### points.remove
-Parameters: points to remove (```Number```)\
-Remove points to a team
-
-##### points.parent
-Returns the points of the parent team, if the type of the manager is set to ```advanced```
 
 ## How to contribute
 
