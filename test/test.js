@@ -39,11 +39,8 @@ const client = new Client();
 manager.setClient(client);
 
 const sub1 = manager.get('sub1');
-console.log(manager, sub1);
 
 sub1.points.add(153);
-
-sub1.points.get() // return 153
 
 sub1.parent // returns parent Team
 
@@ -52,7 +49,6 @@ client.once('ready', () => {
 })
 
 client.on('message', message => {
-    console.log('a')
     console.log(message.member.teams, message.member.team) // returns the member team or null if none is found
 })
 

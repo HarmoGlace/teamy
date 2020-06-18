@@ -12,7 +12,9 @@ class SubPointsHandler extends PointsHandler {
      */
 
     constructor(team) {
+
         super(team);
+
     }
 
     /**
@@ -30,7 +32,7 @@ class SubPointsHandler extends PointsHandler {
      */
 
     current() {
-        return this.team.manager.functions.getPoints(this) || 0
+        return this.team.manager.functions.getPoints(this.team) || 0
     }
 
     /**

@@ -24,7 +24,7 @@ class PointsHandler {
      */
 
     get () {
-        return this.team.manager.functions.getPoints(this) || 0;
+        return this.team.manager.functions.getPoints(this.team) || 0;
     }
 
     /**
