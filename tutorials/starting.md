@@ -58,11 +58,11 @@ You have now a basic teamy configuration.
 
 ### How can I get a team ?
 
-If you want to find a team, it is easy. You can use the `find` function on the {@link TeamsHandler} of the {@link TeamsManager}. It is like the find function on an array [(see mdn)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) :
+If you want to find a team, it is easy. You can use the `find` function on the {@link TeamsManager}. It is like the find function on an array [(see mdn)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) :
 
 
 ```js
-const team = manager.teams.find(team => team.id === 'first team'); // returns 'first team' Team or null if none is found
+const team = manager.find(team => team.id === 'first team'); // returns 'first team' Team or null if none is found
 ```
 
 It will return a {@link Team} or null if none is found.
