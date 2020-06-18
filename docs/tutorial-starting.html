@@ -171,8 +171,8 @@ const manager = new TeamsManager({
 </code></pre>
 <p>You have now a basic teamy configuration.</p>
 <h3>How can I get a team ?</h3>
-<p>If you want to find a team, it is easy. You can use the <code>find</code> function on the TeamsHandler of the <a href="TeamsManager.html">TeamsManager</a>. It is like the find function on an array <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">(see mdn)</a> :</p>
-<pre class="prettyprint source lang-js"><code>const team = manager.teams.find(team => team.id === 'first team'); // returns 'first team' Team or null if none is found
+<p>If you want to find a team, it is easy. You can use the <code>find</code> function on the <a href="TeamsManager.html">TeamsManager</a>. It is like the find function on an array <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">(see mdn)</a> :</p>
+<pre class="prettyprint source lang-js"><code>const team = manager.find(team => team.id === 'first team'); // returns 'first team' Team or null if none is found
 </code></pre>
 <p>It will return a <a href="Team.html">Team</a> or null if none is found.</p>
 <p>If it returns a <a href="Team.html">Team</a>, you can manage the team points easily like that :</p>
