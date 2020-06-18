@@ -114,7 +114,7 @@ class TeamsManager extends Map {
         if (this.client && this.client.user && this.guildId) {
             const guild = this.client.guilds.cache.get(this.guildId);
             if (guild) {
-                for (const team of this.teams.all) {
+                for (const team of this) {
                     if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
                 }
                 this.initialized = true;
@@ -134,7 +134,7 @@ class TeamsManager extends Map {
      */
 
     getMemberTeam (member) {
-        const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
+        const teams = this.type === 'basic' ? this.teams : this.teams.subs();
         return teams.find(team => member.roles.cache.has(team.roleId)) || null;
     }
 
@@ -145,7 +145,7 @@ class TeamsManager extends Map {
      */
 
     getMemberTeams (member) {
-        const teams = this.type === 'basic' ? this.teams.all : this.teams.subs();
+        const teams = this.type === 'basic' ? this.teams : this.teams.subs();
         return teams.filter(team => member.roles.cache.has(team.roleId));
     }
 
@@ -283,7 +283,7 @@ class TeamsManager extends Map {
     }
 
     /**
-     * All ParentTeam of this TeamsHandler
+     * All ParentTeam of this TeamsmANAGER
      * @returns {ParentTeam[]}
      */
 
@@ -292,7 +292,7 @@ class TeamsManager extends Map {
     }
 
     /**
-     * All SubTeam of this TeamsHandler
+     * All SubTeam of this TeamsManager
      * @returns {SubTeam[]}
      */
 
@@ -355,7 +355,7 @@ class TeamsManager extends Map {
     }
 
     /**
-     * Convert this TeamsHandler to an Array
+     * Convert this TeamsManager to an Array
      * @return {Team[]|Array<ParentTeam|SubTeam>}
      */
 
