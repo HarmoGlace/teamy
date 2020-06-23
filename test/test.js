@@ -1,4 +1,4 @@
-const { TeamsManager } = require('../src/index');
+const { TeamsManager, TeamsHandler } = require('../src/index');
 const { Client } = require('discord.js');
 const Enmap = require('enmap');
 const pointsDB = new Enmap({name: 'points'});
@@ -59,6 +59,10 @@ const test = {
     setPoints: (team, points) => pointsDB.set(team.id, points),
     getPoints: (team) => pointsDB.get(team.id)
 }
+
+console.log(new TeamsHandler().set('test', '1'));
+
+console.log(manager.subs, );
 
 
 

@@ -2,12 +2,13 @@ const TeamyError = require('../TeamyError');
 const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');
+const TeamsHandler = require('./TeamsHandler');
 
 /**
  * A TeamsManager
  */
 
-class TeamsManager extends Map {
+class TeamsManager extends TeamsHandler {
 
 
     /**
@@ -252,15 +253,7 @@ class TeamsManager extends Map {
 
     }
 
-    /**
-     * Gets a Team with its id
-     * @param {String} id Team Id
-     * @returns {Team|SubTeam|ParentTeam|null} the team or null if none was found
-     */
 
-    get (id) {
-        return super.get(id) || null;
-    }
 
     /**
      * Remove all teams to keep have given teams
@@ -269,7 +262,7 @@ class TeamsManager extends Map {
      */
 
     set (teams) {
-        if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array in <TeamsManager>.teams.set, instead received ${teams.constructor.name})`);
+        if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array, instead received ${teams.constructor.name})`);
 
         super.clear();
 
@@ -279,16 +272,15 @@ class TeamsManager extends Map {
 
         return this;
 
-
     }
 
     /**
-     * All ParentTeam of this TeamsmANAGER
+     * All ParentTeam of this TeamsManager
      * @returns {ParentTeam[]}
      */
 
-    parents () {
-        return this.toArray().filter(team => team.type === 'parent');
+    get parents () {
+        return new TeamsHandler(this.toArray().filter(team => team.type === 'parent').map(team => [team.id, team]));
     }
 
     /**
@@ -296,8 +288,8 @@ class TeamsManager extends Map {
      * @returns {SubTeam[]}
      */
 
-    subs () {
-        return this.toArray().filter(team => team.type === 'sub');
+    get subs () {
+        return new TeamsHandler(this.toArray().filter(team => team.type === 'sub').map(team => [team.id, team]));
     }
 
     /**
@@ -308,7 +300,7 @@ class TeamsManager extends Map {
     sorted () {
         if (this.type === 'basic') return this.toArray().sort((a, b) => b.points.get() - a.points.get());
 
-        const parents = this.parents();
+        const parents = this.parents;
 
         for (const parent of parents) {
             parent.subs.sort((a, b) => b.points.get() - a.points.get());
@@ -318,50 +310,7 @@ class TeamsManager extends Map {
     }
 
 
-    /**
-     * Clear points of all teams
-     * @return {boolean} successful Return true if successful
-     */
 
-    clearAllPoints () {
-
-        for (const team of this.toArray()) {
-            team.points.clear();
-        }
-
-        return true;
-    }
-
-    /**
-     * Find a team with a function
-     * @param {function} findFunction function passed to find a team
-     * @returns {Team|ParentTeam|SubTeam|null}
-     */
-
-    find (findFunction) {
-        return this.toArray().find(findFunction) || null;
-    }
-
-
-    /**
-     * Resolve a team with a string
-     * @param {String} resolvable
-     * @returns {Team|ParentTeam|SubTeam|null}
-     */
-
-    resolve (resolvable) {
-        resolvable = resolvable.toLowerCase();
-        return this.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
-    }
-
-    /**
-     * Convert this TeamsManager to an Array
-     * @return {Team[]|Array<ParentTeam|SubTeam>}
-     */
-
-    toArray () {
-        return Array.from(this.values());
-    }
 }
 
 module.exports = TeamsManager;
