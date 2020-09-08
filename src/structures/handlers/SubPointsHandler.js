@@ -54,7 +54,7 @@ class SubPointsHandler extends PointsHandler {
     async add (points) {
         await this.team.parent.points.add(points);
 
-        await this.setLocal(this.current() + points);
+        await this.setLocal(await this.current() + points);
 
         return this.current();
     }

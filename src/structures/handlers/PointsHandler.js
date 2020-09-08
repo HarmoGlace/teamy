@@ -2,6 +2,8 @@
  * Points Handler
  */
 
+const TeamyError = require("../TeamyError");
+
 class PointsHandler {
 
     /**
@@ -34,7 +36,7 @@ class PointsHandler {
      */
 
     async add (points) {
-        await this.set(this.get() + points);
+        await this.set(await this.get() + points);
 
         return this.get();
     }

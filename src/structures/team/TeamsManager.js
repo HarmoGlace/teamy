@@ -273,7 +273,7 @@ class TeamsManager extends TeamsHandler {
 
     /**
      * All ParentTeam of this TeamsManager
-     * @returns {ParentTeam[]}
+     * @returns {TeamsHandler}
      */
 
     get parents () {
@@ -282,7 +282,7 @@ class TeamsManager extends TeamsHandler {
 
     /**
      * All SubTeam of this TeamsManager
-     * @returns {SubTeam[]}
+     * @returns {TeamsHandler}
      */
 
     get subs () {
@@ -295,15 +295,15 @@ class TeamsManager extends TeamsHandler {
      */
 
     sorted () {
-        if (this.type === 'basic') return this.toArray().sort((a, b) => b.points.get() - a.points.get());
+        if (this.type === 'basic') return this.toArray().sort((a, b) => b.points.get().then(p => p) - a.points.get().then(points => points));
 
         const parents = this.parents;
 
         for (const parent of parents) {
-            parent.subs.sort((a, b) => b.points.get() - a.points.get());
+            parent.subs.sort((a, b) => b.points.get().then(p => p) - a.points.get().then(p => p));
         }
 
-        return parents.sort((a, b) => b.points.get() - a.points.get());
+        return parents.sort((a, b) => b.points.get().then(p => p) - a.points.get().then(p => p));
     }
 
 
