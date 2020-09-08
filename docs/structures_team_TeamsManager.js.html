@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#TeamyError">TeamyError</a></li></ul></div>
                 
             </nav>
         </div>
@@ -400,7 +400,7 @@ class TeamsManager extends TeamsHandler {
 
     /**
      * All ParentTeam of this TeamsManager
-     * @returns {ParentTeam[]}
+     * @returns {TeamsHandler}
      */
 
     get parents () {
@@ -409,7 +409,7 @@ class TeamsManager extends TeamsHandler {
 
     /**
      * All SubTeam of this TeamsManager
-     * @returns {SubTeam[]}
+     * @returns {TeamsHandler}
      */
 
     get subs () {
@@ -422,15 +422,15 @@ class TeamsManager extends TeamsHandler {
      */
 
     sorted () {
-        if (this.type === 'basic') return this.toArray().sort((a, b) => b.points.get() - a.points.get());
+        if (this.type === 'basic') return this.toArray().sort((a, b) => b.points.get().then(p => p) - a.points.get().then(points => points));
 
         const parents = this.parents;
 
         for (const parent of parents) {
-            parent.subs.sort((a, b) => b.points.get() - a.points.get());
+            parent.subs.sort((a, b) => b.points.get().then(p => p) - a.points.get().then(p => p));
         }
 
-        return parents.sort((a, b) => b.points.get() - a.points.get());
+        return parents.sort((a, b) => b.points.get().then(p => p) - a.points.get().then(p => p));
     }
 
 
