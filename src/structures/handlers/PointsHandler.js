@@ -18,6 +18,14 @@ class PointsHandler {
          */
 
         this.team = team;
+
+
+        /**
+         * Latest points recorded
+         * @type {Number}
+         */
+
+        this.latest = null;
     }
 
     /**
@@ -26,7 +34,11 @@ class PointsHandler {
      */
 
     async get () {
-        return await this.team.manager.functions.getPoints(this.team) || 0;
+        const found = (await this.team.manager.functions.getPoints(this.team)) || 0;
+
+        this.latest = found;
+
+        return found;
     }
 
     /**
@@ -65,6 +77,17 @@ class PointsHandler {
         await this.team.manager.functions.setPoints(this.team, points);
 
         return this.get();
+    }
+
+    /**
+     *
+     * @param {Boolean} [returnTeam=false] Whatever or not to return the current team instead of these points
+     * @return {Promise<PointsHandler>}
+     */
+
+    async checkPoints (returnTeam = false) {
+        await this.get();
+        return returnTeam ? this.team : this;
     }
 
     /**

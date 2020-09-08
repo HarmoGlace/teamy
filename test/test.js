@@ -38,9 +38,16 @@ const client = new Client();
 
 manager.setClient(client);
 
-const sub1 = manager.get('sub1');
+const sub1 = manager.get('sub2');
+// console.log(sub1.name)
 
-sub1.points.add(153);
+sub1.points.add(1534475574);
+
+// console.log((await manager.sorted()))
+
+const sorted = manager.sorted(true).then(console.log);
+
+// console.log(sorted)
 
 sub1.parent // returns parent Team
 
@@ -60,9 +67,9 @@ const test = {
     getPoints: (team) => pointsDB.get(team.id)
 }
 
-console.log(new TeamsHandler().set('test', '1'));
-
-console.log(manager.subs,);
+// console.log(new TeamsHandler().set('test', '1'));
+//
+// console.log(manager.subs,);
 
 
 

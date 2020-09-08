@@ -33,7 +33,7 @@ class SubPointsHandler extends PointsHandler {
      */
 
     async current () {
-        return await this.team.manager.functions.getPoints(this.team) || 0
+        return super.get();
     }
 
     /**
