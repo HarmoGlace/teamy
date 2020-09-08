@@ -17,9 +17,9 @@
  */
 
 exports.TeamsManagerType = [
-        'basic',
-        'advanced'
-    ]
+    'basic',
+    'advanced'
+]
 
 /**
  * A TeamResolvable can be :

@@ -65,7 +65,7 @@ class TeamsHandler extends Map {
     }
 
     set (...args) {
-       return super.set(...args);
+        return super.set(...args);
     }
 
     /**
@@ -74,7 +74,7 @@ class TeamsHandler extends Map {
      */
 
     toArray () {
-        return Array.from(super.values());
+        return [...super.values()];
     }
 
 }

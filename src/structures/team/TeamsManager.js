@@ -15,18 +15,18 @@ class TeamsManager extends TeamsHandler {
      * @param {TeamsManagerData} data TeamsManager data
      */
 
-    constructor({
-                    teams = [],
-                    type = 'basic',
-                    functions: {
-                        setPoints,
-                        getPoints
-                    } = {},
-                    client = null,
-                    guildId = null,
-                    autoInitialize = false,
-                    implementMember = false
-                } = {}) {
+    constructor ({
+                     teams = [],
+                     type = 'basic',
+                     functions: {
+                         setPoints,
+                         getPoints
+                     } = {},
+                     client = null,
+                     guildId = null,
+                     autoInitialize = false,
+                     implementMember = false
+                 } = {}) {
 
         super();
 
@@ -69,7 +69,7 @@ class TeamsManager extends TeamsHandler {
 
         this.functions = { setPoints, getPoints };
 
-        if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
+        if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
         if (teams) this.set(teams);
 
@@ -78,12 +78,12 @@ class TeamsManager extends TeamsHandler {
         if (this.implementMember) {
             const { Structures } = require('discord.js');
             const parent = this;
-            const {getMemberTeam, getMemberTeams} = this;
+            const { getMemberTeam, getMemberTeams } = this;
 
 
             Structures.extend('GuildMember', GuildMember => {
                 class TeamyGuildMember extends GuildMember {
-                    constructor(client, data, guild) {
+                    constructor (client, data, guild) {
                         super(client, data, guild);
                     }
 
@@ -101,9 +101,7 @@ class TeamsManager extends TeamsHandler {
         }
 
 
-
     }
-
 
 
     /**
@@ -254,7 +252,6 @@ class TeamsManager extends TeamsHandler {
     }
 
 
-
     /**
      * Remove all teams to keep have given teams
      * @param {Team|ParentTeam|SubTeam} teams Teams to keep
@@ -280,7 +277,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     get parents () {
-        return new TeamsHandler(this.toArray().filter(team => team.type === 'parent').map(team => [team.id, team]));
+        return new TeamsHandler(this.toArray().filter(team => team.type === 'parent').map(team => [ team.id, team ]));
     }
 
     /**
@@ -289,7 +286,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     get subs () {
-        return new TeamsHandler(this.toArray().filter(team => team.type === 'sub').map(team => [team.id, team]));
+        return new TeamsHandler(this.toArray().filter(team => team.type === 'sub').map(team => [ team.id, team ]));
     }
 
     /**
@@ -308,7 +305,6 @@ class TeamsManager extends TeamsHandler {
 
         return parents.sort((a, b) => b.points.get() - a.points.get());
     }
-
 
 
 }

@@ -13,7 +13,7 @@ class ParentTeam extends Team {
      * @param {TeamData} data The data for this team
      */
 
-    constructor(manager, data) {
+    constructor (manager, data) {
         super(manager, data);
 
         /**

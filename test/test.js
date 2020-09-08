@@ -1,31 +1,31 @@
 const { TeamsManager, TeamsHandler } = require('../src/index');
 const { Client } = require('discord.js');
 const Enmap = require('enmap');
-const pointsDB = new Enmap({name: 'points'});
+const pointsDB = new Enmap({ name: 'points' });
 const config = require('./config');
 
 const manager = new TeamsManager({
     type: 'advanced',
     teams: [
-            {
-                id: 'parent1',
-                subs: [
-                    {
-                        id: 'sub1',
-                        roleId: '577899952244523028' // optional, used to detect member role if a client and a guildId are given
-                    }
-                ]
-            },
-            {
-                id: 'parent2',
-                subs: [
-                    {
-                        id: 'sub2',
-                        roleId: '23456789'
-                    }
-                ]
-            }
-        ],
+        {
+            id: 'parent1',
+            subs: [
+                {
+                    id: 'sub1',
+                    roleId: '577899952244523028' // optional, used to detect member role if a client and a guildId are given
+                }
+            ]
+        },
+        {
+            id: 'parent2',
+            subs: [
+                {
+                    id: 'sub2',
+                    roleId: '23456789'
+                }
+            ]
+        }
+    ],
     functions: { // Needed. Used to save points, you can use the database that you want, here it is enmap
         setPoints: (team, points) => pointsDB.set(team.id, points),
         getPoints: (team) => pointsDB.get(team.id)
@@ -62,7 +62,7 @@ const test = {
 
 console.log(new TeamsHandler().set('test', '1'));
 
-console.log(manager.subs, );
+console.log(manager.subs,);
 
 
 

@@ -8,7 +8,7 @@ class PointsHandler {
      * @param {Team} team Team this Handler belong to
      */
 
-    constructor(team) {
+    constructor (team) {
 
         /**
          * Team this PointsHandler belong to
@@ -23,8 +23,8 @@ class PointsHandler {
      * @returns {number}
      */
 
-    get () {
-        return this.team.manager.functions.getPoints(this.team) || 0;
+    async get () {
+        return await this.team.manager.functions.getPoints(this.team) || 0;
     }
 
     /**
@@ -33,8 +33,8 @@ class PointsHandler {
      * @returns {Number} New team points
      */
 
-    add (points) {
-        this.set(this.get() + points);
+    async add (points) {
+        await this.set(this.get() + points);
 
         return this.get();
     }
@@ -45,8 +45,8 @@ class PointsHandler {
      * @returns {Number} New team points
      */
 
-    remove (points) {
-        this.set(this.get() - points);
+    async remove (points) {
+        await this.set(await this.get() - points);
 
         return this.get();
     }
@@ -57,21 +57,21 @@ class PointsHandler {
      * @returns {Number} New team points
      */
 
-    set (points) {
+    async set (points) {
         if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
-        this.team.manager.functions.setPoints(this.team, points);
+        await this.team.manager.functions.setPoints(this.team, points);
 
         return this.get();
     }
 
     /**
-      *  Clear (reset) the points of this team. Use this carefully
-      * @returns {Number} New team points (should be 0)
+     *  Clear (reset) the points of this team. Use this carefully
+     * @returns {Number} New team points (should be 0)
      */
 
-    clear () {
-        this.set(0);
+    async clear () {
+        await this.set(0);
 
         return this.get();
     }

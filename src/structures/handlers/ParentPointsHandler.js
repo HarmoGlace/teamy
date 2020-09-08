@@ -11,7 +11,7 @@ class ParentPointsHandler extends PointsHandler {
      * @param {ParentTeam} team ParentTeam this points belong to
      */
 
-    constructor(team) {
+    constructor (team) {
         super(team);
     }
 
@@ -21,9 +21,7 @@ class ParentPointsHandler extends PointsHandler {
      */
 
     clear () {
-        this.set(0);
-
-        return this.get();
+        return super.clear();
     }
 
 }

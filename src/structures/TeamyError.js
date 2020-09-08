@@ -1,5 +1,5 @@
 class TeamyError extends Error {
-    constructor(message) {
+    constructor (message) {
         super(message);
         this.name = 'TeamyError';
         Error.captureStackTrace(this, TeamyError);

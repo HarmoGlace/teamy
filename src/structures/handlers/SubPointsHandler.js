@@ -1,4 +1,5 @@
 const PointsHandler = require('./PointsHandler');
+const TeamyError = require("../TeamyError");
 
 /**
  * Points Handler for Sub Teams
@@ -11,7 +12,7 @@ class SubPointsHandler extends PointsHandler {
      * @param {SubTeam} team SubTeam this Handler belong to
      */
 
-    constructor(team) {
+    constructor (team) {
 
         super(team);
 
@@ -22,8 +23,8 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Number}
      */
 
-    parent() {
-        return this.team.parent.points.get() || 0
+    async parent () {
+        return this.team.parent.points.get()
     }
 
     /**
@@ -31,8 +32,8 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Number}
      */
 
-    current() {
-        return this.team.manager.functions.getPoints(this.team) || 0
+    async current () {
+        return await this.team.manager.functions.getPoints(this.team) || 0
     }
 
     /**
@@ -40,44 +41,52 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Number}
      */
 
-    get() {
+    async get () {
         return this.current();
     }
 
     /**
      * Add points to this team
      * @param {Number} points Points to add
+     * @returns {Number} newPoints New points of the team
      */
 
-    add(points) {
-        this.team.parent.points.add(points);
+    async add (points) {
+        await this.team.parent.points.add(points);
 
-        return this.setLocal(this.current() + points);
+        await this.setLocal(this.current() + points);
+
+        return this.current();
     }
 
     /**
      * Remove points to this team
      * @param {Number} points Points to remove
+     * @returns {Number} points New points of the team
      */
 
-    remove(points) {
+    async remove (points) {
         this.team.parent.points.remove(points);
 
-        return this.setLocal(this.points.current() - points);
+        await this.setLocal(this.points.current() - points);
+
+        return this.current();
     }
 
     /**
      * Set points of this team
      * @param {Number} points Points to set
-     * @returns {*}
+     * @returns {Number} newPoints New Points of the team
      */
 
-    set(points) {
-        const diff = points - this.points.current();
+    async set (points) {
+        const diff = points - await this.points.current();
 
-        this.team.parent.points.add(diff);
+        await this.team.parent.points.add(diff);
 
-        return this.team.manager.functions.setPoints(this.team, points);
+        this.team.manager.functions.setPoints(this.team, points);
+
+        await this.get();
     }
 
     /**
@@ -86,7 +95,7 @@ class SubPointsHandler extends PointsHandler {
      * @returns {*}
      */
 
-    setLocal(points) {
+    async setLocal (points) {
 
         if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 

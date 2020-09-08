@@ -13,7 +13,7 @@ class Team {
      * @param {TeamData} data The data of this team
      */
 
-    constructor(manager, {
+    constructor (manager, {
         id,
         name = id,
         aliases = [],

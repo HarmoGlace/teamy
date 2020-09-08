@@ -1,4 +1,4 @@
-import { TeamsManager } from 'teamy';
+import {TeamsManager} from 'teamy';
 
 const manager: TeamsManager = new TeamsManager({
     functions: {

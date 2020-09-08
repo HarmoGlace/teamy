@@ -12,13 +12,17 @@ declare module 'teamy' {
 
     export class TeamsManager {
         constructor(options: TeamsManagerOptions);
+
         type: TeamsManagerType;
         teams: TeamsManager;
         initialized: boolean;
         implementMember: boolean;
-        initialize () : boolean;
-        getMemberTeam (member: any) : AnyTeam | null;
-        getMemberTeams (member: any) : AnyTeam[];
+
+        initialize(): boolean;
+
+        getMemberTeam(member: any): AnyTeam | null;
+
+        getMemberTeams(member: any): AnyTeam[];
     }
 
     interface TeamsManagerOptions {
@@ -32,25 +36,35 @@ declare module 'teamy' {
     }
 
     interface TeamsManagerFunctions {
-        setPoints: { (team: Team, points: number) : void };
-        getPoints: { (team: Team) : number };
+        setPoints: { (team: Team, points: number): void };
+        getPoints: { (team: Team): number };
     }
 
     interface TeamsHandler {
         all: Team[] | (ParentTeam | SubTeam)[];
-        add (team: AnyTeam) : AnyTeam;
-        remove (team: AnyTeam) : TeamsHandler['all'];
-        set (teams: TeamsHandler['all']) : TeamsHandler['all'];
-        parents () : ParentTeam[];
-        subs () : SubTeam[];
-        sorted () : TeamsHandler['all'];
-        find (findFunction: string) : AnyTeam | null
-        get (id: string) : TeamsHandler['find'];
-        resolve (resolvable: string) : TeamsHandler['find'];
+
+        add(team: AnyTeam): AnyTeam;
+
+        remove(team: AnyTeam): TeamsHandler['all'];
+
+        set(teams: TeamsHandler['all']): TeamsHandler['all'];
+
+        parents(): ParentTeam[];
+
+        subs(): SubTeam[];
+
+        sorted(): TeamsHandler['all'];
+
+        find(findFunction: string): AnyTeam | null
+
+        get(id: string): TeamsHandler['find'];
+
+        resolve(resolvable: string): TeamsHandler['find'];
     }
-    
+
     export class Team {
         constructor(manager: TeamsManager, data: TeamData);
+
         id: string;
         name: string;
         aliases: string[];
@@ -71,21 +85,24 @@ declare module 'teamy' {
     }
 
     interface TeamsPointsHandler {
-        get () : number;
-        add (points: number) : void;
-        remove (points: number) : void;
-        set (points: number) : void;
+        get(): number;
+
+        add(points: number): void;
+
+        remove(points: number): void;
+
+        set(points: number): void;
     }
 
     interface SubTeamsPointsHandler extends TeamsPointsHandler {
-        parent () : number;
-        current () : number;
-        setLocal (points: number) : void;
+        parent(): number;
+
+        current(): number;
+
+        setLocal(points: number): void;
     }
 
     type AnyTeam = Team | ParentTeam | SubTeam;
-
-
 
 
     type ParentTeamResolvable = ParentTeamData | ParentTeam;
@@ -103,7 +120,6 @@ declare module 'teamy' {
         color?: number;
         roleId?: string;
     }
-
 
 
     interface ParentTeamData extends TeamData {
