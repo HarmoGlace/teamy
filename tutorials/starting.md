@@ -10,7 +10,7 @@ A {@link TeamsManager} is a class that will manage for you all your teams. You c
 Now you will have to create a new instance of this class, here we will name it manager.
 There is only one thing needed : The points functions. To save points and get it you will need to provide functions that will do it with your database. Teamy doesn't provide this by default. In this example we will use enmap, an easy-to-use database provider
 
-So the needed parameter is named `functions` (see {@link TeamsManagerFunctions}). It is an object that have 2 functions:
+So the needed parameter is named `functions` (see {@link TeamsManagerFunctions}). It is an object that have 2 functions. These can be async or return a promise:
 - setPoints function with 2 parameters : `team` and `points` to set. The team parameter can be a {@link Team} or a {@link ParentTeam}/{@link SubTeam}, depending of your TeamsManager type. We will see this after
 - getPoints function with 1 parameter: `team`. It can be a {@link Team} or a {@link ParentTeam}/{@link SubTeam}, depending of your TeamsManager type too.
 
@@ -62,7 +62,7 @@ If you want to find a team, it is easy. You can use the `find` function on the {
 
 
 ```js
-const team = manager.find(team => team.id === 'first team'); // returns 'first team' Team or null if none is found
+const team = manager.get('first team'); // returns 'first team' Team or null if none is found
 ```
 
 It will return a {@link Team} or null if none is found.
@@ -76,6 +76,8 @@ team.points.remove(3) // remove 3 points
 
 team.points.set(15) // Set the team points to 15
 ```
+
+Note that these methods returns a promise of the new points of the Team.
 
 Now you know how to use teamy !
 If you want an advanced configuration with Parent Teams and Sub Teams, look at [the advanced configuration tutorial](./tutorial-starting.html) (coming soon)
