@@ -306,7 +306,6 @@ class TeamsManager extends TeamsHandler {
 
         const sortTeams = async (teams) => {
             const elements = await Promise.all(teams.map(async team => await team.points.checkPoints(true)));
-            // console.log(elements)
 
             return elements.sort((a, b) => b.points.latest - a.points.latest);
         }

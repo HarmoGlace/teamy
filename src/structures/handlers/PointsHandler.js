@@ -48,9 +48,7 @@ class PointsHandler {
      */
 
     async add (points) {
-        await this.set(await this.get() + points);
-
-        return this.get();
+        return this.set(await this.get() + points);
     }
 
     /**
@@ -60,9 +58,7 @@ class PointsHandler {
      */
 
     async remove (points) {
-        await this.set(await this.get() - points);
-
-        return this.get();
+        return this.set(await this.get() - points);
     }
 
     /**
@@ -96,9 +92,7 @@ class PointsHandler {
      */
 
     async clear () {
-        await this.set(0);
-
-        return this.get();
+        return this.set(0);
     }
 }
 

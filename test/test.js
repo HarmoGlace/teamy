@@ -27,8 +27,8 @@ const manager = new TeamsManager({
         }
     ],
     functions: { // Needed. Used to save points, you can use the database that you want, here it is enmap
-        setPoints: (team, points) => pointsDB.set(team.id, points),
-        getPoints: (team) => pointsDB.get(team.id)
+        setPoints: async (team, points) => pointsDB.set(team.id, points),
+        getPoints: async (team) => pointsDB.get(team.id)
     },
     guildId: '123456789', // guildId where these teams belong to. It will be used to get roles
     implementMember: true
@@ -38,14 +38,17 @@ const client = new Client();
 
 manager.setClient(client);
 
-const sub1 = manager.get('sub2');
+const sub1 = manager.get('sub1');
 // console.log(sub1.name)
 
-sub1.points.add(1534475574);
+sub1.points.set(50).then(console.log);
+
+
+manager.get('sub2').points.set(432).then(console.log)
 
 // console.log((await manager.sorted()))
 
-const sorted = manager.sorted(true).then(console.log);
+// const sorted = manager.sorted(true).then(console.log);
 
 // console.log(sorted)
 

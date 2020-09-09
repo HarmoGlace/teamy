@@ -66,7 +66,7 @@ class SubPointsHandler extends PointsHandler {
      */
 
     async remove (points) {
-        this.team.parent.points.remove(points);
+        await this.team.parent.points.remove(points);
 
         await this.setLocal(this.points.current() - points);
 
@@ -80,13 +80,13 @@ class SubPointsHandler extends PointsHandler {
      */
 
     async set (points) {
-        const diff = points - await this.points.current();
+        const diff = points - await this.current();
 
         await this.team.parent.points.add(diff);
 
-        this.team.manager.functions.setPoints(this.team, points);
+        await this.team.manager.functions.setPoints(this.team, points);
 
-        await this.get();
+        return this.get();
     }
 
     /**
@@ -99,7 +99,7 @@ class SubPointsHandler extends PointsHandler {
 
         if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
-        return this.team.manager.functions.setPoints(this.team, points);
+        return await this.team.manager.functions.setPoints(this.team, points);
     }
 
 
