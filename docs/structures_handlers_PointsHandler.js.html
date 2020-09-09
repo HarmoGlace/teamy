@@ -145,6 +145,14 @@ class PointsHandler {
          */
 
         this.team = team;
+
+
+        /**
+         * Latest points recorded
+         * @type {Number}
+         */
+
+        this.latest = null;
     }
 
     /**
@@ -153,7 +161,11 @@ class PointsHandler {
      */
 
     async get () {
-        return await this.team.manager.functions.getPoints(this.team) || 0;
+        const found = (await this.team.manager.functions.getPoints(this.team)) || 0;
+
+        this.latest = found;
+
+        return found;
     }
 
     /**
@@ -163,9 +175,7 @@ class PointsHandler {
      */
 
     async add (points) {
-        await this.set(await this.get() + points);
-
-        return this.get();
+        return this.set(await this.get() + points);
     }
 
     /**
@@ -175,9 +185,7 @@ class PointsHandler {
      */
 
     async remove (points) {
-        await this.set(await this.get() - points);
-
-        return this.get();
+        return this.set(await this.get() - points);
     }
 
     /**
@@ -195,14 +203,23 @@ class PointsHandler {
     }
 
     /**
+     *
+     * @param {Boolean} [returnTeam=false] Whatever or not to return the current team instead of these points
+     * @return {Promise&lt;PointsHandler>}
+     */
+
+    async checkPoints (returnTeam = false) {
+        await this.get();
+        return returnTeam ? this.team : this;
+    }
+
+    /**
      *  Clear (reset) the points of this team. Use this carefully
      * @returns {Number} New team points (should be 0)
      */
 
     async clear () {
-        await this.set(0);
-
-        return this.get();
+        return this.set(0);
     }
 }
 
