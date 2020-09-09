@@ -41,6 +41,13 @@ class Team {
 
         this.name = name;
 
+        /**
+         * Default Team Type
+         * @type {String}
+         */
+
+        this.type = 'default';
+
 
         /**
          * The name aliases of this team
