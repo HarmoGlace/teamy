@@ -87,6 +87,10 @@ class TeamsHandler extends Map {
         return super.set(...args);
     }
 
+    get keys () {
+        return [...super.keys()];
+    }
+
     /**
      * Convert this TeamsManager to an Array
      * @return {Team[]|Array<ParentTeam|SubTeam>}
@@ -95,6 +99,12 @@ class TeamsHandler extends Map {
     toArray () {
         return [...super.values()];
     }
+
+    toString () {
+        return this.keys.join(', ');
+    }
+
+
 
 }
 

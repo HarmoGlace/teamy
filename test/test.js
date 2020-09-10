@@ -53,6 +53,8 @@ const sorted = manager.sorted().then(console.log);
 
 // console.log(sorted)
 
+console.log(manager.toString())
+
 sub1.parent // returns parent Team
 
 client.once('ready', () => {
