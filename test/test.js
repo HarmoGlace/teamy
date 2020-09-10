@@ -49,7 +49,7 @@ manager.get('sub2').points.set(432).then(console.log)
 
 // console.log((await manager.sorted()))
 
-// const sorted = manager.sorted(true).then(console.log);
+const sorted = manager.sorted().then(console.log);
 
 // console.log(sorted)
 

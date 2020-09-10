@@ -29,7 +29,9 @@ class TeamsManager extends TeamsHandler {
                      alwaysPool = false
                  } = {}) {
 
-        super();
+        super([]);
+
+        super.manager = this;
 
         type = type.toLowerCase();
 
@@ -59,6 +61,9 @@ class TeamsManager extends TeamsHandler {
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
         if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
+
+
+        if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager Type should be basic or advanced. Received ${type}`)
 
         /**
          * TeamsManager type, either
@@ -284,7 +289,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     get parents () {
-        return this.type === 'basic' ? this : new TeamsHandler(this.toArray().filter(team => team.type === 'parent').map(team => [ team.id, team ]));
+        return this.type === 'basic' ? this : new TeamsHandler(this.toArray().filter(team => team.type === 'parent').map(team => [ team.id, team ]), 'parents');
     }
 
     /**
@@ -293,34 +298,11 @@ class TeamsManager extends TeamsHandler {
      */
 
     get subs () {
-        return this.type === 'basic' ? this : new TeamsHandler(this.toArray().filter(team => team.type === 'sub').map(team => [ team.id, team ]));
+        return this.type === 'basic' ? this : new TeamsHandler(this.toArray().filter(team => team.type === 'sub').map(team => [ team.id, team ]), 'subs');
     }
 
-    /**
-     * Teams sorted by their points
-     * @params {Boolean} [forceSubs] Whatever or not to force subs
-     * @returns {Team[]|ParentTeam[]}
-     */
-
-    async sorted (forceSubs = false) {
-
-        const sortTeams = async (teams) => {
-            const elements = await Promise.all(teams.map(async team => await team.points.checkPoints(true)));
-
-            return elements.sort((a, b) => b.points.latest - a.points.latest);
-        }
-
-        if (this.type === 'basic' || forceSubs) return sortTeams((forceSubs ? this.subs : this).toArray());
 
 
-        const parents = this.parents.toArray();
-
-        for (const parent of parents) {
-            parent.subs = await sortTeams(parent.subs);
-        }
-
-        return sortTeams(parents);
-    }
 
 
 }

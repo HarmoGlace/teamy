@@ -1,6 +1,6 @@
 In this tutorial you will learn how to use teamy with node.js (12 at least), in javascript.
 
-We will start by importing the {@link TeamsManager} class (in your main file) :
+We will start by importing the {@link TeamsManager} class :
 ```js
 const { TeamsManager } = require('teamy');
 ```

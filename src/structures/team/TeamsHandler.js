@@ -3,10 +3,14 @@ class TeamsHandler extends Map {
     /**
      * Initializes this TeamsHandler
      * @param base
+     * @param manager
+     * @param type
      */
 
-    constructor (base) {
+    constructor (base, manager = null, type = null) {
         super(base);
+        this.manager = manager;
+        this.type = type || manager && manager.type === 'advanced' ? 'all' : 'normal' || 'unknown';
     }
 
     /**
@@ -24,8 +28,23 @@ class TeamsHandler extends Map {
      * @returns {Team[]|ParentTeam[]}
      */
 
-    sorted () {
-        return this.toArray().sort((a, b) => b.points.get() - a.points.get());
+    async sorted () {
+        const sortTeams = async (teams) => {
+            const elements = await Promise.all(teams.map(async team => await team.points.checkPoints(true)));
+
+            return elements.sort((a, b) => b.points.latest - a.points.latest);
+        }
+
+        if (['normal', 'sub'].includes(this.type)) return sortTeams(this.toArray());
+
+
+        const parents = this.toArray().filter(team => team.type === 'parent');
+
+        for (const parent of parents) {
+            parent.subs = await sortTeams(parent.subs);
+        }
+
+        return sortTeams(parents);
     }
 
     /**
