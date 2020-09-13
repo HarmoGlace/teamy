@@ -1,38 +1,38 @@
-
+const SubPointsHandler = require('./SubPointsHandler');
 
 module.exports = (GuildMember, manager) => {
-
-    const GuildMemberPointsHandler = require('./GuildMemberPointsHandler')(manager.type);
 
     return class GuildMemberHandler extends GuildMember {
 
         #internalPoints
-        #manager
 
         constructor (...args) {
             super(...args);
-            this.#manager = manager;
-            this.#internalPoints = new GuildMemberPointsHandler(this.team, this);
+
+            Object.defineProperty(this, 'manager', {
+                value: manager,
+                writable: false,
+                configurable: false,
+                enumerable: false
+            });
+
+            this.#internalPoints = new SubPointsHandler(this);
         }
 
         get team () {
-            return this.#manager.getMemberTeam(this);
+            return this.manager.getMemberTeam(this);
         }
 
         get teams () {
-            return this.#manager.getMemberTeams(this);
+            return this.manager.getMemberTeams(this);
         }
 
         get points () {
-            if (this.team) {
-                if (this.team?.id !== this.#internalPoints.team) this.#internalPoints.updateTeam(this.team)
-                return this.#internalPoints
-            }
-            return null
+            return this.team ? this.#internalPoints : null;
         }
 
         get parent () {
-            return this?.team.parent;
+            return this.team;
         }
 
     }

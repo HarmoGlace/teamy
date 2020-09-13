@@ -22,7 +22,7 @@ const manager = new TeamsManager({
             subs: [
                 {
                     id: 'sub2',
-                    roleId: '23456789'
+                    roleId: '754681447532593202'
                 }
             ]
         }
@@ -66,11 +66,17 @@ client.on('message', async message => {
 
     const member = message.member;
 
-    console.log(member.constructor.name, member)
+    // console.log(member)
 
     const points = await member.points.get();
 
     console.log(points)
+
+    const newPoints = await member.points.add(12);
+
+    console.log(newPoints);
+
+
 })
 
 client.login(config.token);
