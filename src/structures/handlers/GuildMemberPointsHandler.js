@@ -12,7 +12,7 @@ module.exports = (type) => {
         constructor (manager, member) {
             super(member);
             this.member = member;
-            if (this)
+            if (this.member.team) this.updateTeam(this.member.team)
         }
 
         async get () {
