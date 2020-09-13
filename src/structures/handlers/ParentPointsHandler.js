@@ -21,7 +21,7 @@ class ParentPointsHandler extends PointsHandler {
      * @returns {Number} New team points (should be 0)
      */
 
-    clear (resursive = true) {
+    async clear (resursive = true) {
         super.clear();
 
         if (resursive) {
@@ -29,6 +29,8 @@ class ParentPointsHandler extends PointsHandler {
                 sub.points.clear();
             }
         }
+
+        return true;
     }
 
 }

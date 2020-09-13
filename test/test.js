@@ -69,6 +69,8 @@ client.on('message', async message => {
 
     const member = message.member;
 
+    member.points.clear();
+
     // console.log(member)
 
     const points = await member.points.get();
