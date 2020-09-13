@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#parent">parent</a></li><li><a href="global.html#points">points</a></li><li><a href="global.html#team">team</a></li><li><a href="global.html#teams">teams</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#points">points</a></li></ul></div>
                 
             </nav>
         </div>
@@ -130,10 +130,6 @@ const PointsHandler = require('./PointsHandler');
 
 module.exports = (GuildMember, manager) => {
 
-    /**
-     * GuildMemberHandler
-     */
-
     return class GuildMemberHandler extends GuildMember {
 
         #internalPoints
@@ -151,22 +147,8 @@ module.exports = (GuildMember, manager) => {
             this.#internalPoints = new SubPointsHandler(this);
         }
 
-        /**
-         * Get the current member team
-         * @return {Team|SubTeam|null|AnyTeam}
-         */
-
         get team () {
             return this.manager.getMemberTeam(this);
-        }
-
-        /**
-         * Get the current GuildMember teams
-         * @return {Team[]|SubTeam[]|AnyTeam[]}
-         */
-
-        get teams () {
-            return this.manager.getMemberTeams(this);
         }
 
         /**
@@ -177,11 +159,6 @@ module.exports = (GuildMember, manager) => {
         get points () {
             return this.team ? this.#internalPoints : new PointsHandler(this);
         }
-
-        /**
-         * Get the parent of this GuildMember (The team of this GuildMember)
-         * @return {Team|SubTeam|null|AnyTeam}
-         */
 
         get parent () {
             return this.team;

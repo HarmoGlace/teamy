@@ -24,16 +24,10 @@ module.exports = (GuildMember, manager) => {
             return this.manager.getMemberTeam(this);
         }
 
-<<<<<<< Updated upstream
-        get teams () {
-            return this.manager.getMemberTeams(this);
-        }
-=======
         /**
          * Returns the PointsHandler of this GuildMember
          * @return {*|PointsHandler}
          */
->>>>>>> Stashed changes
 
         get points () {
             return this.team ? this.#internalPoints : new PointsHandler(this);

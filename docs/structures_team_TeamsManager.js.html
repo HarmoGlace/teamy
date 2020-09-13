@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#parent">parent</a></li><li><a href="global.html#points">points</a></li><li><a href="global.html#team">team</a></li><li><a href="global.html#teams">teams</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#points">points</a></li></ul></div>
                 
             </nav>
         </div>
@@ -147,7 +147,8 @@ class TeamsManager extends TeamsHandler {
                      type = 'basic',
                      functions: {
                          setPoints,
-                         getPoints
+                         getPoints,
+                         getMemberTeam
                      } = {},
                      client = null,
                      guildId = null,
@@ -208,6 +209,23 @@ class TeamsManager extends TeamsHandler {
 
         this.functions = { setPoints, getPoints };
 
+
+        /**
+         * Get a member team
+         * @param {GuildMember} member member to get team
+         * @returns {Team | SubTeam | null} The member team or null if none is found
+         */
+        this.getMemberTeam = (member) => this.subs.find(team => member.roles.cache.has(team.roleId));
+
+        if (getMemberTeam &amp;&amp; typeof getMemberTeam === 'function') this.getMemberTeam = (member) => {
+            const found = getMemberTeam(this.subs, member);
+            console.log(found)
+
+            const returnType = this.type === 'basic' ? Team : SubTeam;
+
+            if (found !== null &amp;&amp; found.constructor !== returnType) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found.constructor.name}`);
+        };
+
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
         if (teams) this.set(teams);
@@ -245,27 +263,6 @@ class TeamsManager extends TeamsHandler {
 
         return this.initialized;
 
-    }
-
-
-    /**
-     * Get a member team
-     * @param {GuildMember} member member to get team
-     * @returns {Team | SubTeam | null} The member team or null if none is found
-     */
-
-    getMemberTeam (member) {
-        return this.subs.find(team => member.roles.cache.has(team.roleId)) || null;
-    }
-
-    /**
-     * Get a member teams
-     * @param { GuildMember } member member to get teams
-     * @returns {Team[] | SubTeam[]}
-     */
-
-    getMemberTeams (member) {
-        return this.subs.filter(team => member.roles.cache.has(team.roleId));
     }
 
     /**
