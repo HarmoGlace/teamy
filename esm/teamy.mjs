@@ -6,5 +6,9 @@ export const {
     TeamsManager,
     Team,
     ParentTeam,
-    SubTeam
+    SubTeam,
+    TeamsHandler,
+    PointsHandler,
+    SubPointsHandler,
+    GuildMemberHandler
 } = Teamy;
