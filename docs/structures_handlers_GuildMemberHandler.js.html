@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamy | structures/team/Team.js</title>
+  <title>Teamy | structures/handlers/GuildMemberHandler.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -116,7 +116,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/team/Team.js</h1>
+                    <h1>structures/handlers/GuildMemberHandler.js</h1>
                 </header>
                 
 
@@ -125,92 +125,72 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const TeamyError = require('../TeamyError');
-const PointsHandler = require('../handlers/PointsHandler');
+            <pre class="prettyprint source linenums"><code>const SubPointsHandler = require('./SubPointsHandler');
+const PointsHandler = require('./PointsHandler');
 
-/**
- * A teamy basic team
- */
-
-class Team {
+module.exports = (GuildMember, manager) => {
 
     /**
-     *
-     * @param {TeamsManager} manager The TeamsManager this team belong to
-     * @param {TeamData} data The data of this team
+     * GuildMemberHandler
      */
 
-    constructor (manager, {
-        id,
-        name = id,
-        aliases = [],
-        color = 0x000000,
-        roleId = null
-    } = {}) {
+    return class GuildMemberHandler extends GuildMember {
+
+        #internalPoints
+
+        constructor (...args) {
+            super(...args);
+
+            Object.defineProperty(this, 'manager', {
+                value: manager,
+                writable: false,
+                configurable: false,
+                enumerable: false
+            });
+
+            this.#internalPoints = new SubPointsHandler(this);
+        }
 
         /**
-         * The TeamsManager this team belong to
-         * @type {TeamsManager}
+         * Get the current member team
+         * @return {Team|SubTeam|null|AnyTeam}
          */
-        this.manager = manager;
+
+        get team () {
+            return this.manager.getMemberTeam(this);
+        }
 
         /**
-         * The ID of this team
-         * @type {String}
+         * Get the current GuildMember teams
+         * @return {Team[]|SubTeam[]|AnyTeam[]}
          */
-        this.id = id;
 
+        get teams () {
+            return this.manager.getMemberTeams(this);
+        }
 
         /**
-         * The name of this team
-         * @type {!String}
+         * Returns the PointsHandler of this GuildMember
+         * @return {*|PointsHandler}
          */
 
-        this.name = name;
+        get points () {
+            return this.team ? this.#internalPoints : new PointsHandler(this);
+        }
 
         /**
-         * Default Team Type
-         * @type {String}
+         * Get the parent of this GuildMember (The team of this GuildMember)
+         * @return {Team|SubTeam|null|AnyTeam}
          */
 
-        this.type = 'default';
-
-
-        /**
-         * The name aliases of this team
-         * @type {String[]}
-         */
-
-        this.aliases = aliases;
-
-
-        /**
-         * The color of this team
-         * @type {Number}
-         */
-
-        this.color = color;
-
-        /**
-         * The role id of this team
-         * @type {!String}
-         */
-
-        this.roleId = roleId;
-
-
-        /**
-         * The PointsHandler of this team
-         * @type {PointsHandler}
-         */
-
-        this.points = new PointsHandler(this);
-
+        get parent () {
+            return this.team;
+        }
 
     }
 }
 
-module.exports = Team;</code></pre>
+</code></pre>
         </article>
     </section>
 
