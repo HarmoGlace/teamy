@@ -28,7 +28,7 @@ Recommended node version: 14.10.1 (Current)\
 Required node version: 14.x
 
 ## Example usage
-For a basic teams system using enmap as database:
+For a basic teams system using [enmap](https://www.npmjs.com/package/enmap) as database provider:
 ```js
 const { TeamsManager } = require('teamy');
 const Enmap = require('enmap');
@@ -45,7 +45,7 @@ const manager = new TeamsManager({
                 name: 'Another cool team'
             }
         ],
-        functions: {
+        functions: { // Can be async functions or can return a promise
             setPoints: (team, points) => points.set(team.id, points),
             getPoints: (team) => points.get(team)
         }

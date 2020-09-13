@@ -123,14 +123,14 @@
 </header>
 
 <article>
-    <p>In this tutorial you will learn how to use teamy with node.js (12 at least), in javascript.</p>
-<p>We will start by importing the <a href="TeamsManager.html">TeamsManager</a> class (in your main file) :</p>
+    <p>In this tutorial you will learn how to use teamy with node.js (v14.0.0 at least), in javascript.</p>
+<p>We will start by importing the <a href="TeamsManager.html">TeamsManager</a> class :</p>
 <pre class="prettyprint source lang-js"><code>const { TeamsManager } = require('teamy');
 </code></pre>
 <p>A <a href="TeamsManager.html">TeamsManager</a> is a class that will manage for you all your teams. You can manually create team but it is hader than using the <a href="TeamsManager.html">TeamsManager</a></p>
 <p>Now you will have to create a new instance of this class, here we will name it manager.
 There is only one thing needed : The points functions. To save points and get it you will need to provide functions that will do it with your database. Teamy doesn't provide this by default. In this example we will use enmap, an easy-to-use database provider</p>
-<p>So the needed parameter is named <code>functions</code> (see <a href="global.html#TeamsManagerFunctions">TeamsManagerFunctions</a>). It is an object that have 2 functions:</p>
+<p>So the needed parameter is named <code>functions</code> (see <a href="global.html#TeamsManagerFunctions">TeamsManagerFunctions</a>). It is an object that have 2 functions. These can be async or return a promise:</p>
 <ul>
 <li>setPoints function with 2 parameters : <code>team</code> and <code>points</code> to set. The team parameter can be a <a href="Team.html">Team</a> or a <a href="ParentTeam.html">ParentTeam</a>/<a href="SubTeam.html">SubTeam</a>, depending of your TeamsManager type. We will see this after</li>
 <li>getPoints function with 1 parameter: <code>team</code>. It can be a <a href="Team.html">Team</a> or a <a href="ParentTeam.html">ParentTeam</a>/<a href="SubTeam.html">SubTeam</a>, depending of your TeamsManager type too.</li>
@@ -172,7 +172,7 @@ const manager = new TeamsManager({
 <p>You have now a basic teamy configuration.</p>
 <h3>How can I get a team ?</h3>
 <p>If you want to find a team, it is easy. You can use the <code>find</code> function on the <a href="TeamsManager.html">TeamsManager</a>. It is like the find function on an array <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">(see mdn)</a> :</p>
-<pre class="prettyprint source lang-js"><code>const team = manager.find(team => team.id === 'first team'); // returns 'first team' Team or null if none is found
+<pre class="prettyprint source lang-js"><code>const team = manager.get('first team'); // returns 'first team' Team or null if none is found
 </code></pre>
 <p>It will return a <a href="Team.html">Team</a> or null if none is found.</p>
 <p>If it returns a <a href="Team.html">Team</a>, you can manage the team points easily like that :</p>
@@ -182,6 +182,7 @@ team.points.remove(3) // remove 3 points
 
 team.points.set(15) // Set the team points to 15
 </code></pre>
+<p>Note that these methods returns a promise of the new points of the Team.</p>
 <p>Now you know how to use teamy !
 If you want an advanced configuration with Parent Teams and Sub Teams, look at <a href="./tutorial-starting.html">the advanced configuration tutorial</a> (coming soon)</p>
 </article>
