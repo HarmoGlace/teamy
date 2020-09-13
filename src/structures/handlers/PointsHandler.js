@@ -35,7 +35,7 @@ class PointsHandler {
 
     async get () {
         const found = Number(await this.team.manager.functions.getPoints(this.team)) || 0;
-        if (Number.isNaN(found)) throw new TeamyError(`GetPoints function should only return number. Received ${found.constructor.name}`);
+        if (Number.isNaN(found)) throw new TeamyError(`getPoints function should only return number. Received ${found.constructor.name}`);
 
         this.latest = found;
 

@@ -89,27 +89,10 @@ class TeamsManager extends TeamsHandler {
 
         if (this.implementMember) {
             const { Structures } = require('discord.js');
-            const parent = this;
-            const { getMemberTeam, getMemberTeams } = this;
+            const GuildMemberHandler = require('../handlers/GuildMemberHandler');
 
 
-            Structures.extend('GuildMember', GuildMember => {
-                class TeamyGuildMember extends GuildMember {
-                    constructor (client, data, guild) {
-                        super(client, data, guild);
-                    }
-
-                    get team () {
-                        return getMemberTeam.bind(parent)(this);
-                    }
-
-                    get teams () {
-                        return getMemberTeams.bind(parent)(this);
-                    }
-                }
-
-                return TeamyGuildMember;
-            });
+            Structures.extend('GuildMember', (GuildMember) => GuildMemberHandler(GuildMember, this));
         }
 
 
@@ -145,8 +128,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     getMemberTeam (member) {
-        const teams = this.type === 'basic' ? this.teams : this.teams.subs();
-        return teams.find(team => member.roles.cache.has(team.roleId)) || null;
+        return this.subs.find(team => member.roles.cache.has(team.roleId)) || null;
     }
 
     /**
@@ -156,8 +138,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     getMemberTeams (member) {
-        const teams = this.type === 'basic' ? this.teams : this.teams.subs();
-        return teams.filter(team => member.roles.cache.has(team.roleId));
+        return this.subs.filter(team => member.roles.cache.has(team.roleId));
     }
 
     /**

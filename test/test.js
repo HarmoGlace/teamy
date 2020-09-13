@@ -13,7 +13,7 @@ const manager = new TeamsManager({
             subs: [
                 {
                     id: 'sub1',
-                    roleId: '577899952244523028' // optional, used to detect member role if a client and a guildId are given
+                    roleId: '754644003961700382' // optional, used to detect member role if a client and a guildId are given
                 }
             ]
         },
@@ -59,10 +59,18 @@ sub1.parent // returns parent Team
 
 client.once('ready', () => {
     manager.initialize(); // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role
+    console.log(`Ready on ${client.user.username}`)
 })
 
-client.on('message', message => {
-    console.log(message.member.teams, message.member.team) // returns the member team or null if none is found
+client.on('message', async message => {
+
+    const member = message.member;
+
+    console.log(member.constructor.name, member)
+
+    const points = await member.points.get();
+
+    console.log(points)
 })
 
 client.login(config.token);
