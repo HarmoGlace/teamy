@@ -20,7 +20,8 @@ class TeamsManager extends TeamsHandler {
                      type = 'basic',
                      functions: {
                          setPoints,
-                         getPoints
+                         getPoints,
+                         getMemberTeam
                      } = {},
                      client = null,
                      guildId = null,
@@ -81,6 +82,23 @@ class TeamsManager extends TeamsHandler {
 
         this.functions = { setPoints, getPoints };
 
+
+        /**
+         * Get a member team
+         * @param {GuildMember} member member to get team
+         * @returns {Team | SubTeam | null} The member team or null if none is found
+         */
+        this.getMemberTeam = (member) => this.subs.find(team => member.roles.cache.has(team.roleId));
+
+        if (getMemberTeam && typeof getMemberTeam === 'function') this.getMemberTeam = (member) => {
+            const found = getMemberTeam(this.subs, member);
+            console.log(found)
+
+            const returnType = this.type === 'basic' ? Team : SubTeam;
+
+            if (found !== null && found.constructor !== returnType) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found.constructor.name}`);
+        };
+
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
         if (teams) this.set(teams);
@@ -118,27 +136,6 @@ class TeamsManager extends TeamsHandler {
 
         return this.initialized;
 
-    }
-
-
-    /**
-     * Get a member team
-     * @param {GuildMember} member member to get team
-     * @returns {Team | SubTeam | null} The member team or null if none is found
-     */
-
-    getMemberTeam (member) {
-        return this.subs.find(team => member.roles.cache.has(team.roleId)) || null;
-    }
-
-    /**
-     * Get a member teams
-     * @param { GuildMember } member member to get teams
-     * @returns {Team[] | SubTeam[]}
-     */
-
-    getMemberTeams (member) {
-        return this.subs.filter(team => member.roles.cache.has(team.roleId));
     }
 
     /**

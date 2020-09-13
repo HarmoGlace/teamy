@@ -29,7 +29,10 @@ const manager = new TeamsManager({
     ],
     functions: { // Needed. Used to save points, you can use the database that you want, here it is enmap
         setPoints: async (team, points) => (team.type === 'parent' ? parents : subs).set(team.id, points),
-        getPoints: async (team) => (team.type === 'parent' ? parents : subs).get(team.id)
+        getPoints: async (team) => (team.type === 'parent' ? parents : subs).get(team.id),
+
+        // Optional. Used to know the GuildMember team. Should return a Team or a SubTeam for advanced managers
+        // getMemberTeam: (teams, member) => teams.find(team => member.roles.cache.has(team.roleId))
     },
     guildId: '123456789', // guildId where these teams belong to. It will be used to get roles
     implementMember: true
