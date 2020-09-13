@@ -24,8 +24,8 @@ With yarn
 $ yarn add teamy
 ```
 
-Recommended node version: 14.4.0 (Current)\
-Required node version: 12.x (LTS)
+Recommended node version: 14.10.1 (Current)\
+Required node version: 14.x
 
 ## Example usage
 For a basic teams system using enmap as database:
@@ -108,15 +108,11 @@ sub1.points.get() // return 153
 
 sub1.parent // returns parent Team
 
-client.once('ready', () => {
-    manager.initialize(); // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role
-})
+client.once('ready', manager.initialize) // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role)
 
 client.on('message', message => {
     const team = manager.getMemberTeam(message.member); // returns the member team or null if none is found
 })
-
-client.login('secretToken');
 ```
 
 ## API Reference
@@ -186,4 +182,4 @@ Open an issue [here](https://github.com/HarmoGlace/teamy/issues/new/choose) usin
 
 ## Support
 
-You can go on the [official discord support server (click here)](https://discord.gg/CnuKPMM) if you need help
+You can contact me by discord: HarmoGlace#7746 if you need help

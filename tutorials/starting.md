@@ -1,4 +1,4 @@
-In this tutorial you will learn how to use teamy with node.js (12 at least), in javascript.
+In this tutorial you will learn how to use teamy with node.js (v14.0.0 at least), in javascript.
 
 We will start by importing the {@link TeamsManager} class :
 ```js
