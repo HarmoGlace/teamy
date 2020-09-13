@@ -1,4 +1,5 @@
 const SubPointsHandler = require('./SubPointsHandler');
+const PointsHandler = require('./PointsHandler');
 
 module.exports = (GuildMember, manager) => {
 
@@ -28,7 +29,7 @@ module.exports = (GuildMember, manager) => {
         }
 
         get points () {
-            return this.team ? this.#internalPoints : null;
+            return this.team ? this.#internalPoints : new PointsHandler(this);
         }
 
         get parent () {
