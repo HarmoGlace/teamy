@@ -33,17 +33,17 @@ const manager = new TeamsManager({
         }
     ],
     functions: { // Needed. Used to save points, you can use the database that you want, here it is enmap
-        setPoints: async (team, points) => databases[team.type].set(team.id, points),
-        getPoints: async (team) => databases[team.type].get(team.id),
+        setPoints: async (team, points) => databases[team.type].set(team.id, points, 'points'),
+        getPoints: async (team) => databases[team.type].has(team.id) ? databases[team.type].get(team.id, 'points') : null,
 
 
         // Optional
         // Used to know the GuildMember team. Should return a Team or a SubTeam for advanced managers
-        getMemberTeam: (member, teams) => teams.find(team => member.roles.cache.has(team.roleId)),
+        // getMemberTeam: (member, teams) => teams.find(team => member.roles.cache.has(team.roleId)),
 
 
 
-        getSavedMemberTeam: (member, teams) => databases.has(member.id) ? databases.member.get(member.id, 'team') : null,
+        getSavedMemberTeam: (member, teams) => databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null,
         setMemberTeam: (team, member) => databases.member.set(member.id, team.id, 'team'),
 
 
@@ -88,8 +88,6 @@ client.on('message', async message => {
     // console.log(member)
 
     const points = await member.points.get();
-
-    console.log(points)
 
     const newPoints = await member.points.add(12);
 

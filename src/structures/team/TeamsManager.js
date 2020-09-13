@@ -101,12 +101,15 @@ class TeamsManager extends TeamsHandler {
             if (found !== null && found.constructor !== returnType) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found.constructor.name}`);
         };
 
-        const teamsFunctions = [ getSavedMemberTeam, setMemberTeam, getMemberTeam ];
+        const teamsFunctions = [ getSavedMemberTeam, setMemberTeam, getTeamMembers ];
 
         if (teamsFunctions.every(team => team && typeof team === 'function')) {
             this.getSavedMemberTeam = getSavedMemberTeam;
             this.setMemberTeam = setMemberTeam;
             this.getTeamMembers = getTeamMembers;
+
+
+            this.teamsFunctions = true;
         }
 
 

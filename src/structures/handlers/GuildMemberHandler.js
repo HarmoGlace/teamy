@@ -28,8 +28,7 @@ module.exports = (GuildMember, manager) => {
         }
 
         get team () {
-            const found = this.manager.getMemberTeam(this);
-
+            const found = this.manager.getMemberTeam(this, this.manager.subs);
 
             this.checkSavedTeam();
 
@@ -38,14 +37,15 @@ module.exports = (GuildMember, manager) => {
         }
 
         async checkSavedTeam () {
+            if (!this.manager.teamsFunctions) return false;
             const found = this.manager.getMemberTeam(this, this.manager.subs)?.id;
             const saved = (await this.manager.getSavedMemberTeam(this, this.manager.subs))?.id;
-
-            if (found !== saved) await this.manager.setMemberTeam(found, this);
+            
+            if (found !== saved) await this.manager.setMemberTeam(found ? this.manager.subs.get(found) : null, this);
 
             return true;
         }
-        
+
         /**
          * Returns the PointsHandler of this GuildMember
          * @return {*|PointsHandler}
