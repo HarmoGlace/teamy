@@ -1,8 +1,8 @@
+const TeamyError = require("../TeamyError");
+
 /**
  * Points Handler
  */
-
-const TeamyError = require("../TeamyError");
 
 class PointsHandler {
 
