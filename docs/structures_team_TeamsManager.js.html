@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -216,27 +216,10 @@ class TeamsManager extends TeamsHandler {
 
         if (this.implementMember) {
             const { Structures } = require('discord.js');
-            const parent = this;
-            const { getMemberTeam, getMemberTeams } = this;
+            const GuildMemberHandler = require('../handlers/GuildMemberHandler');
 
 
-            Structures.extend('GuildMember', GuildMember => {
-                class TeamyGuildMember extends GuildMember {
-                    constructor (client, data, guild) {
-                        super(client, data, guild);
-                    }
-
-                    get team () {
-                        return getMemberTeam.bind(parent)(this);
-                    }
-
-                    get teams () {
-                        return getMemberTeams.bind(parent)(this);
-                    }
-                }
-
-                return TeamyGuildMember;
-            });
+            Structures.extend('GuildMember', (GuildMember) => GuildMemberHandler(GuildMember, this));
         }
 
 
@@ -272,8 +255,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     getMemberTeam (member) {
-        const teams = this.type === 'basic' ? this.teams : this.teams.subs();
-        return teams.find(team => member.roles.cache.has(team.roleId)) || null;
+        return this.subs.find(team => member.roles.cache.has(team.roleId)) || null;
     }
 
     /**
@@ -283,8 +265,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     getMemberTeams (member) {
-        const teams = this.type === 'basic' ? this.teams : this.teams.subs();
-        return teams.filter(team => member.roles.cache.has(team.roleId));
+        return this.subs.filter(team => member.roles.cache.has(team.roleId));
     }
 
     /**
