@@ -17,11 +17,33 @@ module.exports = (GuildMember, manager) => {
                 enumerable: false
             });
 
+            Object.defineProperty(this, 'type', {
+                value: 'member',
+                writable: false,
+                configurable: false,
+                enumerable: false
+            });
+
             this.#internalPoints = new SubPointsHandler(this);
         }
 
         get team () {
-            return this.manager.getMemberTeam(this);
+            const found = this.manager.getMemberTeam(this);
+
+
+            this.checkSavedTeam();
+
+            return (found && found.constructor !== SubPointsHandler ? this.manager.get(found) : found) || null;
+
+        }
+
+        async checkSavedTeam () {
+            const found = this.manager.getMemberTeam(this, this.manager.subs)?.id;
+            const saved = (await this.manager.getSavedMemberTeam(this, this.manager.subs))?.id;
+
+            if (found !== saved) await this.manager.setMemberTeam(found, this);
+
+            return true;
         }
 
 <<<<<<< Updated upstream

@@ -21,7 +21,10 @@ class TeamsManager extends TeamsHandler {
                      functions: {
                          setPoints,
                          getPoints,
-                         getMemberTeam
+                         getMemberTeam,
+                         getSavedMemberTeam,
+                         setMemberTeam,
+                         getTeamMembers
                      } = {},
                      client = null,
                      guildId = null,
@@ -91,13 +94,22 @@ class TeamsManager extends TeamsHandler {
         this.getMemberTeam = (member) => this.subs.find(team => member.roles.cache.has(team.roleId));
 
         if (getMemberTeam && typeof getMemberTeam === 'function') this.getMemberTeam = (member) => {
-            const found = getMemberTeam(this.subs, member);
-            console.log(found)
+            const found = getMemberTeam(member, this.subs);
 
             const returnType = this.type === 'basic' ? Team : SubTeam;
 
             if (found !== null && found.constructor !== returnType) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found.constructor.name}`);
         };
+
+        const teamsFunctions = [ getSavedMemberTeam, setMemberTeam, getMemberTeam ];
+
+        if (teamsFunctions.every(team => team && typeof team === 'function')) {
+            this.getSavedMemberTeam = getSavedMemberTeam;
+            this.setMemberTeam = setMemberTeam;
+            this.getTeamMembers = getTeamMembers;
+        }
+
+
 
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
