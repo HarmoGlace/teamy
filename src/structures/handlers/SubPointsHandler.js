@@ -74,6 +74,15 @@ class SubPointsHandler extends PointsHandler {
     }
 
     /**
+     * Clears the points of this SubTeam
+     * @param [locally=false] Whatever to only clear points of this SubTeam without removing them from the ParentTeam. Could cause incorrect data
+     */
+
+    clear (locally = false) {
+        return (locally ? this.setLocal : this.set)(0);
+    }
+
+    /**
      * Set points of this team
      * @param {Number} points Points to set
      * @returns {Number} newPoints New Points of the team
