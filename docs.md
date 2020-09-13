@@ -22,4 +22,4 @@ yarn add teamy
 
 After doing that you can read the [starting tutorial](./tutorial-starting.html).
 
-Need help ? Go on [the official discord support server](https://discord.gg/CnuKPMM)
+Need help ? Contact me on Discord: `HarmoGlace#7746`
