@@ -6,6 +6,7 @@ module.exports = (GuildMember, manager) => {
     return class GuildMemberHandler extends GuildMember {
 
         #internalPoints
+        #noTeamPoints
 
         constructor (...args) {
             super(...args);
@@ -25,6 +26,7 @@ module.exports = (GuildMember, manager) => {
             });
 
             this.#internalPoints = new SubPointsHandler(this);
+            this.#noTeamPoints = new PointsHandler(this);
         }
 
         get team () {
@@ -52,7 +54,7 @@ module.exports = (GuildMember, manager) => {
          */
 
         get points () {
-            return this.team ? this.#internalPoints : new PointsHandler(this);
+            return this.team ? this.#internalPoints : this.#noTeamPoints;
         }
 
         get parent () {
