@@ -1,8 +1,13 @@
 const { TeamsManager, TeamsHandler } = require('../src/index');
+
 const { Client } = require('discord.js');
 const Enmap = require('enmap');
-const subs = new Enmap({ name: 'subs' });
-const parents = new Enmap({ name: 'parents' });
+const databases = {
+    sub: new Enmap({ name: 'subs' }),
+    parent: new Enmap({ name: 'parents' }),
+    member: new Enmap({ name: 'users' })
+}
+
 const config = require('./config');
 
 const manager = new TeamsManager({
@@ -28,11 +33,22 @@ const manager = new TeamsManager({
         }
     ],
     functions: { // Needed. Used to save points, you can use the database that you want, here it is enmap
-        setPoints: async (team, points) => (team.type === 'parent' ? parents : subs).set(team.id, points),
-        getPoints: async (team) => (team.type === 'parent' ? parents : subs).get(team.id),
+        setPoints: async (team, points) => databases[team.type].set(team.id, points, 'points'),
+        getPoints: async (team) => databases[team.type].has(team.id) ? databases[team.type].get(team.id, 'points') : null,
 
-        // Optional. Used to know the GuildMember team. Should return a Team or a SubTeam for advanced managers
-        // getMemberTeam: (teams, member) => teams.find(team => member.roles.cache.has(team.roleId))
+
+        // Optional
+        // Used to know the GuildMember team. Should return a Team or a SubTeam for advanced managers
+        // getMemberTeam: (member, teams) => teams.find(team => member.roles.cache.has(team.roleId)),
+
+
+
+        getSavedMemberTeam: (member, teams) => databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null,
+        setMemberTeam: (team, member) => databases.member.set(member.id, team.id, 'team'),
+
+
+
+        getTeamMembers: (team) => databases.find(user => user.team === team.id)
     },
     guildId: '123456789', // guildId where these teams belong to. It will be used to get roles
     implementMember: true
@@ -75,8 +91,6 @@ client.on('message', async message => {
 
     const points = await member.points.get();
 
-    console.log(points)
-
     const newPoints = await member.points.add(12);
 
     console.log(newPoints);
@@ -86,11 +100,6 @@ client.on('message', async message => {
 
 client.login(config.token);
 
-
-const test = {
-    setPoints: (team, points) => pointsDB.set(team.id, points),
-    getPoints: (team) => pointsDB.get(team.id)
-}
 
 // console.log(new TeamsHandler().set('test', '1'));
 //

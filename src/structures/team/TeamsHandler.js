@@ -79,7 +79,7 @@ class TeamsHandler extends Map {
      */
 
     resolve (resolvable) {
-        resolvable = resolvable.toLowerCase();
+        resolvable = resolvable.toString().toLowerCase();
         return this.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
     }
 
