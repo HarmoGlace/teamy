@@ -28,7 +28,7 @@
     "teamdb"
   ],
   "author": "HarmoGlace",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/HarmoGlace/teamy/issues"
   },
