@@ -83,7 +83,8 @@ class PointsHandler {
      */
 
     async checkPoints (returnTeam = false) {
-        await this.get();
+        const returned = await this.get();
+        if (!returned && returned !== 0) await this.set(0);
         return returnTeam ? this.team : this;
     }
 
