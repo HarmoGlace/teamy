@@ -13,11 +13,13 @@ class Team {
      * @param {TeamData} data The data of this team
      */
 
+    #teamColor
+
     constructor (manager, {
         id,
         name = id,
         aliases = [],
-        color = 0x000000,
+        color = null,
         roleId = null
     } = {}) {
 
@@ -80,6 +82,14 @@ class Team {
         this.points = new PointsHandler(this);
 
 
+    }
+
+    get color () {
+        return  this.#teamColor || this.role?.color || null;
+    }
+
+    set color (color) {
+        this.#teamColor = color;
     }
 }
 
