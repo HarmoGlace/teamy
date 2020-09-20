@@ -61,42 +61,41 @@ manager.setClient(client);
 const sub1 = manager.get('sub1');
 // console.log(sub1.name)
 
-sub1.points.set(50).then(console.log);
+// sub1.points.set(50).then(console.log);
 
 
-manager.get('sub2').points.set(432).then(console.log)
+// manager.get('sub2').points.set(432).then(console.log)
 
 // console.log((await manager.sorted()))
 
-const sorted = manager.sorted().then(console.log);
-
+const sorted = manager.subs.sorted().then(console.log);
 // console.log(sorted)
 
-console.log(manager.toString())
+// console.log(manager.toString())
 
-sub1.parent // returns parent Team
+// sub1.parent // returns parent Team
 
 client.once('ready', () => {
     manager.initialize(); // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role
     console.log(`Ready on ${client.user.username}`)
 })
-
-client.on('message', async message => {
-
-    const member = message.member;
-
-    member.points.clear();
-
-    // console.log(member)
-
-    const points = await member.points.get();
-
-    const newPoints = await member.points.add(12);
-
-    console.log(newPoints);
-
-
-})
+//
+// client.on('message', async message => {
+//
+//     const member = message.member;
+//
+//     member.points.clear();
+//
+//     // console.log(member)
+//
+//     const points = await member.points.get();
+//
+//     const newPoints = await member.points.add(12);
+//
+//     console.log(newPoints);
+//
+//
+// })
 
 client.login(config.token);
 

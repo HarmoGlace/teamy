@@ -32,8 +32,8 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Number}
      */
 
-    async current () {
-        return super.get();
+    async current (...args) {
+        return super.get(...args);
     }
 
     /**
@@ -41,8 +41,8 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Number}
      */
 
-    async get () {
-        return this.current();
+    async get (...args) {
+        return this.current(...args);
     }
 
     /**
