@@ -30,12 +30,16 @@ class PointsHandler {
 
     /**
      * Get the points of this team
+     * @param Booolean [nullable=false] Whatever to return null if the provided function returns a falsy value
      * @returns {number}
      */
 
-    async get () {
-        const found = Number(await this.team.manager.functions.getPoints(this.team)) || 0
-        if (Number.isNaN(found)) throw new TeamyError(`getPoints function should only return number. Received ${found.constructor.name}`);
+    async get (nullable = false) {
+        let found = Number(await this.team.manager.functions.getPoints(this.team));
+
+        if (!found && found !== 0) found = nullable ? null : 0;
+
+        if (Number.isNaN(found) && found !== null) throw new TeamyError(`getPoints function should only return number. Received ${found.constructor.name}`);
 
         this.latest = found;
 
@@ -83,7 +87,7 @@ class PointsHandler {
      */
 
     async checkPoints (returnTeam = false) {
-        const returned = await this.get();
+        const returned = await this.get(true);
         if (!returned && returned !== 0) await this.set(0);
         return returnTeam ? this.team : this;
     }
