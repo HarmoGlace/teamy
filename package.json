@@ -1,6 +1,6 @@
 {
   "name": "teamy",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "A powerful library to manage teams",
   "main": "src/index.js",
   "types": "./typings/index.d.ts",
