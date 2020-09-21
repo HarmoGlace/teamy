@@ -6,7 +6,7 @@ module.exports = {
     Team: require('./structures/team/Team'),
     ParentTeam: require('./structures/team/ParentTeam'),
     SubTeam: require('./structures/team/SubTeam'),
-    TeamsHandler: require('./structures/team/TeamsHandler'),
+    TeamsHandler: require('./structures/handlers/TeamsHandler'),
 
     // Handlers
 

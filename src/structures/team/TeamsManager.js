@@ -2,7 +2,7 @@ const TeamyError = require('../TeamyError');
 const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');
-const TeamsHandler = require('./TeamsHandler');
+const TeamsHandler = require('../handlers/TeamsHandler');
 
 /**
  * A TeamsManager

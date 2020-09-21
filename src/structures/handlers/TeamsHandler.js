@@ -35,7 +35,7 @@ class TeamsHandler extends Map {
             return elements.sort((a, b) => b.points.latest - a.points.latest);
         }
 
-        if (['normal', 'sub'].includes(this.type)) return sortTeams(this.toArray());
+        if (['normal', 'subs'].includes(this.type)) return sortTeams(this.toArray());
 
 
         const parents = this.toArray().filter(team => team.type === 'parent');
