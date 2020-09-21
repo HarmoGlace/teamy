@@ -227,7 +227,6 @@ class TeamsManager extends TeamsHandler {
                 const subTeam = new SubTeam(this, team, parent);
 
                 super.set(subTeam.id, subTeam);
-                parent.subs = parent.subs.push(subTeam);
 
                 return subTeam;
 
@@ -284,7 +283,9 @@ class TeamsManager extends TeamsHandler {
      */
 
     get parents () {
-        return this.type === 'basic' ? this : new TeamsHandler(this.toArray().filter(team => team.type === 'parent').map(team => [ team.id, team ]), 'parents');
+        return this.type === 'basic' ? this : new TeamsHandler({
+            base: this.toArray().filter(team => team.type === 'parent').map(team => [ team.id, team ]),
+            type: 'parents'});
     }
 
     /**
@@ -293,7 +294,10 @@ class TeamsManager extends TeamsHandler {
      */
 
     get subs () {
-        return this.type === 'basic' ? this : new TeamsHandler(this.toArray().filter(team => team.type === 'sub').map(team => [ team.id, team ]), 'subs');
+        return this.type === 'basic' ? this : new TeamsHandler({
+            base: this.toArray().filter(team => team.type === 'sub').map(team => [ team.id, team ]),
+            type: 'subs'
+        });
     }
 
 

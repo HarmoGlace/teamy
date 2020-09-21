@@ -7,7 +7,11 @@ class TeamsHandler extends Map {
      * @param type
      */
 
-    constructor (base, manager = null, type = null) {
+    constructor ({
+                     base,
+                     manager = null,
+                     type = null
+                 }) {
         super(base);
         this.manager = manager;
         this.type = type || manager && manager.type === 'advanced' ? 'all' : 'normal' || 'unknown';
@@ -35,7 +39,7 @@ class TeamsHandler extends Map {
             return elements.sort((a, b) => b.points.latest - a.points.latest);
         }
 
-        if (['normal', 'subs'].includes(this.type)) return sortTeams(this.toArray());
+        if ([ 'normal', 'subs' ].includes(this.type)) return sortTeams(this.toArray());
 
 
         const parents = this.toArray().filter(team => team.type === 'parent');
@@ -72,6 +76,16 @@ class TeamsHandler extends Map {
     }
 
 
+    filter (filterFunction) {
+        return new this.constructor(
+            {
+                base: this.toArray().filter(filterFunction),
+                type: 'custom',
+                manager: this.manager
+            });
+    }
+
+
     /**
      * Resolve a team with a string
      * @param {String} resolvable
@@ -83,12 +97,16 @@ class TeamsHandler extends Map {
         return this.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
     }
 
+    add (team) {
+        return this.set(team.id, team);
+    }
+
     set (...args) {
         return super.set(...args);
     }
 
     get keys () {
-        return [...super.keys()];
+        return [ ...super.keys() ];
     }
 
     /**
@@ -97,7 +115,7 @@ class TeamsHandler extends Map {
      */
 
     toArray () {
-        return [...super.values()];
+        return [ ...super.values() ];
     }
 
     toString () {
@@ -108,7 +126,6 @@ class TeamsHandler extends Map {
     * [Symbol.iterator] () {
         yield super.values();
     }
-
 
 
 }

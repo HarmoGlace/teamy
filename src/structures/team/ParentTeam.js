@@ -1,4 +1,6 @@
 const Team = require('./Team');
+const TeamsHandler = require('../handlers/TeamsHandler');
+const ParentPointsHandler = require('../handlers/ParentPointsHandler');
 
 /**
  * A Parent Team
@@ -23,13 +25,21 @@ class ParentTeam extends Team {
 
         this.type = 'parent';
 
-
         /**
-         * The list of all sub teams of this team
-         * @type {SubTeam[]}
+         * Points of this team
          */
 
-        this.subs = [];
+        this.points = new ParentPointsHandler(this);
+
+    }
+
+    /**
+     * Get the SubTeams of this ParentTeam
+     * @return {TeamsHandler}
+     */
+
+    get subs () {
+        return this.manager.subs.filter(team => team.parent.id === this.id);
     }
 }
 
