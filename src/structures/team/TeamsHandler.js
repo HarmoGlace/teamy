@@ -105,6 +105,11 @@ class TeamsHandler extends Map {
     }
 
 
+    * [Symbol.iterator] () {
+        yield super.values();
+    }
+
+
 
 }
 

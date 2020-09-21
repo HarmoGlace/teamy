@@ -68,8 +68,17 @@ const sub1 = manager.get('sub1');
 
 // console.log((await manager.sorted()))
 
-const sorted = manager.subs.sorted().then(console.log);
+// const sorted = manager.subs.sorted().then(console.log);
 // console.log(sorted)
+
+
+const iterated = manager.parents;
+
+// console.log(iterated, iterated.next(), iterated.next())
+
+for (const team of iterated) {
+    console.log(team)
+}
 
 // console.log(manager.toString())
 
