@@ -39,6 +39,7 @@ class ParentTeam extends Team {
      */
 
     get subs () {
+        console.log('sub type: ', this.manager.subs.type)
         return this.manager.subs.filter(team => team.parent.id === this.id);
     }
 }

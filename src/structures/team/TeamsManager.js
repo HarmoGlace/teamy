@@ -35,6 +35,8 @@ class TeamsManager extends TeamsHandler {
 
         super([]);
 
+        this._constructed = super.constructor;
+
         super.manager = this;
 
         type = type.toLowerCase();
@@ -283,7 +285,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     get parents () {
-        return this.type === 'basic' ? this : this.filter(team => team.type === 'parent');
+        return this.type === 'basic' ? this : super.filter(team => team.type === 'parent', 'parents');
     }
 
     /**
@@ -292,12 +294,8 @@ class TeamsManager extends TeamsHandler {
      */
 
     get subs () {
-        return this.type === 'basic' ? this : this.filter(team => team.type === 'sub');
+        return this.type === 'basic' ? this : super.filter(team => team.type === 'sub', 'subs');
     }
-
-
-
-
 
 }
 
