@@ -34,3 +34,5 @@ class ParentPointsHandler extends PointsHandler {
     }
 
 }
+
+module.exports = ParentPointsHandler;
