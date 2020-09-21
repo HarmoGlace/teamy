@@ -283,9 +283,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     get parents () {
-        return this.type === 'basic' ? this : new TeamsHandler({
-            base: this.toArray().filter(team => team.type === 'parent').map(team => [ team.id, team ]),
-            type: 'parents'});
+        return this.type === 'basic' ? this : this.filter(team => team.type === 'parent');
     }
 
     /**
@@ -294,10 +292,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     get subs () {
-        return this.type === 'basic' ? this : new TeamsHandler({
-            base: this.toArray().filter(team => team.type === 'sub').map(team => [ team.id, team ]),
-            type: 'subs'
-        });
+        return this.type === 'basic' ? this : this.filter(team => team.type === 'sub');
     }
 
 
