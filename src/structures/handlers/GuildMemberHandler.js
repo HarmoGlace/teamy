@@ -1,5 +1,7 @@
 const SubPointsHandler = require('./SubPointsHandler');
 const PointsHandler = require('./PointsHandler');
+const SubTeam = require("../team/SubTeam");
+const { defineUnlistedProperty } = require('../util/Util');
 
 module.exports = (GuildMember, manager) => {
 
@@ -11,19 +13,9 @@ module.exports = (GuildMember, manager) => {
         constructor (...args) {
             super(...args);
 
-            Object.defineProperty(this, 'manager', {
-                value: manager,
-                writable: false,
-                configurable: false,
-                enumerable: false
-            });
+            defineUnlistedProperty('manager', manager, this);
 
-            Object.defineProperty(this, 'type', {
-                value: 'member',
-                writable: false,
-                configurable: false,
-                enumerable: false
-            });
+            defineUnlistedProperty('type', 'property', this);
 
             this.#internalPoints = new SubPointsHandler(this);
             this.#noTeamPoints = new PointsHandler(this);
@@ -34,7 +26,7 @@ module.exports = (GuildMember, manager) => {
 
             this.checkSavedTeam();
 
-            return (found && found.constructor !== SubPointsHandler ? this.manager.get(found) : found) || null;
+            return (found && found.constructor !== SubTeam ? this.manager.get(found) : found) || null;
 
         }
 
