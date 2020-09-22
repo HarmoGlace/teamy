@@ -1,4 +1,5 @@
 const TeamyError = require("../TeamyError");
+const { defineUnlistedProperty} = require('../util/Util');
 
 /**
  * Points Handler
@@ -17,7 +18,7 @@ class PointsHandler {
          * @type {Team}
          */
 
-        this.team = team;
+        defineUnlistedProperty('team', team, this);
 
 
         /**

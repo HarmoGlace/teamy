@@ -74,7 +74,7 @@ const sub1 = manager.get('sub1');
 
 const iterated = manager.parents;
 
-console.log(iterated, manager.subs)
+console.log(manager)
 
 // for (const team of iterated) {
 //     console.log(team)

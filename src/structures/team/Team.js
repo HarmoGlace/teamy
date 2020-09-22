@@ -1,5 +1,6 @@
 const TeamyError = require('../TeamyError');
 const PointsHandler = require('../handlers/PointsHandler');
+const { defineUnlistedProperty } = require('../util/Util');
 
 /**
  * A teamy basic team
@@ -27,7 +28,7 @@ class Team {
          * The TeamsManager this team belong to
          * @type {TeamsManager}
          */
-        this.manager = manager;
+        defineUnlistedProperty('manager', manager, this);
 
         /**
          * The ID of this team

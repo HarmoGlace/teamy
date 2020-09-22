@@ -10,16 +10,28 @@ class TeamsHandler extends Map {
      * @param type
      */
 
+    #manager
+
     constructor ({
-                     base,
+                     base = [],
                      manager = null,
                      type = null
                  }) {
         super(base);
         defineUnlistedProperty('constructed', this.constructor, this);
-        defineUnlistedProperty('manager', manager, this);
+        // defineUnlistedProperty('manager', manager, this);
+
+        this.#manager = manager;
 
         defineUnlistedProperty('type', type || manager && manager.type === 'advanced' ? 'all' : 'normal' || 'unknown', this);
+    }
+
+    get manager () {
+        return this.#manager
+    }
+
+    set manager (newValue) {
+        this.#manager = newValue;
     }
 
     /**

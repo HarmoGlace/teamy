@@ -34,11 +34,11 @@ class TeamsManager extends TeamsHandler {
                      alwaysPool = false
                  } = {}) {
 
-        super([]);
-
-        this._constructed = super.constructor;
+        super({ base: [] });
 
         super.manager = this;
+
+        defineUnlistedProperty('_constructed', super.constructor, this);
 
         type = type.toLowerCase();
 
@@ -63,8 +63,8 @@ class TeamsManager extends TeamsHandler {
          */
         defineUnlistedProperty('implementMember', implementMember, this);
 
-        if (client) this.client = client;
-        if (guildId) this.guildId = guildId;
+        if (client) defineUnlistedProperty('client', client, this);
+        if (guildId) defineUnlistedProperty('guildId', guildId, this);
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
         if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
@@ -162,7 +162,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     setClient (client) {
-        return this.client = client;
+        return this.client = defineUnlistedProperty('client', client, this);
     }
 
     /**
@@ -204,7 +204,7 @@ class TeamsManager extends TeamsHandler {
                 for (const sub of subs) {
                     if (typeof sub !== 'object' || sub instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${sub.constructor.name}`);
 
-                    if (this.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}`);
+                    if (this.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}. IDs should be unique`);
 
                     const subTeam = new SubTeam(this, sub, parentTeam);
 
