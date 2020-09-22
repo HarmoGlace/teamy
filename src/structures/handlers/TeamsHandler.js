@@ -18,8 +18,8 @@ class TeamsHandler extends Map {
                      type = null
                  }) {
         super(base);
+
         defineUnlistedProperty('constructed', this.constructor, this);
-        // defineUnlistedProperty('manager', manager, this);
 
         this.#manager = manager;
 
@@ -94,10 +94,9 @@ class TeamsHandler extends Map {
 
 
     filter (filterFunction, type = 'custom') {
-        // console.log(this.toArray(), type, this.type)
         return new this._constructed(
             {
-                base: this.toArray().filter(filterFunction),
+                base: this.toArray().filter(filterFunction).map(team => [ team.id, team ]),
                 type,
                 manager: this.manager
             });

@@ -74,7 +74,14 @@ const sub1 = manager.get('sub1');
 
 const iterated = manager.parents;
 
-console.log(manager)
+// console.log(manager, '  toArray: ', manager.toArray(), '')
+//
+//
+// console.log('lol')
+//
+// console.log(manager.get('parent1'))
+
+console.log(iterated, iterated.get('parent1'))
 
 // for (const team of iterated) {
 //     console.log(team)
