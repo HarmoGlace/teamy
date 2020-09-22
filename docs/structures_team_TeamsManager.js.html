@@ -129,7 +129,7 @@
 const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');
-const TeamsHandler = require('./TeamsHandler');
+const TeamsHandler = require('../handlers/TeamsHandler');
 
 /**
  * A TeamsManager
@@ -148,7 +148,10 @@ class TeamsManager extends TeamsHandler {
                      functions: {
                          setPoints,
                          getPoints,
-                         getMemberTeam
+                         getMemberTeam,
+                         getSavedMemberTeam,
+                         setMemberTeam,
+                         getTeamMembers
                      } = {},
                      client = null,
                      guildId = null,
@@ -159,6 +162,8 @@ class TeamsManager extends TeamsHandler {
 
         super([]);
 
+        this._constructed = super.constructor;
+
         super.manager = this;
 
         type = type.toLowerCase();
@@ -168,10 +173,11 @@ class TeamsManager extends TeamsHandler {
          * @type {Boolean}
          */
 
-        this.initialized = false;
+        this.#defineProperty('initialized', false);
 
         /**
          * Whatever or not to always pool when getting points
+         * @type {Boolean}
          */
 
         this.alwaysPool = alwaysPool;
@@ -218,13 +224,25 @@ class TeamsManager extends TeamsHandler {
         this.getMemberTeam = (member) => this.subs.find(team => member.roles.cache.has(team.roleId));
 
         if (getMemberTeam &amp;&amp; typeof getMemberTeam === 'function') this.getMemberTeam = (member) => {
-            const found = getMemberTeam(this.subs, member);
-            console.log(found)
+            const found = getMemberTeam(member, this.subs);
 
             const returnType = this.type === 'basic' ? Team : SubTeam;
 
             if (found !== null &amp;&amp; found.constructor !== returnType) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found.constructor.name}`);
         };
+
+        const teamsFunctions = [ getSavedMemberTeam, setMemberTeam, getTeamMembers ];
+
+        if (teamsFunctions.every(team => team &amp;&amp; typeof team === 'function')) {
+            this.getSavedMemberTeam = getSavedMemberTeam;
+            this.setMemberTeam = setMemberTeam;
+            this.getTeamMembers = getTeamMembers;
+
+
+            this.teamsFunctions = true;
+        }
+
+
 
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
@@ -241,6 +259,15 @@ class TeamsManager extends TeamsHandler {
         }
 
 
+    }
+
+    #defineProperty (value, name) {
+        return Object.defineProperty(this, name, {
+            value,
+            configurable: true,
+            enumerable: false,
+            writable: true
+        });
     }
 
 
@@ -319,7 +346,7 @@ class TeamsManager extends TeamsHandler {
                     const subTeam = new SubTeam(this, sub, parentTeam);
 
                     super.set(subTeam.id, subTeam);
-                    parentTeam.subs.push(subTeam);
+
                 }
 
                 super.set(parentTeam.id, parentTeam);
@@ -339,7 +366,6 @@ class TeamsManager extends TeamsHandler {
                 const subTeam = new SubTeam(this, team, parent);
 
                 super.set(subTeam.id, subTeam);
-                parent.subs = parent.subs.push(subTeam);
 
                 return subTeam;
 
@@ -396,7 +422,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     get parents () {
-        return this.type === 'basic' ? this : new TeamsHandler(this.toArray().filter(team => team.type === 'parent').map(team => [ team.id, team ]), 'parents');
+        return this.type === 'basic' ? this : super.filter(team => team.type === 'parent', 'parents');
     }
 
     /**
@@ -405,12 +431,8 @@ class TeamsManager extends TeamsHandler {
      */
 
     get subs () {
-        return this.type === 'basic' ? this : new TeamsHandler(this.toArray().filter(team => team.type === 'sub').map(team => [ team.id, team ]), 'subs');
+        return this.type === 'basic' ? this : super.filter(team => team.type === 'sub', 'subs');
     }
-
-
-
-
 
 }
 

@@ -1,3 +1,6 @@
+const { defineUnlistedProperty } = require('../util/Util');
+
+
 class TeamsHandler extends Map {
 
     /**
@@ -13,10 +16,10 @@ class TeamsHandler extends Map {
                      type = null
                  }) {
         super(base);
-        this._constructed = this.constructor;
-        this.manager = manager;
+        defineUnlistedProperty('constructed', this.constructor, this);
+        defineUnlistedProperty('manager', manager, this);
 
-        this.type = type || manager && manager.type === 'advanced' ? 'all' : 'normal' || 'unknown';
+        defineUnlistedProperty('type', type || manager && manager.type === 'advanced' ? 'all' : 'normal' || 'unknown', this);
     }
 
     /**
@@ -79,7 +82,7 @@ class TeamsHandler extends Map {
 
 
     filter (filterFunction, type = 'custom') {
-        console.log(this.toArray(), type, this.type)
+        // console.log(this.toArray(), type, this.type)
         return new this._constructed(
             {
                 base: this.toArray().filter(filterFunction),

@@ -3,6 +3,7 @@ const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');
 const TeamsHandler = require('../handlers/TeamsHandler');
+const { defineUnlistedProperty } = require('../util/Util');
 
 /**
  * A TeamsManager
@@ -46,21 +47,21 @@ class TeamsManager extends TeamsHandler {
          * @type {Boolean}
          */
 
-        this.initialized = false;
+        defineUnlistedProperty('initialized', false, this);
 
         /**
          * Whatever or not to always pool when getting points
+         * @type {Boolean}
          */
 
-        this.alwaysPool = alwaysPool;
+        defineUnlistedProperty('alwaysPool', alwaysPool, this);
 
 
         /**
          * Client option. If enabled it will add the `team` and `teams` properties on GuildMembers
          * @type {Boolean}
-         * @private
          */
-        this.implementMember = implementMember;
+        defineUnlistedProperty('implementMember', implementMember, this);
 
         if (client) this.client = client;
         if (guildId) this.guildId = guildId;
@@ -78,14 +79,14 @@ class TeamsManager extends TeamsHandler {
          * @type {TeamsManagerType}
          */
 
-        this.type = type;
+        defineUnlistedProperty('type', type, this);
 
         /**
          * setPoints and getPoints functions of this TeamsManager
          * @type {TeamsManagerFunctions}
          */
 
-        this.functions = { setPoints, getPoints };
+        defineUnlistedProperty('functions',{ setPoints, getPoints }, this);
 
 
         /**
@@ -93,7 +94,7 @@ class TeamsManager extends TeamsHandler {
          * @param {GuildMember} member member to get team
          * @returns {Team | SubTeam | null} The member team or null if none is found
          */
-        this.getMemberTeam = (member) => this.subs.find(team => member.roles.cache.has(team.roleId));
+        defineUnlistedProperty('getMemberTeam', (member) => this.subs.find(team => member.roles.cache.has(team.roleId)), this);
 
         if (getMemberTeam && typeof getMemberTeam === 'function') this.getMemberTeam = (member) => {
             const found = getMemberTeam(member, this.subs);
@@ -106,12 +107,12 @@ class TeamsManager extends TeamsHandler {
         const teamsFunctions = [ getSavedMemberTeam, setMemberTeam, getTeamMembers ];
 
         if (teamsFunctions.every(team => team && typeof team === 'function')) {
-            this.getSavedMemberTeam = getSavedMemberTeam;
-            this.setMemberTeam = setMemberTeam;
-            this.getTeamMembers = getTeamMembers;
+            defineUnlistedProperty('getSavedMemberTeam', getSavedMemberTeam, this);
+            defineUnlistedProperty('setMemberTeam', setMemberTeam, this);
+            defineUnlistedProperty('getTeamMembers', getTeamMembers, this);
 
 
-            this.teamsFunctions = true;
+            defineUnlistedProperty('teamsFunctions', true, this);
         }
 
 
@@ -132,7 +133,6 @@ class TeamsManager extends TeamsHandler {
 
 
     }
-
 
     /**
      * Initialize this TeamsManager : Creates a role property for each Team
@@ -209,7 +209,7 @@ class TeamsManager extends TeamsHandler {
                     const subTeam = new SubTeam(this, sub, parentTeam);
 
                     super.set(subTeam.id, subTeam);
-                    parentTeam.subs.push(subTeam);
+
                 }
 
                 super.set(parentTeam.id, parentTeam);
