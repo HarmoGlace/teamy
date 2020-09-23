@@ -89,15 +89,22 @@ class TeamsHandler extends Map {
     }
 
     /**
-     * Find a team with a function
-     * @param {function} findFunction function passed to find a team
-     * @returns {Team|ParentTeam|SubTeam|null|*}
+     * Find a team with a function. Same as [Array#find](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/find)
+     * @param {function} findFunction Function passed to find a team
+     * @returns {TeamsHandler<Team|ParentTeam|SubTeam>|null|*}
      */
 
     find (findFunction) {
         return this.toArray().find(findFunction) || null;
     }
 
+
+    /**
+     * Filter teams with a function. Same as [Array#filter](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/filter)
+     * @param {function} filterFunction Function passed to filter the teams
+     * @param {String} type The type of the new TeamsHandler
+     * @return {TeamsHandler<Team|ParentTeam|SubTeam>|null|*}
+     */
 
     filter (filterFunction, type = 'custom') {
         return new this._constructed(
@@ -140,7 +147,7 @@ class TeamsHandler extends Map {
 
     /**
      * Convert this TeamsManager to an Array
-     * @return {Team[]|Array<ParentTeam|SubTeam>|*}
+     * @return {Team[]|Array<ParentTeam|SubTeam>|Array<*>}
      */
 
     toArray () {

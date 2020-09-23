@@ -573,7 +573,7 @@
         <p class="tag-source">
             <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line129">line 129</a>
+                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line136">line 136</a>
             </span>
         </p>
     
@@ -750,12 +750,12 @@
 
 
     
-    <h4 class="name" id="find">
-        <a class="href-link" href="#find">#</a>
+    <h4 class="name" id="filter">
+        <a class="href-link" href="#filter">#</a>
         
         <span class="code-name">
             
-                find<span class="signature">(findFunction)</span><span class="type-signature"> &rarr; {<a href="Team.html">Team</a>|<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>|null|*}</span>
+                filter<span class="signature">(filterFunction, type)</span><span class="type-signature"> &rarr; {<a href="TeamsHandler.html">TeamsHandler</a>.&lt;(<a href="Team.html">Team</a>|<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)>|null|*}</span>
             
         </span>
     </h4>
@@ -764,7 +764,221 @@
     
     
     <div class="description">
-        <p>Find a team with a function</p>
+        <p>Filter teams with a function. Same as <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/filter">Array#filter</a></p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>filterFunction</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>Function passed to filter the teams</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>type</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">String</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          custom
+      
+      </td>
+  
+
+  <td class="description last"><p>The type of the new TeamsHandler</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line109">line 109</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type"><a href="TeamsHandler.html">TeamsHandler</a>.&lt;(<a href="Team.html">Team</a>|<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)></span>
+|
+
+<span class="param-type">null</span>
+|
+
+<span class="param-type">*</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="find">
+        <a class="href-link" href="#find">#</a>
+        
+        <span class="code-name">
+            
+                find<span class="signature">(findFunction)</span><span class="type-signature"> &rarr; {<a href="TeamsHandler.html">TeamsHandler</a>.&lt;(<a href="Team.html">Team</a>|<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)>|null|*}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Find a team with a function. Same as <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/find">Array#find</a></p>
     </div>
     
 
@@ -818,7 +1032,7 @@
 
   
 
-  <td class="description last"><p>function passed to find a team</p></td>
+  <td class="description last"><p>Function passed to find a team</p></td>
 </tr>
 
 
@@ -901,13 +1115,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type"><a href="Team.html">Team</a></span>
-|
-
-<span class="param-type"><a href="ParentTeam.html">ParentTeam</a></span>
-|
-
-<span class="param-type"><a href="SubTeam.html">SubTeam</a></span>
+<span class="param-type"><a href="TeamsHandler.html">TeamsHandler</a>.&lt;(<a href="Team.html">Team</a>|<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)></span>
 |
 
 <span class="param-type">null</span>
@@ -1049,7 +1257,7 @@
         <p class="tag-source">
             <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line155">line 155</a>
+                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line162">line 162</a>
             </span>
         </p>
     
@@ -1379,7 +1587,7 @@
         <p class="tag-source">
             <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line118">line 118</a>
+                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line125">line 125</a>
             </span>
         </p>
     
@@ -1581,7 +1789,7 @@
         
         <span class="code-name">
             
-                toArray<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Team.html">Team</a>>|Array.&lt;(<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)>|*}</span>
+                toArray<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Team.html">Team</a>>|Array.&lt;(<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)>|Array.&lt;*>}</span>
             
         </span>
     </h4>
@@ -1641,7 +1849,7 @@
         <p class="tag-source">
             <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line146">line 146</a>
+                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line153">line 153</a>
             </span>
         </p>
     
@@ -1682,7 +1890,7 @@
 <span class="param-type">Array.&lt;(<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)></span>
 |
 
-<span class="param-type">*</span>
+<span class="param-type">Array.&lt;*></span>
 
 
     </div>
