@@ -28,22 +28,10 @@ module.exports = (GuildMember, manager) => {
         }
 
         get team () {
-            const found = this.manager.getMemberTeam(this, this.manager.subs);
-
-            this.checkSavedTeam();
+            const found = this.manager.functions.getMemberTeam(this, this.manager.subs);
 
             return (found && found.constructor !== SubTeam ? this.manager.get(found) : found) || null;
 
-        }
-
-        async checkSavedTeam () {
-            if (!this.manager.teamsFunctions) return false;
-            const found = this.manager.getMemberTeam(this, this.manager.subs)?.id;
-            const saved = (await this.manager.getSavedMemberTeam(this, this.manager.subs))?.id;
-            
-            if (found !== saved) await this.manager.setMemberTeam(found ? this.manager.subs.get(found) : null, this);
-
-            return true;
         }
 
 

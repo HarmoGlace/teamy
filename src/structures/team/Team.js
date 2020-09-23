@@ -102,7 +102,7 @@ class Team {
     get members () {
         if (!this.membersEnabled) return null;
 
-        let returned = this.manager.getTeamMembers(this);
+        let returned = this.manager.functions.getTeamMembers(this);
         const GuildMemberHandler = this.manager.client.Structures.get('GuildMember');
 
         if (returned && Array.isArray(returned) && returned.every(member => member.constructor === GuildMemberHandler)) returned = new TeamsHandler({

@@ -42,9 +42,9 @@ const manager = new TeamsManager({
         getMemberTeam: (member, teams) => {
             const found = teams.find(team => member.roles.cache.has(team.roleId)) || null;
 
-            // const saved = databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null;
-            //
-            // if (found && saved && found.id !== saved.id) databases.member.set(member.id, found.id, 'team');
+            const saved = databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null;
+
+            if (found && saved && found.id !== saved.id) databases.member.set(member.id, found.id, 'team');
 
             return found;
         },
@@ -89,7 +89,7 @@ const subs = manager.subs;
 
 const found = subs.get('sub1');
 
-console.log(found.members)
+// console.log(found.members)
 
 // console.log(iterated[Symbol.iterator].next())
 
@@ -131,22 +131,24 @@ client.once('ready', () => {
     console.log(`Ready on ${client.user.username}`)
 })
 //
-// client.on('message', async message => {
-//
-//     const member = message.member;
-//
-//     member.points.clear();
-//
-//     // console.log(member)
-//
-//     const points = await member.points.get();
-//
-//     const newPoints = await member.points.add(12);
-//
-//     console.log(newPoints);
-//
-//
-// })
+client.on('message', async message => {
+
+    const member = message.member;
+
+    console.log('found: ', member.team);
+
+    // member.points.clear();
+    //
+    // // console.log(member)
+    //
+    // const points = await member.points.get();
+    //
+    // const newPoints = await member.points.add(12);
+    //
+    // console.log(newPoints);
+
+
+})
 
 client.login(config.token);
 

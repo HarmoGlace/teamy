@@ -16,6 +16,8 @@ class TeamsManager extends TeamsHandler {
      * @param {TeamsManagerData} data TeamsManager data
      */
 
+    #privateGetMemberTeam
+
     constructor ({
                      teams = [],
                      type = 'basic',
@@ -89,27 +91,27 @@ class TeamsManager extends TeamsHandler {
         defineUnlistedProperty('functions',{ setPoints, getPoints }, this);
 
 
+        this.#privateGetMemberTeam = getMemberTeam || (member => this.subs.find(team => member.roles.cache.has(team.roleId)));
+
         /**
          * Get a member team
          * @param {GuildMember} member member to get team
          * @returns {Team | SubTeam | null} The member team or null if none is found
          */
-        defineUnlistedProperty('getMemberTeam', (member) => this.subs.find(team => member.roles.cache.has(team.roleId)), this);
 
-        if (getMemberTeam && typeof getMemberTeam === 'function') this.getMemberTeam = (member) => {
-            const found = getMemberTeam(member, this.subs);
+        defineUnlistedProperty('getMemberTeam', (member) => {
+            const found = this.#privateGetMemberTeam(member, this.subs);
 
             const returnType = this.type === 'basic' ? Team : SubTeam;
 
             if (found !== null && found.constructor !== returnType) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found.constructor.name}`);
-        };
 
-        const teamsFunctions = [ getSavedMemberTeam, setMemberTeam, getTeamMembers ];
+            return found;
+        }, this.functions);
 
-        if (teamsFunctions.every(team => team && typeof team === 'function')) {
-            defineUnlistedProperty('getSavedMemberTeam', getSavedMemberTeam, this);
-            defineUnlistedProperty('setMemberTeam', setMemberTeam, this);
-            defineUnlistedProperty('getTeamMembers', getTeamMembers, this);
+
+        if (getTeamMembers && typeof getTeamMembers === 'function') {
+            defineUnlistedProperty('getTeamMembers', getTeamMembers, this.functions);
 
 
             defineUnlistedProperty('teamsFunctions', true, this);
