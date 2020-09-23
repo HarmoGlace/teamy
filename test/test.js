@@ -1,4 +1,4 @@
-const { TeamsManager, TeamsHandler } = require('../src/index');
+const { TeamsManager, TeamsHandler } = require('teamy');
 
 const { Client } = require('discord.js');
 const Enmap = require('enmap');
@@ -58,7 +58,11 @@ const manager = new TeamsManager({
 
 const client = new Client();
 
-manager.setClient(client);
+manager.client = client;
+
+const { Structures } = require('discord.js');
+
+console.log(Structures.get('GuildMember'));
 
 const sub1 = manager.get('sub1');
 // console.log(sub1.name)

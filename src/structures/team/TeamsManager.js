@@ -74,8 +74,8 @@ class TeamsManager extends TeamsHandler {
          */
         defineUnlistedProperty('implementMember', implementMember, this);
 
-        if (client) defineUnlistedProperty('client', client, this);
-        if (guildId) defineUnlistedProperty('guildId', guildId, this);
+        defineUnlistedProperty('client', client || null, this);
+        defineUnlistedProperty('guildId', guildId || null, this);
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
         if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
@@ -129,19 +129,20 @@ class TeamsManager extends TeamsHandler {
 
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
-        if (teams) this.set(teams);
-
-        if (autoInitialize) this.initialize();
-
         if (this.implementMember) {
+            console.log('implementing')
             const { Structures } = require('discord.js');
             const GuildMemberHandler = require('../handlers/GuildMemberHandler');
 
 
             Structures.extend('GuildMember', (GuildMember) => GuildMemberHandler(GuildMember, this));
 
-            defineUnlistedProperty('Structures', Structures, this);
+            // defineUnlistedProperty('Structures', Structures, this);
         }
+
+        if (teams) this.set(teams);
+
+        if (autoInitialize) this.initialize();
 
 
     }
@@ -172,13 +173,7 @@ class TeamsManager extends TeamsHandler {
 
     }
 
-    /**
-     * Sets the client of this TeamsManager
-     * @param {Client} client Discord.js client
-     * @returns {Client} Client provided
-     */
-
-    setClient (client) {
+    set client (client) {
         defineUnlistedProperty('client', client, this);
     }
 
