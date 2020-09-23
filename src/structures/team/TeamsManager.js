@@ -13,10 +13,21 @@ class TeamsManager extends TeamsHandler {
 
 
     /**
-     * @param {TeamsManagerData} data TeamsManager data
+     * TeamsManager
      */
 
     #privateGetMemberTeam
+
+    /**
+     * @param {Object} options Options to instantiate a TeamsManager
+     * @param {TeamResolvable[]} [options.teams = []] List of teams
+     * @param {TeamsManagerType} [options.type='basic'] The type of the TeamsManager
+     * @param {TeamsManagerFunctions} options.functions Functions to store and get points
+     * @param {Client} [options.client] Discord.js client used to get roles. Need the guildId option
+     * @param {String} [options.guildId] Guild id used to get roles. Need the client option
+     * @param {Boolean} [options.autoInitialize] If true it will fire the initialize method when creating the manager
+     * @param  {Boolean} [options.implementMember] If true it will add a team and teams properties to Discord.js GuildMembers. The client needs to be created after this manager
+     */
 
     constructor ({
                      teams = [],
@@ -24,10 +35,8 @@ class TeamsManager extends TeamsHandler {
                      functions: {
                          setPoints,
                          getPoints,
-                         getMemberTeam,
-                         getSavedMemberTeam,
-                         setMemberTeam,
-                         getTeamMembers
+                         getMemberTeam = null,
+                         getTeamMembers = null
                      } = {},
                      client = null,
                      guildId = null,
@@ -72,7 +81,7 @@ class TeamsManager extends TeamsHandler {
         if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
 
 
-        if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager Type should be basic or advanced. Received ${type}`)
+        if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager Type should be basic or advanced. Received ${type}`)
 
         /**
          * TeamsManager type, either
@@ -88,7 +97,7 @@ class TeamsManager extends TeamsHandler {
          * @type {TeamsManagerFunctions}
          */
 
-        defineUnlistedProperty('functions',{ setPoints, getPoints }, this);
+        defineUnlistedProperty('functions', { setPoints, getPoints }, this);
 
 
         this.#privateGetMemberTeam = getMemberTeam || (member => this.subs.find(team => member.roles.cache.has(team.roleId)));
@@ -116,7 +125,6 @@ class TeamsManager extends TeamsHandler {
 
             defineUnlistedProperty('teamsFunctions', true, this);
         }
-
 
 
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);

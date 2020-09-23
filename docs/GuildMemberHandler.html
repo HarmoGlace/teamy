@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamy | structures/handlers/SubPointsHandler.js</title>
+  <title>Teamy | GuildMemberHandler</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -115,135 +113,320 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>structures/handlers/SubPointsHandler.js</h1>
+                    <p>Class</p>
+                    <h1>GuildMemberHandler</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const PointsHandler = require('./PointsHandler');
-const TeamyError = require("../TeamyError");
+        <h2><span class="attribs"><span class="type-signature"></span></span>GuildMemberHandler<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description"><p>A GuildMemberHandler</p></div>
+        
+    
+</header>
 
-/**
- * Points Handler for Sub Teams
- * @extends PointsHandler
- */
-
-class SubPointsHandler extends PointsHandler {
-
-    /**
-     * @param {SubTeam} team SubTeam this Handler belong to
-     */
-
-    constructor (team) {
-
-        super(team);
-
-    }
-
-    /**
-     * Get the points of the parent team
-     * @returns {Number}
-     */
-
-    async parent () {
-        return this.team.parent.points.get()
-    }
-
-    /**
-     * Get the points of this team
-     * @returns {Number}
-     */
-
-    async current (...args) {
-        return super.get(...args);
-    }
-
-    /**
-     * Get the points of this team
-     * @returns {Number}
-     */
-
-    async get (...args) {
-        return this.current(...args);
-    }
-
-    /**
-     * Add points to this team
-     * @param {Number} points Points to add
-     * @returns {Number} newPoints New points of the team
-     */
-
-    async add (points) {
-        await this.team.parent.points.add(points);
-
-        await this.setLocal(await this.current() + points);
-
-        return this.current();
-    }
-
-    /**
-     * Remove points to this team
-     * @param {Number} points Points to remove
-     * @returns {Number} points New points of the team
-     */
-
-    async remove (points) {
-        await this.team.parent.points.remove(points);
-
-        await this.setLocal(this.points.current() - points);
-
-        return this.current();
-    }
-
-    /**
-     * Clears the points of this SubTeam
-     * @param [locally=false] Whatever to only clear points of this SubTeam without removing them from the ParentTeam. Could cause incorrect data
-     */
-
-    async clear (locally = false) {
-        return (locally ? this.set : this.setLocal).bind(this)(0)
-    }
-
-    /**
-     * Set points of this team
-     * @param {Number} points Points to set
-     * @returns {Number} newPoints New Points of the team
-     */
-
-    async set (points) {
-        const diff = points - await this.current();
-
-        await this.team.parent.points.add(diff);
-
-        await this.team.manager.functions.setPoints(this.team, points);
-
-        return this.get();
-    }
-
-    /**
-     * Set points of this team only without editing parent team points. Use this carefully
-     * @param {Number} points Points to set
-     * @returns {*}
-     */
-
-    async setLocal (points) {
-
-        if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
-
-        return await this.team.manager.functions.setPoints(this.team, points);
-    }
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <div class="members">
+                    <div class="member">
+                        <div class=name>
+                            <span class="tag">Constructor</span>
+                        </div>
+                        
 
 
-}
+    
+    <h4 class="name" id="GuildMemberHandler">
+        <a class="href-link" href="#GuildMemberHandler">#</a>
+        
+        <span class="code-name">
+            
+                new GuildMemberHandler<span class="signature">()</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
 
-module.exports = SubPointsHandler;</code></pre>
-        </article>
-    </section>
+    
+    
+    <div class="description">
+        <p>Instantiates this GuildMemberHandler. Should not be done manually</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_handlers_GuildMemberHandler.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_handlers_GuildMemberHandler.js.html">structures/handlers/GuildMemberHandler.js</a>, <a href="structures_handlers_GuildMemberHandler.js.html#line21">line 21</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Members</h1>
+            <div class="members">
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+<span class="param-type"><a href="SubPointsHandler.html">SubPointsHandler</a></span>
+|
+
+<span class="param-type"><a href="PointsHandler.html">PointsHandler</a></span>
+
+
+    </span>
+
+<h4 class="name" id="points">
+    <a class="href-link" href="#points">#</a>
+    
+    <span class="code-name">
+        points
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Returns the PointsHandler of this GuildMember. Returns a basic points handler if the member is not in a team</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_handlers_GuildMemberHandler.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_handlers_GuildMemberHandler.js.html">structures/handlers/GuildMemberHandler.js</a>, <a href="structures_handlers_GuildMemberHandler.js.html#line51">line 51</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="type">
+    <a class="href-link" href="#type">#</a>
+    
+        
+            <span class='tag'>constant</span>
+        
+    
+    <span class="code-name">
+        type
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <p>Defines the Type of this Class: <code>member</code></p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_handlers_GuildMemberHandler.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_handlers_GuildMemberHandler.js.html">structures/handlers/GuildMemberHandler.js</a>, <a href="structures_handlers_GuildMemberHandler.js.html#line31">line 31</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

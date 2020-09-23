@@ -50,13 +50,6 @@ const manager = new TeamsManager({
         },
 
 
-
-        /**
-         * Team Function used to get all GuildMember of a Team
-         * @param team the team where we want its members
-         * @return {GuildMemberHandler[]|TeamsHandler<GuildMember>}
-         */
-
         getTeamMembers: (team) => databases.member.filter(user => user.team === team.id).keyArray().map(member => team.manager.teamsGuild.members.fetch(member))
     },
     guildId: '718743854496612406', // guildId where these teams belong to. It will be used to get roles

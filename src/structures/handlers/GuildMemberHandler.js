@@ -5,10 +5,18 @@ const { defineUnlistedProperty } = require('../util/Util');
 
 module.exports = (GuildMember, manager) => {
 
-    return class GuildMemberHandler extends GuildMember {
+    /**
+     * A GuildMemberHandler
+     */
+
+    class GuildMemberHandler extends GuildMember {
 
         #internalPoints
         #noTeamPoints
+
+        /**
+         * Instantiates this GuildMemberHandler. Should not be done manually
+         */
 
         constructor (...args) {
             super(...args);
@@ -16,7 +24,7 @@ module.exports = (GuildMember, manager) => {
             defineUnlistedProperty('manager', manager, this);
 
             /**
-             * Defines the Type of this Class
+             * Defines the Type of this Class: `member`
              * @constant
              */
 
@@ -36,8 +44,8 @@ module.exports = (GuildMember, manager) => {
 
 
         /**
-         * Returns the PointsHandler of this GuildMember
-         * @return {*|PointsHandler}
+         * Returns the PointsHandler of this GuildMember. Returns a basic points handler if the member is not in a team
+         * @type {SubPointsHandler|PointsHandler}
          */
 
         get points () {
@@ -49,5 +57,7 @@ module.exports = (GuildMember, manager) => {
         }
 
     }
+
+    return GuildMemberHandler
 }
 

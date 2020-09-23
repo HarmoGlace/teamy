@@ -1,13 +1,4 @@
-/**
- * @typedef {Object} TeamsManagerData
- * @property {Team[] | ParentTeam[]} [teams = []] List of teams
- * @property {TeamsManagerType} [type='basic'] The type of the TeamsManager
- * @property {TeamsManagerFunctions} functions Functions to store and get points
- * @property {Client} [client] Discord.js client used to get roles. Need the guildId option
- * @property {String} [guildId] Guild id used to get roles. Need the client option
- * @property {Boolean} [autoInitialize] If true it will fire the initialize method when creating the manager
- * @property  {Boolean} [implementMember] If true it will add a team and teams properties to Discord.js GuildMembers. The client needs to be created after this manager
- */
+
 
 /**
  * The type of a TeamsManager. Can be :
@@ -38,12 +29,16 @@ exports.TeamsManagerType = [
  * @property {String[]} [aliases=[]] Team name aliases
  * @property {Number} [color] Team color
  * @property {String} [roleId] Team role ID
+ * @property {ParentTeam} [parent] Parent Team of this team. Only needed if this team is a SubTeam
  */
 
 /**
  @typedef {Object} TeamsManagerFunctions
- @property setPoints {function} Used to set the points of a team. Parameters : `team` and `points`
- @property getPoints {function} Used to get the points of a team. Parameter: `team`
+ @property setPoints {function} Used to set the points of a team. Parameters : `team` and `points`. Should return a Number
+ @property getPoints {function} Used to get the points of a team. Parameter: `team`. Should return a Number
+ @property [getMemberTeam] {function} Used to know the team of a GuildMember. Parameter: `member`. Should return a Team or a SubTeam
+ @property [getTeamsMembers] {function} Used to know the members of a team. Parameter: `team`. Should return an array of GuildMember
  */
+
 
 

@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#points">points</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="GuildMemberHandler.html">GuildMemberHandler</a></li><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -125,25 +125,46 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>class TeamsHandler extends Map {
+            <pre class="prettyprint source linenums"><code>const { defineUnlistedProperty } = require('../util/Util');
+
+/**
+ * TeamsHandler
+ */
+
+class TeamsHandler extends Map {
+
+
+
+    #manager
 
     /**
      * Initializes this TeamsHandler
-     * @param base
-     * @param manager
-     * @param type
+     * @param {Object} options
+     * @param {Array&lt;Array&lt;String, *>>} [options.base=[]]
+     * @param {TeamsManager} options.manager
+     * @param {String} [options.type='unknown']
      */
 
     constructor ({
-                     base,
+                     base = [],
                      manager = null,
                      type = null
                  }) {
         super(base);
-        this._constructed = this.constructor;
-        this.manager = manager;
 
-        this.type = type || manager &amp;&amp; manager.type === 'advanced' ? 'all' : 'normal' || 'unknown';
+        defineUnlistedProperty('constructed', this.constructor, this);
+
+        this.#manager = manager;
+
+        defineUnlistedProperty('type', type || manager &amp;&amp; manager.type === 'advanced' ? 'all' : 'normal' || 'unknown', this);
+    }
+
+    get manager () {
+        return this.#manager
+    }
+
+    set manager (newValue) {
+        this.#manager = newValue;
     }
 
     /**
@@ -158,7 +179,7 @@
 
     /**
      * Teams sorted by their points
-     * @returns {Team[]|ParentTeam[]}
+     * @returns {Team[]|ParentTeam[]|*}
      */
 
     async sorted () {
@@ -168,7 +189,7 @@
             return elements.sort((a, b) => b.points.latest - a.points.latest);
         }
 
-        if ([ 'normal', 'subs' ].includes(this.type)) return sortTeams(this.toArray());
+        if ([ 'normal', 'subs', 'member' ].includes(this.type)) return sortTeams(this.toArray());
 
 
         const parents = this.toArray().filter(team => team.type === 'parent');
@@ -197,7 +218,7 @@
     /**
      * Find a team with a function
      * @param {function} findFunction function passed to find a team
-     * @returns {Team|ParentTeam|SubTeam|null}
+     * @returns {Team|ParentTeam|SubTeam|null|*}
      */
 
     find (findFunction) {
@@ -206,10 +227,9 @@
 
 
     filter (filterFunction, type = 'custom') {
-        // console.log(this.toArray(), type, this.type)
         return new this._constructed(
             {
-                base: this.toArray().filter(filterFunction),
+                base: this.toArray().filter(filterFunction).map(team => [ team.id, team ]),
                 type,
                 manager: this.manager
             });
@@ -219,13 +239,19 @@
     /**
      * Resolve a team with a string
      * @param {String} resolvable
-     * @returns {Team|ParentTeam|SubTeam|null}
+     * @returns {Team|ParentTeam|SubTeam|null|*}
      */
 
     resolve (resolvable) {
         resolvable = resolvable.toString().toLowerCase();
         return this.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
     }
+
+    /**
+     * Add a Team to this TeamsManager
+     * @param {Team|ParentTeam|SubTeam} team The team to add
+     * @return {*}
+     */
 
     add (team) {
         return this.set(team.id, team);
@@ -241,21 +267,26 @@
 
     /**
      * Convert this TeamsManager to an Array
-     * @return {Team[]|Array&lt;ParentTeam|SubTeam>}
+     * @return {Team[]|Array&lt;ParentTeam|SubTeam>|*}
      */
 
     toArray () {
         return [ ...super.values() ];
     }
 
+    /**
+     * Runs a function for each team in this TeamsHandler
+     * @param {function} callback The callback used
+     */
+
+    forEach (callback) {
+        return this.toArray().forEach(callback);
+    }
+
     toString () {
         return this.keys.join(', ');
     }
 
-
-    * [Symbol.iterator] () {
-        yield super.values();
-    }
 
 
 }

@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#points">points</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="GuildMemberHandler.html">GuildMemberHandler</a></li><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -127,58 +127,52 @@
         <article>
             <pre class="prettyprint source linenums"><code>const SubPointsHandler = require('./SubPointsHandler');
 const PointsHandler = require('./PointsHandler');
+const SubTeam = require("../team/SubTeam");
+const { defineUnlistedProperty } = require('../util/Util');
 
 module.exports = (GuildMember, manager) => {
 
-    return class GuildMemberHandler extends GuildMember {
+    /**
+     * A GuildMemberHandler
+     */
+
+    class GuildMemberHandler extends GuildMember {
 
         #internalPoints
         #noTeamPoints
 
+        /**
+         * Instantiates this GuildMemberHandler. Should not be done manually
+         */
+
         constructor (...args) {
             super(...args);
 
-            Object.defineProperty(this, 'manager', {
-                value: manager,
-                writable: false,
-                configurable: false,
-                enumerable: false
-            });
+            defineUnlistedProperty('manager', manager, this);
 
-            Object.defineProperty(this, 'type', {
-                value: 'member',
-                writable: false,
-                configurable: false,
-                enumerable: false
-            });
+            /**
+             * Defines the Type of this Class: `member`
+             * @constant
+             */
+
+            this.type = 'member';
+
 
             this.#internalPoints = new SubPointsHandler(this);
             this.#noTeamPoints = new PointsHandler(this);
         }
 
         get team () {
-            const found = this.manager.getMemberTeam(this, this.manager.subs);
+            const found = this.manager.functions.getMemberTeam(this, this.manager.subs);
 
-            this.checkSavedTeam();
+            return (found &amp;&amp; found.constructor !== SubTeam ? this.manager.get(found) : found) || null;
 
-            return (found &amp;&amp; found.constructor !== SubPointsHandler ? this.manager.get(found) : found) || null;
-
-        }
-
-        async checkSavedTeam () {
-            if (!this.manager.teamsFunctions) return false;
-            const found = this.manager.getMemberTeam(this, this.manager.subs)?.id;
-            const saved = (await this.manager.getSavedMemberTeam(this, this.manager.subs))?.id;
-            
-            if (found !== saved) await this.manager.setMemberTeam(found ? this.manager.subs.get(found) : null, this);
-
-            return true;
         }
 
 
         /**
-         * Returns the PointsHandler of this GuildMember
-         * @return {*|PointsHandler}
+         * Returns the PointsHandler of this GuildMember. Returns a basic points handler if the member is not in a team
+         * @type {SubPointsHandler|PointsHandler}
          */
 
         get points () {
@@ -190,6 +184,8 @@ module.exports = (GuildMember, manager) => {
         }
 
     }
+
+    return GuildMemberHandler
 }
 
 </code></pre>

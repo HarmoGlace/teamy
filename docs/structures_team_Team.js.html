@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#points">points</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="GuildMemberHandler.html">GuildMemberHandler</a></li><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -127,6 +127,8 @@
         <article>
             <pre class="prettyprint source linenums"><code>const TeamyError = require('../TeamyError');
 const PointsHandler = require('../handlers/PointsHandler');
+const TeamsHandler = require("../handlers/TeamsHandler");
+const { defineUnlistedProperty } = require('../util/Util');
 
 /**
  * A teamy basic team
@@ -154,7 +156,7 @@ class Team {
          * The TeamsManager this team belong to
          * @type {TeamsManager}
          */
-        this.manager = manager;
+        defineUnlistedProperty('manager', manager, this);
 
         /**
          * The ID of this team
@@ -208,11 +210,50 @@ class Team {
 
         this.points = new PointsHandler(this);
 
+    }
 
+    /**
+     * Whatever this Team can store members
+     * @return {Boolean}
+     */
+
+    get membersEnabled () {
+        return this.manager.teamsFunctions &amp;&amp; this.type !== 'parent'
+    }
+
+    /**
+     * Get the GuildMembers only of the members who belongs to this team.
+     * @return {Promise&lt;TeamsHandler&lt;GuildMemberHandler>|null>}
+     */
+
+    async members () {
+        if (!this.membersEnabled) return null;
+
+        let returned = await Promise.all(await this.manager.functions.getTeamMembers(this));
+
+        const GuildMemberHandler = this.manager.Structures.get('GuildMember');
+
+        if (returned &amp;&amp; returned.constructor !== TeamsHandler &amp;&amp; !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name}`);
+
+        const returnedArray = returned?.constructor === TeamsHandler ? returned.toArray() : returned;
+
+        if (returned) {
+            for (const member of returnedArray) {
+                if (member.constructor !== GuildMemberHandler) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
+            }
+
+            returned = new TeamsHandler({
+                base: returnedArray.map(member => [ member.id, member ]),
+                type: 'member',
+                manager: this.manager
+            });
+        }
+
+        return returned || null;
     }
 
     get color () {
-        return  this.#teamColor || this.role?.color || null;
+        return this.#teamColor || this.role?.color || null;
     }
 
     set color (color) {

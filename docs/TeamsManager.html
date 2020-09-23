@@ -106,7 +106,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#points">points</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="GuildMemberHandler.html">GuildMemberHandler</a></li><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -125,7 +125,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>TeamsManager<span class="signature">(data)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>TeamsManager<span class="signature">(options)</span><span class="type-signature"></span></h2>
         
             <div class="class-description"><p>A TeamsManager</p></div>
         
@@ -151,7 +151,7 @@
         
         <span class="code-name">
             
-                new TeamsManager<span class="signature">(data)</span><span class="type-signature"></span>
+                new TeamsManager<span class="signature">(options)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -181,7 +181,11 @@
             <th>Type</th>
 
             
+            <th>Attributes</th>
+            
 
+            
+            <th>Default</th>
             
 
             <th class="last">Description</th>
@@ -194,24 +198,300 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>data</code></td>
+      <td class="name"><code>options</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type"><a href="global.html#TeamsManagerData">TeamsManagerData</a></span>
+<span class="param-type">Object</span>
 
 
   
   </td>
 
   
+      <td class="attributes">
+      
 
+      
+
+      
+      </td>
   
 
-  <td class="description last"><p>TeamsManager data</p></td>
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>Options to instantiate a TeamsManager</p></td>
 </tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>teams</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Array.&lt;<a href="global.html#TeamResolvable">TeamResolvable</a>></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          []
+      
+      </td>
+  
+
+  <td class="description last"><p>List of teams</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>type</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="global.html#TeamsManagerType">TeamsManagerType</a></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          'basic'
+      
+      </td>
+  
+
+  <td class="description last"><p>The type of the TeamsManager</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>functions</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="global.html#TeamsManagerFunctions">TeamsManagerFunctions</a></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>Functions to store and get points</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>client</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Client</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>Discord.js client used to get roles. Need the guildId option</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>guildId</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">String</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>Guild id used to get roles. Need the client option</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>autoInitialize</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Boolean</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>If true it will fire the initialize method when creating the manager</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>implementMember</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Boolean</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>If true it will add a team and teams properties to Discord.js GuildMembers. The client needs to be created after this manager</p></td>
+</tr>
+
+  
 
 
         
@@ -258,7 +538,7 @@
         <p class="tag-source">
             <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line18">line 18</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line32">line 32</a>
             </span>
         </p>
     
@@ -308,160 +588,6 @@
         <div class='vertical-section'>
             <h1>Members</h1>
             <div class="members">
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">Boolean</span>
-
-
-    </span>
-
-<h4 class="name" id="alwaysPool">
-    <a class="href-link" href="#alwaysPool">#</a>
-    
-    <span class="code-name">
-        alwaysPool
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Whatever or not to always pool when getting points</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line56">line 56</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type"><a href="global.html#TeamsManagerFunctions">TeamsManagerFunctions</a></span>
-
-
-    </span>
-
-<h4 class="name" id="functions">
-    <a class="href-link" href="#functions">#</a>
-    
-    <span class="code-name">
-        functions
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>setPoints and getPoints functions of this TeamsManager</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line89">line 89</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
             
                 <div class="member">
 
@@ -520,7 +646,7 @@
         <p class="tag-source">
             <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line297">line 297</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line304">line 304</a>
             </span>
         </p>
     
@@ -589,88 +715,7 @@
         <p class="tag-source">
             <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line306">line 306</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type"><a href="global.html#TeamsManagerType">TeamsManagerType</a></span>
-
-
-    </span>
-
-<h4 class="name" id="type">
-    <a class="href-link" href="#type">#</a>
-    
-    <span class="code-name">
-        type
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>TeamsManager type, either</p>
-<ul>
-<li><code>basic</code></li>
-<li><code>advanced</code></li>
-</ul>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line82">line 82</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line313">line 313</a>
             </span>
         </p>
     
@@ -811,7 +856,7 @@
         <p class="tag-source">
             <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line184">line 184</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line191">line 191</a>
             </span>
         </p>
     
@@ -853,185 +898,6 @@
 |
 
 <span class="param-type"><a href="Team.html">Team</a></span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="getMemberTeam">
-        <a class="href-link" href="#getMemberTeam">#</a>
-        
-        <span class="code-name">
-            
-                getMemberTeam<span class="signature">(member)</span><span class="type-signature"> &rarr; {<a href="Team.html">Team</a>|<a href="SubTeam.html">SubTeam</a>|null}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <p>Get a member team</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>member</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">GuildMember</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>member to get team</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line97">line 97</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>The member team or null if none is found</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type"><a href="Team.html">Team</a></span>
-|
-
-<span class="param-type"><a href="SubTeam.html">SubTeam</a></span>
-|
-
-<span class="param-type">null</span>
 
 
     </div>
@@ -1116,7 +982,7 @@
         <p class="tag-source">
             <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line152">line 152</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line159">line 159</a>
             </span>
         </p>
     
@@ -1289,7 +1155,7 @@
         <p class="tag-source">
             <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line260">line 260</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line267">line 267</a>
             </span>
         </p>
     
@@ -1469,7 +1335,7 @@
         <p class="tag-source">
             <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line279">line 279</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line286">line 286</a>
             </span>
         </p>
     
@@ -1640,7 +1506,7 @@
         <p class="tag-source">
             <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line174">line 174</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line181">line 181</a>
             </span>
         </p>
     

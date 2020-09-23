@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3>Global</h3><ul><li><a href="global.html#points">points</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="GuildMemberHandler.html">GuildMemberHandler</a></li><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -130,6 +130,7 @@ const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');
 const TeamsHandler = require('../handlers/TeamsHandler');
+const { defineUnlistedProperty } = require('../util/Util');
 
 /**
  * A TeamsManager
@@ -139,7 +140,20 @@ class TeamsManager extends TeamsHandler {
 
 
     /**
-     * @param {TeamsManagerData} data TeamsManager data
+     * TeamsManager
+     */
+
+    #privateGetMemberTeam
+
+    /**
+     * @param {Object} options Options to instantiate a TeamsManager
+     * @param {TeamResolvable[]} [options.teams = []] List of teams
+     * @param {TeamsManagerType} [options.type='basic'] The type of the TeamsManager
+     * @param {TeamsManagerFunctions} options.functions Functions to store and get points
+     * @param {Client} [options.client] Discord.js client used to get roles. Need the guildId option
+     * @param {String} [options.guildId] Guild id used to get roles. Need the client option
+     * @param {Boolean} [options.autoInitialize] If true it will fire the initialize method when creating the manager
+     * @param  {Boolean} [options.implementMember] If true it will add a team and teams properties to Discord.js GuildMembers. The client needs to be created after this manager
      */
 
     constructor ({
@@ -148,10 +162,8 @@ class TeamsManager extends TeamsHandler {
                      functions: {
                          setPoints,
                          getPoints,
-                         getMemberTeam,
-                         getSavedMemberTeam,
-                         setMemberTeam,
-                         getTeamMembers
+                         getMemberTeam = null,
+                         getTeamMembers = null
                      } = {},
                      client = null,
                      guildId = null,
@@ -160,11 +172,11 @@ class TeamsManager extends TeamsHandler {
                      alwaysPool = false
                  } = {}) {
 
-        super([]);
-
-        this._constructed = super.constructor;
+        super({ base: [] });
 
         super.manager = this;
+
+        defineUnlistedProperty('_constructed', super.constructor, this);
 
         type = type.toLowerCase();
 
@@ -173,31 +185,30 @@ class TeamsManager extends TeamsHandler {
          * @type {Boolean}
          */
 
-        this.#defineProperty('initialized', false);
+        defineUnlistedProperty('initialized', false, this);
 
         /**
          * Whatever or not to always pool when getting points
          * @type {Boolean}
          */
 
-        this.alwaysPool = alwaysPool;
+        defineUnlistedProperty('alwaysPool', alwaysPool, this);
 
 
         /**
          * Client option. If enabled it will add the `team` and `teams` properties on GuildMembers
          * @type {Boolean}
-         * @private
          */
-        this.implementMember = implementMember;
+        defineUnlistedProperty('implementMember', implementMember, this);
 
-        if (client) this.client = client;
-        if (guildId) this.guildId = guildId;
+        if (client) defineUnlistedProperty('client', client, this);
+        if (guildId) defineUnlistedProperty('guildId', guildId, this);
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
         if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
 
 
-        if (!['basic', 'advanced'].includes(type)) throw new TeamyError(`TeamsManager Type should be basic or advanced. Received ${type}`)
+        if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager Type should be basic or advanced. Received ${type}`)
 
         /**
          * TeamsManager type, either
@@ -206,42 +217,41 @@ class TeamsManager extends TeamsHandler {
          * @type {TeamsManagerType}
          */
 
-        this.type = type;
+        defineUnlistedProperty('type', type, this);
 
         /**
          * setPoints and getPoints functions of this TeamsManager
          * @type {TeamsManagerFunctions}
          */
 
-        this.functions = { setPoints, getPoints };
+        defineUnlistedProperty('functions', { setPoints, getPoints }, this);
 
+
+        this.#privateGetMemberTeam = getMemberTeam || (member => this.subs.find(team => member.roles.cache.has(team.roleId)));
 
         /**
          * Get a member team
          * @param {GuildMember} member member to get team
          * @returns {Team | SubTeam | null} The member team or null if none is found
          */
-        this.getMemberTeam = (member) => this.subs.find(team => member.roles.cache.has(team.roleId));
 
-        if (getMemberTeam &amp;&amp; typeof getMemberTeam === 'function') this.getMemberTeam = (member) => {
-            const found = getMemberTeam(member, this.subs);
+        defineUnlistedProperty('getMemberTeam', (member) => {
+            const found = this.#privateGetMemberTeam(member, this.subs);
 
             const returnType = this.type === 'basic' ? Team : SubTeam;
 
             if (found !== null &amp;&amp; found.constructor !== returnType) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found.constructor.name}`);
-        };
 
-        const teamsFunctions = [ getSavedMemberTeam, setMemberTeam, getTeamMembers ];
-
-        if (teamsFunctions.every(team => team &amp;&amp; typeof team === 'function')) {
-            this.getSavedMemberTeam = getSavedMemberTeam;
-            this.setMemberTeam = setMemberTeam;
-            this.getTeamMembers = getTeamMembers;
+            return found;
+        }, this.functions);
 
 
-            this.teamsFunctions = true;
+        if (getTeamMembers &amp;&amp; typeof getTeamMembers === 'function') {
+            defineUnlistedProperty('getTeamMembers', getTeamMembers, this.functions);
+
+
+            defineUnlistedProperty('teamsFunctions', true, this);
         }
-
 
 
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
@@ -256,20 +266,17 @@ class TeamsManager extends TeamsHandler {
 
 
             Structures.extend('GuildMember', (GuildMember) => GuildMemberHandler(GuildMember, this));
+
+            defineUnlistedProperty('Structures', Structures, this);
         }
 
 
     }
 
-    #defineProperty (value, name) {
-        return Object.defineProperty(this, name, {
-            value,
-            configurable: true,
-            enumerable: false,
-            writable: true
-        });
-    }
 
+    get teamsGuild () {
+        return this.client?.guilds.cache.get(this.guildId);
+    }
 
     /**
      * Initialize this TeamsManager : Creates a role property for each Team
@@ -278,7 +285,7 @@ class TeamsManager extends TeamsHandler {
 
     initialize () {
         if (this.client &amp;&amp; this.client.user &amp;&amp; this.guildId) {
-            const guild = this.client.guilds.cache.get(this.guildId);
+            const guild = this.teamsGuild;
             if (guild) {
                 for (const team of this) {
                     if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
@@ -299,7 +306,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     setClient (client) {
-        return this.client = client;
+        defineUnlistedProperty('client', client, this);
     }
 
     /**
@@ -341,7 +348,7 @@ class TeamsManager extends TeamsHandler {
                 for (const sub of subs) {
                     if (typeof sub !== 'object' || sub instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${sub.constructor.name}`);
 
-                    if (this.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}`);
+                    if (this.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}. IDs should be unique`);
 
                     const subTeam = new SubTeam(this, sub, parentTeam);
 

@@ -1,16 +1,22 @@
 const { defineUnlistedProperty } = require('../util/Util');
 
+/**
+ * TeamsHandler
+ */
 
 class TeamsHandler extends Map {
 
-    /**
-     * Initializes this TeamsHandler
-     * @param base
-     * @param manager
-     * @param type
-     */
+
 
     #manager
+
+    /**
+     * Initializes this TeamsHandler
+     * @param {Object} options
+     * @param {Array<Array<String, *>>} [options.base=[]]
+     * @param {TeamsManager} options.manager
+     * @param {String} [options.type='unknown']
+     */
 
     constructor ({
                      base = [],
@@ -46,7 +52,7 @@ class TeamsHandler extends Map {
 
     /**
      * Teams sorted by their points
-     * @returns {Team[]|ParentTeam[]}
+     * @returns {Team[]|ParentTeam[]|*}
      */
 
     async sorted () {
@@ -85,7 +91,7 @@ class TeamsHandler extends Map {
     /**
      * Find a team with a function
      * @param {function} findFunction function passed to find a team
-     * @returns {Team|ParentTeam|SubTeam|null}
+     * @returns {Team|ParentTeam|SubTeam|null|*}
      */
 
     find (findFunction) {
@@ -106,13 +112,19 @@ class TeamsHandler extends Map {
     /**
      * Resolve a team with a string
      * @param {String} resolvable
-     * @returns {Team|ParentTeam|SubTeam|null}
+     * @returns {Team|ParentTeam|SubTeam|null|*}
      */
 
     resolve (resolvable) {
         resolvable = resolvable.toString().toLowerCase();
         return this.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
     }
+
+    /**
+     * Add a Team to this TeamsManager
+     * @param {Team|ParentTeam|SubTeam} team The team to add
+     * @return {*}
+     */
 
     add (team) {
         return this.set(team.id, team);
@@ -128,12 +140,17 @@ class TeamsHandler extends Map {
 
     /**
      * Convert this TeamsManager to an Array
-     * @return {Team[]|Array<ParentTeam|SubTeam>}
+     * @return {Team[]|Array<ParentTeam|SubTeam>|*}
      */
 
     toArray () {
         return [ ...super.values() ];
     }
+
+    /**
+     * Runs a function for each team in this TeamsHandler
+     * @param {function} callback The callback used
+     */
 
     forEach (callback) {
         return this.toArray().forEach(callback);
