@@ -56,7 +56,7 @@ class TeamsHandler extends Map {
             return elements.sort((a, b) => b.points.latest - a.points.latest);
         }
 
-        if ([ 'normal', 'subs' ].includes(this.type)) return sortTeams(this.toArray());
+        if ([ 'normal', 'subs', 'member' ].includes(this.type)) return sortTeams(this.toArray());
 
 
         const parents = this.toArray().filter(team => team.type === 'parent');
@@ -135,14 +135,14 @@ class TeamsHandler extends Map {
         return [ ...super.values() ];
     }
 
+    forEach (callback) {
+        return this.toArray().forEach(callback);
+    }
+
     toString () {
         return this.keys.join(', ');
     }
 
-
-    * [Symbol.iterator] () {
-        yield super.values();
-    }
 
 
 }

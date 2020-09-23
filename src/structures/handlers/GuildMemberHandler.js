@@ -15,7 +15,13 @@ module.exports = (GuildMember, manager) => {
 
             defineUnlistedProperty('manager', manager, this);
 
-            defineUnlistedProperty('type', 'property', this);
+            /**
+             * Defines the Type of this Class
+             * @constant
+             */
+
+            this.type = 'member';
+
 
             this.#internalPoints = new SubPointsHandler(this);
             this.#noTeamPoints = new PointsHandler(this);

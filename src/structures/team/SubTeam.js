@@ -39,6 +39,7 @@ class SubTeam extends Team {
          */
 
         this.points = new SubPointsHandler(this);
+
     }
 }
 

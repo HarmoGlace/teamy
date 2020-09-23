@@ -39,14 +39,27 @@ const manager = new TeamsManager({
 
         // Optional
         // Used to know the GuildMember team. Should return a Team or a SubTeam for advanced managers
-        // getMemberTeam: (member, teams) => teams.find(team => member.roles.cache.has(team.roleId)),
+        getMemberTeam: (member, teams) => {
+            const found = teams.find(team => member.roles.cache.has(team.roleId)) || null;
+
+            const saved = databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null;
+
+            if (found && saved && found.id !== saved.id) databases.member.set(member.id, found.id, 'team');
+
+
+        },
 
 
 
-        getSavedMemberTeam: (member, teams) => databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null,
-        setMemberTeam: (team, member) => databases.member.set(member.id, team.id, 'team'),
+        // getSavedMemberTeam: (member, teams) => databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null,
+        // setMemberTeam: (team, member) => ,
 
 
+        /**
+         * Team Function used to get all GuildMember of a Team
+         * @param team the team where we want its members
+         * @return {GuildMemberHandler[]|TeamsHandler<GuildMember>}
+         */
 
         getTeamMembers: (team) => databases.find(user => user.team === team.id)
     },
@@ -74,6 +87,24 @@ const sub1 = manager.get('sub1');
 
 const iterated = manager.parents;
 
+// console.log(iterated[Symbol.iterator].next())
+
+console.log(iterated, iterated[Symbol.iterator])
+
+console.log(iterated[Symbol.iterator]())
+for (const team of iterated) {
+    console.log('team lol ', team)
+}
+
+// const handler = new TeamsHandler({ base: [[ 'a', 'okboomer' ], [' b ', 'derien'], ['c', 'ptdrtki']] });
+
+// console.log(handler);
+//
+// for (const team of handler) {
+//     console.log(team)
+// }
+
+
 // console.log(manager, '  toArray: ', manager.toArray(), '')
 //
 //
@@ -81,7 +112,7 @@ const iterated = manager.parents;
 //
 // console.log(manager.get('parent1'))
 
-console.log(iterated, iterated.get('parent1'))
+// console.log(iterated, iterated.get('parent1'))
 
 // for (const team of iterated) {
 //     console.log(team)
