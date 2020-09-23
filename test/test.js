@@ -44,7 +44,7 @@ const manager = new TeamsManager({
 
             const saved = databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null;
 
-            if (found && saved && found.id !== saved.id) databases.member.set(member.id, found.id, 'team');
+            if (found?.id !== saved?.id) databases.member.set(member.id, found.id, 'team');
 
             return found;
         },
@@ -61,9 +61,9 @@ const manager = new TeamsManager({
          * @return {GuildMemberHandler[]|TeamsHandler<GuildMember>}
          */
 
-        getTeamMembers: (team) => databases.member.find(user => user.team === team.id)
+        getTeamMembers: (team) => databases.member.filter(user => user.team === team.id).keyArray().map(member => team.manager.teamsGuild.members.fetch(member))
     },
-    guildId: '123456789', // guildId where these teams belong to. It will be used to get roles
+    guildId: '718743854496612406', // guildId where these teams belong to. It will be used to get roles
     implementMember: true
 });
 
@@ -89,7 +89,7 @@ const subs = manager.subs;
 
 const found = subs.get('sub1');
 
-// console.log(found.members)
+
 
 // console.log(iterated[Symbol.iterator].next())
 
@@ -126,9 +126,13 @@ const found = subs.get('sub1');
 
 // sub1.parent // returns parent Team
 
-client.once('ready', () => {
+client.once('ready', async () => {
     manager.initialize(); // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role
     console.log(`Ready on ${client.user.username}`)
+
+    const members = await found.members();
+
+    console.log(members)
 })
 //
 client.on('message', async message => {

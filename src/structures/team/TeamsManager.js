@@ -138,6 +138,12 @@ class TeamsManager extends TeamsHandler {
 
     }
 
+
+    get teamsGuild () {
+        console.log(this.client, this.client.constructor.name)
+        return this.client?.guilds.cache.get(this.guildId);
+    }
+
     /**
      * Initialize this TeamsManager : Creates a role property for each Team
      * @returns {Boolean} true if successful
@@ -145,7 +151,7 @@ class TeamsManager extends TeamsHandler {
 
     initialize () {
         if (this.client && this.client.user && this.guildId) {
-            const guild = this.client.guilds.cache.get(this.guildId);
+            const guild = this.teamsGuild;
             if (guild) {
                 for (const team of this) {
                     if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
@@ -166,7 +172,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     setClient (client) {
-        return this.client = defineUnlistedProperty('client', client, this);
+        defineUnlistedProperty('client', client, this);
     }
 
     /**
