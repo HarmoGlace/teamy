@@ -25,7 +25,7 @@ class TeamsHandler extends Map {
                  }) {
         super(base);
 
-        defineUnlistedProperty('constructed', this.constructor, this);
+        defineUnlistedProperty('_constructed', this.constructor, this);
 
         this.#manager = manager;
 
