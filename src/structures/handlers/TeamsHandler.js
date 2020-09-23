@@ -21,7 +21,7 @@ class TeamsHandler extends Map {
     constructor ({
                      base = [],
                      manager = null,
-                     type = null
+                     type = 'unknown'
                  }) {
         super(base);
 
@@ -29,7 +29,7 @@ class TeamsHandler extends Map {
 
         this.#manager = manager;
 
-        defineUnlistedProperty('type', type || manager && manager.type === 'advanced' ? 'all' : 'normal' || 'unknown', this);
+        defineUnlistedProperty('type', type, this);
     }
 
     get manager () {
@@ -37,7 +37,7 @@ class TeamsHandler extends Map {
     }
 
     set manager (newValue) {
-        this.#manager = newValue;
+        return this.#manager = newValue;
     }
 
     /**
@@ -57,10 +57,13 @@ class TeamsHandler extends Map {
 
     async sorted () {
         const sortTeams = async (teams) => {
+            console.log(teams);
             const elements = await Promise.all(teams.map(async team => await team.points.checkPoints(true)));
 
             return elements.sort((a, b) => b.points.latest - a.points.latest);
         }
+
+        console.log(this.type, this.toArray())
 
         if ([ 'normal', 'subs', 'member' ].includes(this.type)) return sortTeams(this.toArray());
 
@@ -68,7 +71,7 @@ class TeamsHandler extends Map {
         const parents = this.toArray().filter(team => team.type === 'parent');
 
         for (const parent of parents) {
-            parent.subs = await sortTeams(parent.subs.toArray());
+            await sortTeams(parent.subs.toArray());
         }
 
         return sortTeams(parents);

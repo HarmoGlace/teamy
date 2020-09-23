@@ -76,6 +76,8 @@ const sub1 = manager.get('sub1');
 
 const subs = manager.subs;
 
+// console.log(subs, subs.toArray());
+
 
 
 
@@ -119,16 +121,11 @@ client.once('ready', async () => {
     manager.initialize(); // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role
     console.log(`Ready on ${client.user.username}`)
 
-    const found = subs.get('sub1');
-    const found2 = subs.get('sub2');
+    const sorted = await manager.parents.sorted();
 
-
-    const members = await found.members();
-    const othersMembers = await found2.members();
-
-
-    console.log(members, othersMembers)
+    console.log('sorted: ', sorted)
 })
+
 //
 client.on('message', async message => {
 

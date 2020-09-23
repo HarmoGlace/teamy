@@ -39,7 +39,11 @@ class ParentTeam extends Team {
      */
 
     get subs () {
-        return this.manager.subs.filter(team => team.parent.id === this.id);
+        return new TeamsHandler({
+            base: this.manager.subs.toArray().filter(team => team.parent.id === this.id).sort((a, b) => b.points.latest - a.points.latest).map(team => [ team.id, team ]),
+            manager: this.manager,
+            type: 'subs'
+        });
     }
 }
 
