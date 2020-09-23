@@ -68,7 +68,7 @@ class TeamsHandler extends Map {
         const parents = this.toArray().filter(team => team.type === 'parent');
 
         for (const parent of parents) {
-            parent.subs = await sortTeams(parent.subs);
+            parent.subs = await sortTeams(parent.subs.toArray());
         }
 
         return sortTeams(parents);
