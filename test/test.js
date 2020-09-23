@@ -44,15 +44,11 @@ const manager = new TeamsManager({
 
             const saved = databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null;
 
-            if (found?.id !== saved?.id) databases.member.set(member.id, found.id, 'team');
+            if (found?.id !== saved) databases.member.set(member.id, found?.id || null, 'team');
 
             return found;
         },
 
-
-
-        getSavedMemberTeam: (member, teams) => databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null,
-        setMemberTeam: (team, member) => databases.member.set(member.id, team.id, 'team'),
 
 
         /**
@@ -87,7 +83,7 @@ const sub1 = manager.get('sub1');
 
 const subs = manager.subs;
 
-const found = subs.get('sub1');
+
 
 
 
@@ -130,16 +126,22 @@ client.once('ready', async () => {
     manager.initialize(); // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role
     console.log(`Ready on ${client.user.username}`)
 
-    const members = await found.members();
+    const found = subs.get('sub1');
+    const found2 = subs.get('sub2');
 
-    console.log(members)
+
+    const members = await found.members();
+    const othersMembers = await found2.members();
+
+
+    console.log(members, othersMembers)
 })
 //
 client.on('message', async message => {
 
     const member = message.member;
 
-    console.log('found: ', member.team);
+    console.log('member team: ', member.team);
 
     // member.points.clear();
     //

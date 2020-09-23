@@ -140,7 +140,6 @@ class TeamsManager extends TeamsHandler {
 
 
     get teamsGuild () {
-        console.log(this.client, this.client.constructor.name)
         return this.client?.guilds.cache.get(this.guildId);
     }
 
