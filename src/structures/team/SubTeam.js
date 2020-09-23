@@ -1,5 +1,4 @@
 const Team = require('./Team');
-const TeamyError = require('../TeamyError');
 const SubPointsHandler = require('../handlers/SubPointsHandler');
 
 /**

@@ -1,7 +1,6 @@
 const TeamyError = require('../TeamyError');
 const PointsHandler = require('../handlers/PointsHandler');
 const TeamsHandler = require("../handlers/TeamsHandler");
-const { GuildMemberHandler } = require("../../index");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
@@ -104,16 +103,17 @@ class Team {
         if (!this.membersEnabled) return null;
 
         let returned = this.manager.getTeamMembers(this);
+        const GuildMemberHandler = this.manager.client.Structures.get('GuildMember');
 
-        if (Array.isArray(returned) && returned.every(member => member.constructor === GuildMemberHandler)) returned = new TeamsHandler({
+        if (returned && Array.isArray(returned) && returned.every(member => member.constructor === GuildMemberHandler)) returned = new TeamsHandler({
             base: returned.map(member => [ member.id, member ]),
             type: 'member',
             manager: this.manager
         });
 
-        if (returned.constructor !== TeamsHandler) throw new TeamyError(`The getTeamMembers should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name}`);
+        if (returned && returned.constructor !== TeamsHandler) throw new TeamyError(`The getTeamMembers should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name}`);
 
-        return returned;
+        return returned || null;
     }
 
     get color () {

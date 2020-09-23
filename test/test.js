@@ -42,17 +42,17 @@ const manager = new TeamsManager({
         getMemberTeam: (member, teams) => {
             const found = teams.find(team => member.roles.cache.has(team.roleId)) || null;
 
-            const saved = databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null;
+            // const saved = databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null;
+            //
+            // if (found && saved && found.id !== saved.id) databases.member.set(member.id, found.id, 'team');
 
-            if (found && saved && found.id !== saved.id) databases.member.set(member.id, found.id, 'team');
-
-
+            return found;
         },
 
 
 
-        // getSavedMemberTeam: (member, teams) => databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null,
-        // setMemberTeam: (team, member) => ,
+        getSavedMemberTeam: (member, teams) => databases.member.has(member.id) ? databases.member.get(member.id, 'team') : null,
+        setMemberTeam: (team, member) => databases.member.set(member.id, team.id, 'team'),
 
 
         /**
@@ -61,7 +61,7 @@ const manager = new TeamsManager({
          * @return {GuildMemberHandler[]|TeamsHandler<GuildMember>}
          */
 
-        getTeamMembers: (team) => databases.find(user => user.team === team.id)
+        getTeamMembers: (team) => databases.member.find(user => user.team === team.id)
     },
     guildId: '123456789', // guildId where these teams belong to. It will be used to get roles
     implementMember: true
@@ -85,16 +85,20 @@ const sub1 = manager.get('sub1');
 // console.log(sorted)
 
 
-const iterated = manager.parents;
+const subs = manager.subs;
+
+const found = subs.get('sub1');
+
+console.log(found.members)
 
 // console.log(iterated[Symbol.iterator].next())
 
-console.log(iterated, iterated[Symbol.iterator])
-
-console.log(iterated[Symbol.iterator]())
-for (const team of iterated) {
-    console.log('team lol ', team)
-}
+// console.log(iterated, iterated[Symbol.iterator])
+//
+// console.log(iterated[Symbol.iterator]())
+// for (const team of iterated) {
+//     console.log('team lol ', team)
+// }
 
 // const handler = new TeamsHandler({ base: [[ 'a', 'okboomer' ], [' b ', 'derien'], ['c', 'ptdrtki']] });
 
