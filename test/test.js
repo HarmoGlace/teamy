@@ -60,74 +60,18 @@ const client = new Client();
 
 manager.client = client;
 
-const { Structures } = require('discord.js');
-
-console.log(Structures.get('GuildMember'));
-
-const sub1 = manager.get('sub1');
-// console.log(sub1.name)
-
-// sub1.points.set(50).then(console.log);
 
 
-// manager.get('sub2').points.set(432).then(console.log)
-
-// console.log((await manager.sorted()))
-
-// const sorted = manager.subs.sorted().then(console.log);
-// console.log(sorted)
-
-
-const subs = manager.subs;
-
-// console.log(subs, subs.toArray());
-
-
-
-
-
-// console.log(iterated[Symbol.iterator].next())
-
-// console.log(iterated, iterated[Symbol.iterator])
-//
-// console.log(iterated[Symbol.iterator]())
-// for (const team of iterated) {
-//     console.log('team lol ', team)
-// }
-
-// const handler = new TeamsHandler({ base: [[ 'a', 'okboomer' ], [' b ', 'derien'], ['c', 'ptdrtki']] });
-
-// console.log(handler);
-//
-// for (const team of handler) {
-//     console.log(team)
-// }
-
-
-// console.log(manager, '  toArray: ', manager.toArray(), '')
-//
-//
-// console.log('lol')
-//
-// console.log(manager.get('parent1'))
-
-// console.log(iterated, iterated.get('parent1'))
-
-// for (const team of iterated) {
-//     console.log(team)
-// }
-
-// console.log(manager.toString())
-
-// sub1.parent // returns parent Team
 
 client.once('ready', async () => {
     manager.initialize(); // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role
     console.log(`Ready on ${client.user.username}`)
 
-    const sorted = await manager.parents.sorted();
+    const sub1 = manager.get('sub1');
 
-    console.log('sorted: ', sorted)
+    const sorted = await sub1.members.fetch();
+
+    console.log('members: ', sorted)
 })
 
 //

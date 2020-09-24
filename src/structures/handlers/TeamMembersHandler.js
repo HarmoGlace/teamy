@@ -45,7 +45,7 @@ class TeamMembersHandler {
     async fetch () {
         if (!this.enabled) return null;
 
-        let returned = await Promise.all(await this.manager.functions.getTeamMembers(this));
+        let returned = await Promise.all(await this.manager.functions.getTeamMembers(this.team));
 
         const GuildMemberHandler = this.manager.Structures.get('GuildMember');
 
