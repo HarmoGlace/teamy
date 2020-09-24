@@ -86,10 +86,10 @@ class Team {
 
         /**
          * The TeamMembersHandler of this class
-         * @type {TeamsMemberHandler}
+         * @type {TeamMembersHandler}
          */
 
-        this.members = new TeamMembersHandler();
+        this.members = new TeamMembersHandler(this);
 
     }
 
