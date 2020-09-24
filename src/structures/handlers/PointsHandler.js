@@ -31,8 +31,8 @@ class PointsHandler {
 
     /**
      * Get the points of this team
-     * @param Booolean [nullable=false] Whatever to return null if the provided function returns a falsy value
-     * @returns {number}
+     * @param {Boolean} [nullable=false] Whatever to return null if the provided function returns a falsy value
+     * @returns {Promise<number>} The points of the team
      */
 
     async get (nullable = false) {
@@ -52,7 +52,7 @@ class PointsHandler {
     /**
      * Add points to the team
      * @param {number} points Points to add
-     * @returns {Number} New team points
+     * @returns {Promise<Number>} New team points
      */
 
     async add (points) {
@@ -62,17 +62,17 @@ class PointsHandler {
     /**
      * Remove points to the team
      * @param {number} points Points to remove
-     * @returns {Number} New team points
+     * @returns {Promise<Number>} New team points
      */
 
     async remove (points) {
-        return this.set(await this.get() - points);
+        return this.add(- points);
     }
 
     /**
      * Set points to this team
      * @param {Number} points Points to set
-     * @returns {Number} New team points
+     * @returns {Promise<Number>} New team points
      */
 
     async set (points) {
