@@ -68,10 +68,6 @@ client.once('ready', async () => {
     console.log(`Ready on ${client.user.username}`)
 
     const sub1 = manager.get('sub1');
-
-    const sorted = await sub1.members.fetch();
-
-    console.log('members: ', sorted)
 })
 
 //
@@ -79,7 +75,12 @@ client.on('message', async message => {
 
     const member = message.member;
 
-    console.log('member team: ', member.team);
+    const newPoints = await member.points.clear();
+
+    console.log('newPoints', newPoints, ' fetched: ', await member.points.get());
+    console.log('subPoints', await member.team.points.get())
+    console.log('parentPoints', await member.team.parent.points.get());
+
 
     // member.points.clear();
     //

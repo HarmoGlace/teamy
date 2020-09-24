@@ -57,13 +57,10 @@ class TeamsHandler extends Map {
 
     async sorted () {
         const sortTeams = async (teams) => {
-            console.log(teams);
             const elements = await Promise.all(teams.map(async team => await team.points.checkPoints(true)));
 
             return elements.sort((a, b) => b.points.latest - a.points.latest);
         }
-
-        console.log(this.type, this.toArray())
 
         if ([ 'normal', 'subs', 'member' ].includes(this.type)) return sortTeams(this.toArray());
 
