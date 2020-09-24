@@ -414,7 +414,7 @@
         
         <span class="code-name">
             
-                add<span class="signature">(points)</span><span class="type-signature"> &rarr; {Number}</span>
+                add<span class="signature">(points)</span><span class="type-signature"> &rarr; {Promise.&lt;Number>}</span>
             
         </span>
     </h4>
@@ -562,7 +562,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Number</span>
+<span class="param-type">Promise.&lt;Number></span>
 
 
     </div>
@@ -974,7 +974,7 @@
         
         <span class="code-name">
             
-                get<span class="signature">(Booolean)</span><span class="type-signature"> &rarr; {number}</span>
+                get<span class="signature">(nullable<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;number>}</span>
             
         </span>
     </h4>
@@ -1008,7 +1008,11 @@
             <th>Type</th>
 
             
+            <th>Attributes</th>
+            
 
+            
+            <th>Default</th>
             
 
             <th class="last">Description</th>
@@ -1021,18 +1025,39 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>Booolean</code></td>
+      <td class="name"><code>nullable</code></td>
   
 
   <td class="type">
   
+      
+<span class="param-type">Boolean</span>
+
+
+  
   </td>
 
   
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
 
+      
+
+      
+      </td>
   
 
-  <td class="description last"><p>[nullable=false] Whatever to return null if the provided function returns a falsy value</p></td>
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last"><p>Whatever to return null if the provided function returns a falsy value (excepted 0)</p></td>
 </tr>
 
 
@@ -1111,11 +1136,13 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'><p>The points of the team</p></div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">number</span>
+<span class="param-type">Promise.&lt;number></span>
 
 
     </div>
@@ -1144,7 +1171,7 @@
         
         <span class="code-name">
             
-                remove<span class="signature">(points)</span><span class="type-signature"> &rarr; {Number}</span>
+                remove<span class="signature">(points)</span><span class="type-signature"> &rarr; {Promise.&lt;Number>}</span>
             
         </span>
     </h4>
@@ -1292,7 +1319,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Number</span>
+<span class="param-type">Promise.&lt;Number></span>
 
 
     </div>
@@ -1321,7 +1348,7 @@
         
         <span class="code-name">
             
-                set<span class="signature">(points)</span><span class="type-signature"> &rarr; {Number}</span>
+                set<span class="signature">(points)</span><span class="type-signature"> &rarr; {Promise.&lt;Number>}</span>
             
         </span>
     </h4>
@@ -1469,7 +1496,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Number</span>
+<span class="param-type">Promise.&lt;Number></span>
 
 
     </div>

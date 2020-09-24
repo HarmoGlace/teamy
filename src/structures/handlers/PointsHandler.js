@@ -31,7 +31,7 @@ class PointsHandler {
 
     /**
      * Get the points of this team
-     * @param {Boolean} [nullable=false] Whatever to return null if the provided function returns a falsy value
+     * @param {Boolean} [nullable=false] Whatever to return null if the provided function returns a falsy value (excepted 0)
      * @returns {Promise<number>} The points of the team
      */
 
