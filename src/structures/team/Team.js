@@ -41,7 +41,7 @@ class Team {
 
         /**
          * The name of this team
-         * @type {!String}
+         * @type {String|null}
          */
 
         this.name = name;
@@ -71,7 +71,7 @@ class Team {
 
         /**
          * The role id of this team
-         * @type {!String}
+         * @type {String|null}
          */
 
         this.roleId = roleId;
