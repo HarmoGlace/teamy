@@ -20,7 +20,7 @@ class SubPointsHandler extends PointsHandler {
 
     /**
      * Get the points of the parent team
-     * @returns {Number}
+     * @returns {Promise<Number>}
      */
 
     async parent () {
@@ -29,7 +29,7 @@ class SubPointsHandler extends PointsHandler {
 
     /**
      * Get the points of this team
-     * @returns {Number}
+     * @returns {Promise<Number>}
      */
 
     async current (...args) {
@@ -38,7 +38,7 @@ class SubPointsHandler extends PointsHandler {
 
     /**
      * Get the points of this team
-     * @returns {Number}
+     * @returns {Promise<Number>}
      */
 
     async get (...args) {
@@ -48,7 +48,7 @@ class SubPointsHandler extends PointsHandler {
     /**
      * Add points to this team
      * @param {Number} points Points to add
-     * @returns {Number} newPoints New points of the team
+     * @returns {Promise<Number>} newPoints New points of the team
      */
 
     async add (points) {
@@ -62,20 +62,17 @@ class SubPointsHandler extends PointsHandler {
     /**
      * Remove points to this team
      * @param {Number} points Points to remove
-     * @returns {Number} points New points of the team
+     * @returns {Promise<Number>} points New points of the team
      */
 
     async remove (points) {
-        await this.team.parent.points.remove(points);
-
-        await this.setLocal(this.points.current() - points);
-
-        return this.current();
+        return this.add(- points);
     }
 
     /**
      * Clears the points of this SubTeam
      * @param [locally=false] Whatever to only clear points of this SubTeam without removing them from the ParentTeam. Could cause incorrect data
+     * @returns {Promise<Number>}
      */
 
     async clear (locally = false) {
@@ -85,7 +82,7 @@ class SubPointsHandler extends PointsHandler {
     /**
      * Set points of this team
      * @param {Number} points Points to set
-     * @returns {Number} newPoints New Points of the team
+     * @returns {Promise<Number>} newPoints New Points of the team
      */
 
     async set (points) {
@@ -108,7 +105,7 @@ class SubPointsHandler extends PointsHandler {
 
         if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
-        return await this.team.manager.functions.setPoints(this.team, points);
+        return this.team.manager.functions.setPoints(this.team, points);
     }
 
 
