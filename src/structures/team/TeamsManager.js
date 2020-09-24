@@ -146,6 +146,10 @@ class TeamsManager extends TeamsHandler {
 
     }
 
+    /**
+     * Returns the Guild affected by this TeamsManger, if a client and a guildId are set
+     * @return {Guild|null}
+     */
 
     get teamsGuild () {
         return this.client?.guilds.cache.get(this.guildId);
