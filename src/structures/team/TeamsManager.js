@@ -137,7 +137,7 @@ class TeamsManager extends TeamsHandler {
 
             Structures.extend('GuildMember', (GuildMember) => GuildMemberHandler(GuildMember, this));
 
-            // defineUnlistedProperty('Structures', Structures, this);
+            defineUnlistedProperty('Structures', Structures, this);
         }
 
         if (teams) this.set(teams);
