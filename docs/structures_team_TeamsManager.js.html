@@ -257,7 +257,6 @@ class TeamsManager extends TeamsHandler {
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
         if (this.implementMember) {
-            console.log('implementing')
             const { Structures } = require('discord.js');
             const GuildMemberHandler = require('../handlers/GuildMemberHandler');
 
