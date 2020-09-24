@@ -149,11 +149,11 @@ class PointsHandler {
 
 
         /**
-         * Latest points recorded
-         * @type {Number}
+         * Latest points recorded. It is undefined if there is no points recorded and null if the latest points recorded are null
+         * @type {Number|null|undefined}
          */
 
-        this.latest = null;
+        this.latest = undefined;
     }
 
     /**
