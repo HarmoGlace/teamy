@@ -1,6 +1,7 @@
 const TeamyError = require('../TeamyError');
 const PointsHandler = require('../handlers/PointsHandler');
 const TeamsHandler = require("../handlers/TeamsHandler");
+const TeamMembersHandler = require("../handlers/TeamMembersHandler");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
@@ -83,46 +84,13 @@ class Team {
 
         this.points = new PointsHandler(this);
 
-    }
+        /**
+         * The TeamMembersHandler of this class
+         * @type {TeamsMemberHandler}
+         */
 
-    /**
-     * Whatever this Team can store members
-     * @return {Boolean}
-     */
+        this.members = new TeamMembersHandler();
 
-    get membersEnabled () {
-        return this.manager.teamsFunctions && this.type !== 'parent'
-    }
-
-    /**
-     * Get the GuildMembers only of the members who belongs to this team.
-     * @return {Promise<TeamsHandler<GuildMemberHandler>|null>}
-     */
-
-    async members () {
-        if (!this.membersEnabled) return null;
-
-        let returned = await Promise.all(await this.manager.functions.getTeamMembers(this));
-
-        const GuildMemberHandler = this.manager.Structures.get('GuildMember');
-
-        if (returned && returned.constructor !== TeamsHandler && !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name}`);
-
-        const returnedArray = returned?.constructor === TeamsHandler ? returned.toArray() : returned;
-
-        if (returned) {
-            for (const member of returnedArray) {
-                if (member.constructor !== GuildMemberHandler) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
-            }
-
-            returned = new TeamsHandler({
-                base: returnedArray.map(member => [ member.id, member ]),
-                type: 'member',
-                manager: this.manager
-            });
-        }
-
-        return returned || null;
     }
 
     get color () {

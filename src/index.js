@@ -13,5 +13,6 @@ module.exports = {
     PointsHandler: require('./structures/handlers/PointsHandler'),
     SubPointsHandler: require('./structures/handlers/SubPointsHandler'),
     ParentPointsHandler: require('./structures/handlers/ParentPointsHandler'),
-    GuildMemberHandler: require('./structures/handlers/GuildMemberHandler')
+    GuildMemberHandler: require('./structures/handlers/GuildMemberHandler'),
+    TeamMembersHandler: require('./structures/handlers/TeamMembersHandler')
 };

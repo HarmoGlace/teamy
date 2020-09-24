@@ -10,5 +10,7 @@ export const {
     TeamsHandler,
     PointsHandler,
     SubPointsHandler,
-    GuildMemberHandler
+    ParentPointsHandler,
+    GuildMemberHandler,
+    TeamMembersHandler,
 } = Teamy;
