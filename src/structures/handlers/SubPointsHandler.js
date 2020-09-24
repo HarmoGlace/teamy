@@ -76,7 +76,7 @@ class SubPointsHandler extends PointsHandler {
      */
 
     async clear (locally = false) {
-        return (locally ? this.set : this.setLocal).bind(this)(0)
+        return (locally ? this.setLocal : this.set).bind(this)(0)
     }
 
     /**
