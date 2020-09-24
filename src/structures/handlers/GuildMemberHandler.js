@@ -26,6 +26,7 @@ module.exports = (GuildMember, manager) => {
             /**
              * Defines the Type of this Class: `member`
              * @constant
+             * @type {String}
              */
 
             this.type = 'member';
@@ -34,6 +35,11 @@ module.exports = (GuildMember, manager) => {
             this.#internalPoints = new SubPointsHandler(this);
             this.#noTeamPoints = new PointsHandler(this);
         }
+
+        /**
+        * The Team this member belongs to if there is one
+         * @type {Team|SubTeam|null}
+         */
 
         get team () {
             const found = this.manager.functions.getMemberTeam(this, this.manager.subs);

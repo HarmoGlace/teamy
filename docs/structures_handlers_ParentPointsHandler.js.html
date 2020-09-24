@@ -145,7 +145,7 @@ class ParentPointsHandler extends PointsHandler {
     /**
      * Clear (reset) the points of this team. Use this carefully
      * @param [resursive=true] Whatever to also clear points of sub teams
-     * @returns {Number} New team points (should be 0)
+     * @returns {Promise&lt;Number>} New team points (should be 0)
      */
 
     async clear (resursive = true) {
