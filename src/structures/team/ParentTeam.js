@@ -18,9 +18,12 @@ class ParentTeam extends Team {
     constructor (manager, data) {
         super(manager, data);
 
+        delete this.members;
+
         /**
          * The type of this team
-         * @type {TeamType}
+         * @type {String}
+         * @enum {TeamType}
          */
 
         this.type = 'parent';

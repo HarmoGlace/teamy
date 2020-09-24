@@ -30,7 +30,7 @@ class TeamMembersHandler {
 
     /**
      * Whatever this is enabled
-     * @returns {Boolean} enabled
+     * @type {Boolean}
      */
 
     get enabled () {

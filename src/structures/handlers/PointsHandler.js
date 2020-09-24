@@ -97,11 +97,23 @@ class PointsHandler {
 
     /**
      *  Clear (reset) the points of this team. Use this carefully
-     * @returns {Number} New team points (should be 0)
+     * @param [recursive=true] Whatever also delete points of members who belongs to this team, if there are.
+     * @returns {Promise<Number>} New team points (should be 0)
      */
 
-    async clear () {
-        return this.set(0);
+    async clear (recursive = true) {
+
+        const set = this.set(0);
+
+        if (!recursive || !this.members?.enabled) return set;
+
+        const members = await this.members.fetch();
+
+        for (const member of members.toArray()) {
+            member.points.clear();
+        }
+
+        return set;
     }
 }
 

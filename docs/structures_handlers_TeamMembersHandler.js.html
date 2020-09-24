@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamy | structures/team/ParentTeam.js</title>
+  <title>Teamy | structures/handlers/TeamMembersHandler.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -116,7 +116,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/team/ParentTeam.js</h1>
+                    <h1>structures/handlers/TeamMembersHandler.js</h1>
                 </header>
                 
 
@@ -125,59 +125,78 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const Team = require('./Team');
-const TeamsHandler = require('../handlers/TeamsHandler');
-const ParentPointsHandler = require('../handlers/ParentPointsHandler');
+            <pre class="prettyprint source linenums"><code>const TeamsHandler = require("./TeamsHandler");
+const TeamyError = require("../TeamyError");
+const { defineUnlistedProperty } = require('../util/Util');
 
 /**
- * A Parent Team
- * @extends Team
+ * TeamsMemberHandler
  */
 
-class ParentTeam extends Team {
+class TeamMembersHandler {
 
     /**
-     *
-     * @param {TeamsManager} manager TeamsManager this ParentTeam belong to
-     * @param {TeamData} data The data for this team
+     * Instantiate the class
+     * @param team The team this TeamMemberHandler belongs to
      */
 
-    constructor (manager, data) {
-        super(manager, data);
+    constructor (team) {
 
-        delete this.members;
+        defineUnlistedProperty('team', team, this);
 
-        /**
-         * The type of this team
-         * @type {String}
-         * @enum {TeamType}
-         */
+        defineUnlistedProperty('manager', team.manager, this);
 
-        this.type = 'parent';
 
         /**
-         * Points of this team
+         * The latest members recorded. It is undefined if nothing was recorded
+         * @type {TeamsHandler|undefined}
          */
 
-        this.points = new ParentPointsHandler(this);
-
+        this.latest = undefined;
     }
 
     /**
-     * Get the SubTeams of this ParentTeam
-     * @return {TeamsHandler}
+     * Whatever this is enabled
+     * @type {Boolean}
      */
 
-    get subs () {
-        return new TeamsHandler({
-            base: this.manager.subs.toArray().filter(team => team.parent.id === this.id).sort((a, b) => b.points.latest - a.points.latest).map(team => [ team.id, team ]),
-            manager: this.manager,
-            type: 'subs'
-        });
+    get enabled () {
+        return this.manager.teamsFunctions &amp;&amp; this.team.type !== 'parent'
+    }
+
+    /**
+     * Get the GuildMembers only of the members who belongs to this team.
+     * @return {Promise&lt;TeamsHandler&lt;GuildMemberHandler>|null>}
+     */
+
+    async fetch () {
+        if (!this.enabled) return null;
+
+        let returned = await Promise.all(await this.manager.functions.getTeamMembers(this.team));
+
+        const GuildMemberHandler = this.manager.Structures.get('GuildMember');
+
+        if (returned &amp;&amp; returned.constructor !== TeamsHandler &amp;&amp; !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name}`);
+
+        const returnedArray = returned?.constructor === TeamsHandler ? returned.toArray() : returned;
+
+        if (returned) {
+            for (const member of returnedArray) {
+                if (member.constructor !== GuildMemberHandler) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
+            }
+
+            returned = new TeamsHandler({
+                base: returnedArray.map(member => [ member.id, member ]),
+                type: 'member',
+                manager: this.manager
+            });
+        }
+
+        return returned || null;
     }
 }
 
-module.exports = ParentTeam;</code></pre>
+module.exports = TeamMembersHandler;</code></pre>
         </article>
     </section>
 
