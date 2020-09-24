@@ -38,7 +38,7 @@ class ParentTeam extends Team {
 
     /**
      * Get the SubTeams of this ParentTeam
-     * @return {TeamsHandler}
+     * @type {TeamsHandler}
      */
 
     get subs () {
