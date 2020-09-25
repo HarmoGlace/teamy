@@ -75,6 +75,7 @@ const manager = new TeamsManager({
     teams: [
             {
                 id: 'parent1',
+                roleid: '123456789', // Optional
                 subs: [
                     {
                         id: 'sub1',
