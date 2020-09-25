@@ -24,8 +24,8 @@ With yarn
 $ yarn add teamy
 ```
 
-Recommended node version: 14.10.1 (Current)\
-Required node version: 14.x
+Recommended node version: 14.12.0 (Current)\
+Required node version: 14.4.0
 
 ## Example usage
 For a basic teams system using [enmap](https://www.npmjs.com/package/enmap) as database provider:
@@ -111,7 +111,7 @@ sub1.parent // returns parent Team
 client.once('ready', manager.initialize) // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role)
 
 client.on('message', message => {
-    const team = manager.getMemberTeam(message.member); // returns the member team or null if none is found
+    const team = manager.functions.getMemberTeam(message.member); // returns the member team or null if none is found. See below example for an easier way to do it
 })
 ```
 
@@ -143,7 +143,9 @@ const manager = new TeamsManager({
         ],
         functions: {
             setPoints: (team, points) => points.set(team.id, points),
-            getPoints: (team) => points.get(team)
+            getPoints: (team) => points.get(team),
+   
+            getMemberTeam: (member, teams) => teams.find(team => member.roles.cache.has(team.roleId)
         },
         guildId: '123456',  // guildId where all roles are from
         implementMembers: true
@@ -152,12 +154,10 @@ const manager = new TeamsManager({
 const { Client } = require('discord.js');
 const client = new Client();
 
-manager.setClient(client);
+manager.client = client;
 
 client.on('message', message => {
     message.member.team; // Returns the member team or null if none is found
-    
-    message.member.teams; // Returns an array with all member teams or an empty array if none is found.
 })
 ````
 
