@@ -1,6 +1,9 @@
+
+
 declare enum TeamType {
     'parent',
-    'sub'
+    'sub',
+    'default'
 }
 
 declare enum TeamsManagerType {
@@ -8,24 +11,45 @@ declare enum TeamsManagerType {
     'advanced'
 }
 
+declare enum TeamsHandlerType {
+    'all',
+    'subs',
+    'parents',
+    'unknown'
+}
+
 declare module 'teamy' {
 
-    export class TeamsManager {
-        constructor(options: TeamsManagerOptions);
-
-        type: TeamsManagerType;
-        teams: TeamsManager;
-        initialized: boolean;
-        implementMember: boolean;
-
-        initialize(): boolean;
-
-        getMemberTeam(member: any): AnyTeam | null;
-
-        getMemberTeams(member: any): AnyTeam[];
+    export class GuildMemberHandler {
+        team?: SubTeam|Team;
+        points: SubPointsHandler|PointsHandler;
+        type: 'member';
     }
 
-    interface TeamsManagerOptions {
+    export class TeamsManager implements TeamsHandler {
+        constructor(options: TeamsManagerOptions);
+
+        // @ts-ignore
+        type: TeamsManagerType;
+        alwaysPool: boolean;
+        client: any|null;
+        guildId: string|null;
+        add(resolvable: TeamResolvable): AnyTeam;
+        remove(team: AnyTeam|String): this;
+
+        // @ts-ignore
+        set (teams: TeamResolvable[]): this;
+        initialized: boolean;
+        implementMember: boolean;
+        initialize(): boolean;
+        functions: TeamsManagerFunctions;
+
+        parents: ParentTeam[]|Team[];
+        subs: SubTeam[]|Team[];
+
+    }
+
+    export interface TeamsManagerOptions {
         type?: TeamsManagerType;
         teams?: TeamResolvable[];
         functions: TeamsManagerFunctions;
@@ -33,68 +57,95 @@ declare module 'teamy' {
         guildId?: string;
         implementMember?: boolean;
         autoInitialize?: boolean;
+        alwaysPool: boolean;
     }
 
-    interface TeamsManagerFunctions {
-        setPoints: { (team: Team, points: number): void };
+    export interface TeamsManagerFunctions {
+        setPoints: { (team: Team, points: number): number };
         getPoints: { (team: Team): number };
+
+        getMemberTeam(member: GuildMemberHandler): SubTeam|Team|null;
+        getTeamMembers(team: AnyTeam): GuildMemberHandler[];
     }
 
-    interface TeamsHandler {
-        all: Team[] | (ParentTeam | SubTeam)[];
+    export interface TeamsHandler extends Map<String, TeamsHandlerStocked> {
+        constructor(options: TeamsHandlerOptions): this;
+
+        manager?: TeamsManager|null;
+        type: TeamsHandlerType|String;
+
+
 
         add(team: AnyTeam): AnyTeam;
 
-        remove(team: AnyTeam): TeamsHandler['all'];
+        sorted(): TeamsHandlerStocked;
 
-        set(teams: TeamsHandler['all']): TeamsHandler['all'];
+        clearAllPoints(recursive: Boolean): Boolean;
 
-        parents(): ParentTeam[];
+        find(callback: TeamsHandlerCallback): TeamsHandlerStocked|null;
 
-        subs(): SubTeam[];
+        filter(callback: TeamsHandlerCallback): TeamsHandlerCallback[];
 
-        sorted(): TeamsHandler['all'];
+        resolve(resolvable: string): TeamsHandlerStocked;
 
-        find(findFunction: string): AnyTeam | null
+        toArray(): TeamsHandlerCallback[];
+    }
 
-        get(id: string): TeamsHandler['find'];
+    interface TeamsHandlerCallback {
+        (team: TeamsHandlerStocked): Boolean;
+    }
 
-        resolve(resolvable: string): TeamsHandler['find'];
+    export interface TeamsHandlerOptions {
+        base: Array<Array<String|TeamsHandlerStocked>>;
+    }
+
+    export interface TeamMembersHandler {
+        enabled: Boolean;
+        fetch(): GuildMemberHandler[];
+        latest: number|undefined;
     }
 
     export class Team {
         constructor(manager: TeamsManager, data: TeamData);
 
+        members: TeamMembersHandler;
         id: string;
         name: string;
         aliases: string[];
         color: number;
         roleId: string | null;
-        points: TeamsPointsHandler
+        points: PointsHandler;
+        type: TeamType;
     }
 
     export class ParentTeam extends Team {
-        type: string;
+        // @ts-ignore
+        members: undefined;
         subs: SubTeam[];
+        points: ParentPointsHandler;
     }
 
     export class SubTeam extends Team {
-        type: string;
         parent: ParentTeam;
-        points: SubTeamsPointsHandler;
+        points: SubPointsHandler;
     }
 
-    interface TeamsPointsHandler {
-        get(): number;
+    interface PointsHandler {
+        latest: number|null|undefined;
 
-        add(points: number): void;
+        get(nullable: Boolean): number;
 
-        remove(points: number): void;
+        add(points: number): number;
 
-        set(points: number): void;
+        remove(points: number): number;
+
+        set(points: number): number;
+
+        clear(recursive: Boolean): number;
+        checkPoints(returnTeam: Boolean): this;
     }
 
-    interface SubTeamsPointsHandler extends TeamsPointsHandler {
+    interface SubPointsHandler extends PointsHandler {
         parent(): number;
 
         current(): number;
@@ -102,7 +153,12 @@ declare module 'teamy' {
         setLocal(points: number): void;
     }
 
+    interface ParentPointsHandler extends PointsHandler {
+
+    }
+
     type AnyTeam = Team | ParentTeam | SubTeam;
+    type TeamsHandlerStocked= AnyTeam|GuildMemberHandler;
 
 
     type ParentTeamResolvable = ParentTeamData | ParentTeam;

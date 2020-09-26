@@ -84,15 +84,14 @@ class PointsHandler {
     }
 
     /**
-     *
-     * @param {Boolean} [returnTeam=false] Whatever or not to return the current team instead of these points
+     * Check the points of the team to update the `latest` property
      * @return {Promise<PointsHandler>}
      */
 
-    async checkPoints (returnTeam = false) {
+    async checkPoints () {
         const returned = await this.get(true);
         if (!returned && returned !== 0) await this.set(0);
-        return returnTeam ? this.team : this;
+        return this;
     }
 
     /**
