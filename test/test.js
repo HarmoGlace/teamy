@@ -73,24 +73,7 @@ client.once('ready', async () => {
 //
 client.on('message', async message => {
 
-    const member = message.member;
-
-    const newPoints = await member.points.clear();
-
-    console.log('newPoints', newPoints, ' fetched: ', await member.points.get());
-    console.log('subPoints', await member.team.points.get())
-    console.log('parentPoints', await member.team.parent.points.get());
-
-
-    // member.points.clear();
-    //
-    // // console.log(member)
-    //
-    // const points = await member.points.get();
-    //
-    // const newPoints = await member.points.add(12);
-    //
-    // console.log(newPoints);
+    message.member.points.clear();
 
 
 })
