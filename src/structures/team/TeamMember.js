@@ -15,7 +15,7 @@ module.exports = (GuildMember, manager) => {
         #noTeamPoints
 
         /**
-         * Instantiates this TeamMember. Should not be done manually
+         * Instantiates this TeamMember. Should not be done manually, discord.js will do it for you
          */
 
         constructor (...args) {
