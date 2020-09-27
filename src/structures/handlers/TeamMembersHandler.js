@@ -3,14 +3,14 @@ const TeamyError = require("../TeamyError");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
- * TeamsMemberHandler
+ * TeamMembersHandler
  */
 
 class TeamMembersHandler {
 
     /**
      * Instantiate the class
-     * @param team The team this TeamMemberHandler belongs to
+     * @param team The team this TeamMembersHandler belongs to
      */
 
     constructor (team) {
@@ -34,7 +34,7 @@ class TeamMembersHandler {
      */
 
     get enabled () {
-        return this.manager.teamsFunctions && this.team.type !== 'parent'
+        return this.manager.teamsFunctions;
     }
 
     /**
@@ -47,7 +47,7 @@ class TeamMembersHandler {
 
         let returned = await Promise.all(await this.manager.functions.getTeamMembers(this.team));
 
-        const GuildMemberHandler = this.manager.Structures.get('GuildMember');
+        const TeamMember = this.manager.Structures.get('GuildMember');
 
         if (returned && returned.constructor !== TeamsHandler && !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name}`);
 
@@ -55,7 +55,7 @@ class TeamMembersHandler {
 
         if (returned) {
             for (const member of returnedArray) {
-                if (member.constructor !== GuildMemberHandler) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
+                if (member.constructor !== TeamMember) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of TeamMember. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
             }
 
             returned = new TeamsHandler({
