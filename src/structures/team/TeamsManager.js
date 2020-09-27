@@ -131,10 +131,10 @@ class TeamsManager extends TeamsHandler {
 
         if (this.implementMember) {
             const { Structures } = require('discord.js');
-            const GuildMemberHandler = require('./TeamMember');
+            const TeamMember = require('./TeamMember');
 
 
-            Structures.extend('GuildMember', (GuildMember) => GuildMemberHandler(GuildMember, this));
+            Structures.extend('GuildMember', (GuildMember) => TeamMember(GuildMember, this));
 
             defineUnlistedProperty('Structures', Structures, this);
         }
