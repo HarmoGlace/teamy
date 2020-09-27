@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamy | structures/handlers/ParentPointsHandler.js</title>
+  <title>Teamy | index.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -116,7 +116,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/handlers/ParentPointsHandler.js</h1>
+                    <h1>index.js</h1>
                 </header>
                 
 
@@ -125,44 +125,31 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const PointsHandler = require('./PointsHandler');
+            <pre class="prettyprint source linenums"><code>module.exports = {
 
-/**
- * Parent points handler
- */
+    // Teams
 
-class ParentPointsHandler extends PointsHandler {
+    TeamsManager: require('./structures/team/TeamsManager'),
+    Team: require('./structures/team/Team'),
+    ParentTeam: require('./structures/team/ParentTeam'),
+    SubTeam: require('./structures/team/SubTeam'),
+    TeamMember: require('./structures/team/TeamMember'),
+
+
+    // Handlers
+    TeamsHandler: require('./structures/handlers/TeamsHandler'),
+
+    PointsHandler: require('./structures/handlers/PointsHandler'),
+    SubPointsHandler: require('./structures/handlers/SubPointsHandler'),
+    ParentPointsHandler: require('./structures/handlers/ParentPointsHandler'),
+
+    TeamMembersHandler: require('./structures/handlers/TeamMembersHandler'),
 
     /**
-     * @extends PointsHandler
-     * @param {ParentTeam} team ParentTeam this points belong to
+     * @deprecated Use TeamMember instead
      */
-
-    constructor (team) {
-        super(team);
-    }
-
-    /**
-     * Clear (reset) the points of this team. Use this carefully
-     * @param [resursive=true] Whatever to also clear points of sub teams
-     * @returns {Promise&lt;Number>} New team points (should be 0)
-     */
-
-    async clear (resursive = true) {
-        super.clear();
-
-        if (resursive) {
-            for (const sub of this.subs) {
-                sub.points.clear();
-            }
-        }
-
-        return true;
-    }
-
-}
-
-module.exports = ParentPointsHandler;</code></pre>
+    GuildMemberHandler: require('./structures/team/TeamMember'),
+};</code></pre>
         </article>
     </section>
 

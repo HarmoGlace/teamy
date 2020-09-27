@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamy | structures/handlers/ParentPointsHandler.js</title>
+  <title>Teamy | structures/team/TeamMember.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -116,7 +116,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/handlers/ParentPointsHandler.js</h1>
+                    <h1>structures/team/TeamMember.js</h1>
                 </header>
                 
 
@@ -125,44 +125,75 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const PointsHandler = require('./PointsHandler');
+            <pre class="prettyprint source linenums"><code>const SubPointsHandler = require('../handlers/SubPointsHandler');
+const PointsHandler = require('../handlers/PointsHandler');
+const SubTeam = require("./SubTeam");
+const { defineUnlistedProperty } = require('../util/Util');
 
-/**
- * Parent points handler
- */
-
-class ParentPointsHandler extends PointsHandler {
-
-    /**
-     * @extends PointsHandler
-     * @param {ParentTeam} team ParentTeam this points belong to
-     */
-
-    constructor (team) {
-        super(team);
-    }
+module.exports = (GuildMember, manager) => {
 
     /**
-     * Clear (reset) the points of this team. Use this carefully
-     * @param [resursive=true] Whatever to also clear points of sub teams
-     * @returns {Promise&lt;Number>} New team points (should be 0)
+     * A GuildMemberHandler
      */
 
-    async clear (resursive = true) {
-        super.clear();
+    return class TeamMember extends GuildMember {
 
-        if (resursive) {
-            for (const sub of this.subs) {
-                sub.points.clear();
-            }
+        #internalPoints
+        #noTeamPoints
+
+        /**
+         * Instantiates this GuildMemberHandler. Should not be done manually
+         */
+
+        constructor (...args) {
+            super(...args);
+
+            defineUnlistedProperty('manager', manager, this);
+
+            /**
+             * Defines the Type of this Class: `member`
+             * @constant
+             * @type {String}
+             */
+
+            this.type = 'member';
+
+
+            this.#internalPoints = new SubPointsHandler(this);
+            this.#noTeamPoints = new PointsHandler(this);
         }
 
-        return true;
+        /**
+        * The Team this member belongs to if there is one
+         * @type {Team|SubTeam|null}
+         */
+
+        get team () {
+            const found = this.manager.functions.getMemberTeam(this, this.manager.subs);
+
+            return (found &amp;&amp; found.constructor !== SubTeam ? this.manager.get(found) : found) || null;
+
+        }
+
+
+        /**
+         * Returns the PointsHandler of this GuildMember. Returns a basic points handler if the member is not in a team
+         * @type {SubPointsHandler|PointsHandler}
+         */
+
+        get points () {
+            return this.team ? this.#internalPoints : this.#noTeamPoints;
+        }
+
+        get parent () {
+            return this.team;
+        }
+
     }
 
 }
 
-module.exports = ParentPointsHandler;</code></pre>
+</code></pre>
         </article>
     </section>
 
