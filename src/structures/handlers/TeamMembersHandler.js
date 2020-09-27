@@ -3,14 +3,14 @@ const TeamyError = require("../TeamyError");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
- * TeamsMemberHandler
+ * TeamMembersHandler
  */
 
 class TeamMembersHandler {
 
     /**
      * Instantiate the class
-     * @param team The team this TeamMemberHandler belongs to
+     * @param team The team this TeamMembersHandler belongs to
      */
 
     constructor (team) {
@@ -22,7 +22,7 @@ class TeamMembersHandler {
 
         /**
          * The latest members recorded. It is undefined if nothing was recorded
-         * @type {TeamsHandler|undefined}
+         * @type {TeamsHandler<TeamMember>|undefined}
          */
 
         this.latest = undefined;
@@ -34,12 +34,12 @@ class TeamMembersHandler {
      */
 
     get enabled () {
-        return this.manager.teamsFunctions && this.team.type !== 'parent'
+        return this.manager.teamsFunctions;
     }
 
     /**
      * Get the GuildMembers only of the members who belongs to this team.
-     * @return {Promise<TeamsHandler<GuildMemberHandler>|null>}
+     * @return {Promise<TeamsHandler<TeamMember>|null>}
      */
 
     async fetch () {
@@ -47,15 +47,15 @@ class TeamMembersHandler {
 
         let returned = await Promise.all(await this.manager.functions.getTeamMembers(this.team));
 
-        const GuildMemberHandler = this.manager.Structures.get('GuildMember');
+        const TeamMember = this.manager.Structures.get('GuildMember');
 
-        if (returned && returned.constructor !== TeamsHandler && !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name}`);
+        if (returned && returned.constructor !== TeamsHandler && !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of TeamMember. Instead received ${returned.constructor.name}`);
 
         const returnedArray = returned?.constructor === TeamsHandler ? returned.toArray() : returned;
 
         if (returned) {
             for (const member of returnedArray) {
-                if (member.constructor !== GuildMemberHandler) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
+                if (member.constructor !== TeamMember) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of TeamMember. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
             }
 
             returned = new TeamsHandler({
