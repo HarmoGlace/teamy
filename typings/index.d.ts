@@ -61,11 +61,11 @@ declare module 'teamy' {
     }
 
     export interface TeamsManagerFunctions {
-        setPoints: { (team: Team, points: number): number };
-        getPoints: { (team: Team): number };
+        setPoints: { (team: Team, points: number): any };
+        getPoints: { (team: Team): number|null|Promise<number|null> };
 
-        getMemberTeam(member: TeamMember): SubTeam|Team|null;
-        getTeamMembers(team: AnyTeam): TeamMember[];
+        getMemberTeam(member: TeamMember): SubTeam|Team|null|Promise<SubTeam|Team|null>;
+        getTeamMembers(team: AnyTeam): TeamMember[]|Promise<TeamMember[]>;
     }
 
     export interface TeamsHandler extends Map<String, TeamsHandlerStocked> {
@@ -78,9 +78,9 @@ declare module 'teamy' {
 
         add(team: AnyTeam): AnyTeam;
 
-        sorted(): TeamsHandlerStocked;
+        sorted(): Promise<TeamsHandlerStocked>;
 
-        clearAllPoints(recursive: Boolean): Boolean;
+        clearAllPoints(recursive: Boolean): Promise<Boolean>;
 
         find(callback: TeamsHandlerCallback): TeamsHandlerStocked|null;
 
@@ -101,7 +101,7 @@ declare module 'teamy' {
 
     export interface TeamMembersHandler {
         enabled: Boolean;
-        fetch(): TeamMember[];
+        fetch(): Promise<TeamMember[]>;
         latest: number|undefined;
     }
 
@@ -133,24 +133,24 @@ declare module 'teamy' {
     interface PointsHandler {
         latest: number|null|undefined;
 
-        get(nullable: Boolean): number;
+        get(nullable: Boolean): Promise<number|null>;
 
-        add(points: number): number;
+        add(points: number): Promise<number>;
 
-        remove(points: number): number;
+        remove(points: number): Promise<number>;
 
-        set(points: number): number;
+        set(points: number): Promise<number>;
 
         clear(recursive: Boolean): number;
-        checkPoints(returnTeam: Boolean): this;
+        checkPoints(returnTeam: Boolean): Promise<this>;
     }
 
     interface SubPointsHandler extends PointsHandler {
-        parent(): number;
+        parent(): Promise<number>;
 
-        current(): number;
+        current(): Promise<number>;
 
-        setLocal(points: number): void;
+        setLocal(points: number): Promise<number>;
     }
 
     interface ParentPointsHandler extends PointsHandler {

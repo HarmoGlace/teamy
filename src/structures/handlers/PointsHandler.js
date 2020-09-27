@@ -32,7 +32,7 @@ class PointsHandler {
     /**
      * Get the points of this team
      * @param {Boolean} [nullable=false] Whatever to return null if the provided function returns a falsy value (excepted 0)
-     * @returns {Promise<number>} The points of the team
+     * @returns {Promise<number|null>} The points of the team
      */
 
     async get (nullable = false) {
