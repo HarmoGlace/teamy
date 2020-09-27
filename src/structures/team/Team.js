@@ -10,13 +10,13 @@ const { defineUnlistedProperty } = require('../util/Util');
 
 class Team {
 
+    #teamColor
+
     /**
      *
      * @param {TeamsManager} manager The TeamsManager this team belong to
      * @param {TeamData} data The data of this team
      */
-
-    #teamColor
 
     constructor (manager, {
         id,
