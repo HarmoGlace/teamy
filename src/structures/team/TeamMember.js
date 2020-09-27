@@ -1,6 +1,6 @@
-const SubPointsHandler = require('./SubPointsHandler');
-const PointsHandler = require('./PointsHandler');
-const SubTeam = require("../team/SubTeam");
+const SubPointsHandler = require('../handlers/SubPointsHandler');
+const PointsHandler = require('../handlers/PointsHandler');
+const SubTeam = require("./SubTeam");
 const { defineUnlistedProperty } = require('../util/Util');
 
 module.exports = (GuildMember, manager) => {
@@ -9,7 +9,7 @@ module.exports = (GuildMember, manager) => {
      * A GuildMemberHandler
      */
 
-    class GuildMemberHandler extends GuildMember {
+    return class TeamMember extends GuildMember {
 
         #internalPoints
         #noTeamPoints
@@ -64,6 +64,5 @@ module.exports = (GuildMember, manager) => {
 
     }
 
-    return GuildMemberHandler
 }
 

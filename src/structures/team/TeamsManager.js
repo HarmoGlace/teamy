@@ -131,7 +131,7 @@ class TeamsManager extends TeamsHandler {
 
         if (this.implementMember) {
             const { Structures } = require('discord.js');
-            const GuildMemberHandler = require('../handlers/GuildMemberHandler');
+            const GuildMemberHandler = require('./TeamMember');
 
 
             Structures.extend('GuildMember', (GuildMember) => GuildMemberHandler(GuildMember, this));
