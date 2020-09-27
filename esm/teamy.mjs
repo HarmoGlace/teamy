@@ -7,11 +7,17 @@ export const {
     Team,
     ParentTeam,
     SubTeam,
+    TeamMember,
+
+
     TeamsHandler,
     PointsHandler,
     SubPointsHandler,
     ParentPointsHandler,
-    GuildMemberHandler,
-    TeamMember,
     TeamMembersHandler,
+
+    /**
+     * @deprecated Use TeamMember instead
+     */
+    GuildMemberHandler
 } = Teamy;
