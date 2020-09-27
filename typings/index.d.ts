@@ -20,7 +20,7 @@ declare enum TeamsHandlerType {
 
 declare module 'teamy' {
 
-    export class GuildMemberHandler {
+    export class TeamMember {
         team?: SubTeam|Team;
         points: SubPointsHandler|PointsHandler;
         type: 'member';
@@ -64,8 +64,8 @@ declare module 'teamy' {
         setPoints: { (team: Team, points: number): number };
         getPoints: { (team: Team): number };
 
-        getMemberTeam(member: GuildMemberHandler): SubTeam|Team|null;
-        getTeamMembers(team: AnyTeam): GuildMemberHandler[];
+        getMemberTeam(member: TeamMember): SubTeam|Team|null;
+        getTeamMembers(team: AnyTeam): TeamMember[];
     }
 
     export interface TeamsHandler extends Map<String, TeamsHandlerStocked> {
@@ -101,7 +101,7 @@ declare module 'teamy' {
 
     export interface TeamMembersHandler {
         enabled: Boolean;
-        fetch(): GuildMemberHandler[];
+        fetch(): TeamMember[];
         latest: number|undefined;
     }
 
@@ -158,7 +158,7 @@ declare module 'teamy' {
     }
 
     type AnyTeam = Team | ParentTeam | SubTeam;
-    type TeamsHandlerStocked= AnyTeam|GuildMemberHandler;
+    type TeamsHandlerStocked= AnyTeam|TeamMember;
 
 
     type ParentTeamResolvable = ParentTeamData | ParentTeam;
