@@ -22,7 +22,7 @@ class TeamMembersHandler {
 
         /**
          * The latest members recorded. It is undefined if nothing was recorded
-         * @type {TeamsHandler|undefined}
+         * @type {TeamsHandler<TeamMember>|undefined}
          */
 
         this.latest = undefined;
@@ -39,7 +39,7 @@ class TeamMembersHandler {
 
     /**
      * Get the GuildMembers only of the members who belongs to this team.
-     * @return {Promise<TeamsHandler<GuildMemberHandler>|null>}
+     * @return {Promise<TeamsHandler<TeamMember>|null>}
      */
 
     async fetch () {
@@ -49,7 +49,7 @@ class TeamMembersHandler {
 
         const TeamMember = this.manager.Structures.get('GuildMember');
 
-        if (returned && returned.constructor !== TeamsHandler && !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of GuildMemberHandler. Instead received ${returned.constructor.name}`);
+        if (returned && returned.constructor !== TeamsHandler && !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of TeamMember. Instead received ${returned.constructor.name}`);
 
         const returnedArray = returned?.constructor === TeamsHandler ? returned.toArray() : returned;
 

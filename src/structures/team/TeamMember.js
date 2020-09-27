@@ -6,7 +6,7 @@ const { defineUnlistedProperty } = require('../util/Util');
 module.exports = (GuildMember, manager) => {
 
     /**
-     * A GuildMemberHandler
+     * A TeamMember
      */
 
     return class TeamMember extends GuildMember {
@@ -15,7 +15,7 @@ module.exports = (GuildMember, manager) => {
         #noTeamPoints
 
         /**
-         * Instantiates this GuildMemberHandler. Should not be done manually
+         * Instantiates this TeamMember. Should not be done manually
          */
 
         constructor (...args) {
@@ -37,7 +37,7 @@ module.exports = (GuildMember, manager) => {
         }
 
         /**
-        * The Team this member belongs to if there is one
+        * The Team this TeamMember belongs to if there is one
          * @type {Team|SubTeam|null}
          */
 
