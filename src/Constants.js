@@ -28,8 +28,9 @@ exports.TeamsManagerType = [
  * @property {String} [name] Name of the team
  * @property {String[]} [aliases=[]] Team name aliases
  * @property {Number} [color] Team color
- * @property {String} [roleId] Team role ID
- * @property {ParentTeam} [parent] Parent Team of this team. Only needed if this team is a SubTeam
+ * @property {String} [role] Team role Id
+ * @property {ParentTeam} [parent] Parent Team of this team. Only needed if this team is a {@link SubTeam}
+ * @property {SubTeam[]} [subs] Sub Teams of this team. Only needed if this team is a {@link ParentTeam}
  */
 
 /**
