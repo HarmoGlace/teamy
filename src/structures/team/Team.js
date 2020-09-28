@@ -110,7 +110,7 @@ class Team {
 
     /**
      * Get the guild used by this Team. It is a [discord.js Guild](https://discord.js.org/#/docs/main/stable/class/Guild)
-     * @return {Guild|null}
+     * @type {Guild|null}
      */
 
     get guild () {
@@ -118,12 +118,13 @@ class Team {
     }
 
     set guild (guildId) {
+        if (typeof guildId !== 'string') throw new TeamyError(`Team#guild sets only receive strings. Instead received ${guildId.constructor.name}`);
         this.#internalGuildId = guildId.toString();
     }
 
     /**
      * Get the Role of this team. It is a [discord.js Role](https://discord.js.org/#/docs/main/stable/class/Role)
-     * @return {Role|null}
+     * @type {Role|null}
      */
 
     get role () {
@@ -131,14 +132,21 @@ class Team {
     }
 
     set role (roleId) {
-        this.roleId = roleId.toString();
+        if (typeof roleId !== 'string') throw new TeamyError(`Team#role sets only receive strings. Instead received ${roleId.constructor.name}`);
+        this.roleId = roleId;
     }
+
+    /**
+     * Color of this team, if there is one
+     * @return {*|number|null}
+     */
 
     get color () {
         return this.#teamColor || this.role?.color || null;
     }
 
     set color (color) {
+        if (typeof color !== 'number') throw new TeamyError(`Team#color sets only receive strings. Instead received ${color.constructor.name}`);
         this.#teamColor = color;
     }
 }
