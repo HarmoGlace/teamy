@@ -63,8 +63,6 @@ manager.client = client;
 console.log(manager.guilds.get('718743854496612406').subs);
 
 
-
-
 client.once('ready', async () => {
     console.log(`Ready on ${client.user.username}`)
 

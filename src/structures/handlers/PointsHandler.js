@@ -1,5 +1,5 @@
 const TeamyError = require("../TeamyError");
-const { defineUnlistedProperty} = require('../util/Util');
+const { defineUnlistedProperty } = require('../util/Util');
 
 /**
  * Points Handler
@@ -66,7 +66,7 @@ class PointsHandler {
      */
 
     async remove (points) {
-        return this.add(- points);
+        return this.add(-points);
     }
 
     /**

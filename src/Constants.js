@@ -1,5 +1,3 @@
-
-
 /**
  * The type of a TeamsManager. Can be :
  * * `basic`

@@ -37,7 +37,7 @@ module.exports = (GuildMember, manager) => {
         }
 
         /**
-        * The Team this member belongs to if there is one
+         * The Team this member belongs to if there is one
          * @type {Team|SubTeam|null}
          */
 

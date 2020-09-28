@@ -1,5 +1,3 @@
-
-
 declare enum TeamType {
     'parent',
     'sub',
@@ -21,8 +19,8 @@ declare enum TeamsHandlerType {
 declare module 'teamy' {
 
     export class TeamMember {
-        team?: SubTeam|Team;
-        points: SubPointsHandler|PointsHandler;
+        team?: SubTeam | Team;
+        points: SubPointsHandler | PointsHandler;
         type: 'member';
     }
 
@@ -32,18 +30,22 @@ declare module 'teamy' {
         // @ts-ignore
         type: TeamsManagerType;
         alwaysPool: boolean;
-        client: any|null;
-        guildId: string|null;
+        client: any | null;
+        guildId: string | null;
+
         add(resolvable: TeamResolvable): AnyTeam;
-        remove(team: AnyTeam|String): this;
+
+        remove(team: AnyTeam | String): this;
 
         // @ts-ignore
-        set (teams: TeamResolvable[]): this;
+        set(teams: TeamResolvable[]): this;
+
         initialized: boolean;
         implementMember: boolean;
-        initialize(): boolean;
-        functions: TeamsManagerFunctions;
 
+        initialize(): boolean;
+
+        functions: TeamsManagerFunctions;
 
 
     }
@@ -61,21 +63,22 @@ declare module 'teamy' {
 
     export interface TeamsManagerFunctions {
         setPoints: { (team: Team, points: number): any };
-        getPoints: { (team: Team): number|null|Promise<number|null> };
+        getPoints: { (team: Team): number | null | Promise<number | null> };
 
-        getMemberTeam(member: TeamMember): SubTeam|Team|null|Promise<SubTeam|Team|null>;
-        getTeamMembers(team: AnyTeam): TeamMember[]|Promise<TeamMember[]>;
+        getMemberTeam(member: TeamMember): SubTeam | Team | null | Promise<SubTeam | Team | null>;
+
+        getTeamMembers(team: AnyTeam): TeamMember[] | Promise<TeamMember[]>;
     }
 
     export interface TeamsHandler extends Map<String, TeamsHandlerStocked> {
         constructor(options: TeamsHandlerOptions): this;
 
-        manager?: TeamsManager|null;
-        type: TeamsHandlerType|String;
+        manager?: TeamsManager | null;
+        type: TeamsHandlerType | String;
 
 
-        parents: ParentTeam[]|Team[];
-        subs: SubTeam[]|Team[];
+        parents: ParentTeam[] | Team[];
+        subs: SubTeam[] | Team[];
 
 
         add(team: AnyTeam): AnyTeam;
@@ -84,9 +87,10 @@ declare module 'teamy' {
 
         clearAllPoints(recursive: Boolean): Promise<Boolean>;
 
-        find(callback: TeamsHandlerCallback): TeamsHandlerStocked|null;
+        find(callback: TeamsHandlerCallback): TeamsHandlerStocked | null;
 
         filter(callback: TeamsHandlerCallback): TeamsHandler;
+
         map(callback: TeamsHandlerMapCallback): TeamsHandlerCallback[];
 
         resolve(resolvable: string): TeamsHandlerStocked;
@@ -103,13 +107,15 @@ declare module 'teamy' {
     }
 
     export interface TeamsHandlerOptions {
-        base: Array<Array<String|TeamsHandlerStocked>>;
+        base: Array<Array<String | TeamsHandlerStocked>>;
     }
 
     export interface TeamMembersHandler {
         enabled: Boolean;
+
         fetch(): Promise<TeamMember[]>;
-        latest: number|undefined;
+
+        latest: number | undefined;
     }
 
     export class Team {
@@ -121,9 +127,9 @@ declare module 'teamy' {
         aliases: string[];
         color: number;
         roleId: string | null;
-        role: any|null;
-        guildId: string|null;
-        guild: any|null;
+        role: any | null;
+        guildId: string | null;
+        guild: any | null;
         points: PointsHandler;
         type: TeamType;
     }
@@ -141,9 +147,9 @@ declare module 'teamy' {
     }
 
     interface PointsHandler {
-        latest: number|null|undefined;
+        latest: number | null | undefined;
 
-        get(nullable: Boolean): Promise<number|null>;
+        get(nullable: Boolean): Promise<number | null>;
 
         add(points: number): Promise<number>;
 
@@ -152,6 +158,7 @@ declare module 'teamy' {
         set(points: number): Promise<number>;
 
         clear(recursive: Boolean): number;
+
         checkPoints(returnTeam: Boolean): Promise<this>;
     }
 
@@ -168,7 +175,7 @@ declare module 'teamy' {
     }
 
     type AnyTeam = Team | ParentTeam | SubTeam;
-    type TeamsHandlerStocked= AnyTeam|TeamMember;
+    type TeamsHandlerStocked = AnyTeam | TeamMember;
 
 
     type ParentTeamResolvable = ParentTeamData | ParentTeam;

@@ -149,7 +149,7 @@ class TeamsManager extends TeamsHandler {
                 continue;
             }
 
-            guilds.set(team.guildId, new TeamsHandler({ base: [ [ team.id, team ] ], type: 'all', manager: this}));
+            guilds.set(team.guildId, new TeamsHandler({ base: [ [ team.id, team ] ], type: 'all', manager: this }));
         }
 
         return guilds;
@@ -279,7 +279,6 @@ class TeamsManager extends TeamsHandler {
         return this;
 
     }
-
 
 
 }

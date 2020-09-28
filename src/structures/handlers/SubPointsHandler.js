@@ -66,7 +66,7 @@ class SubPointsHandler extends PointsHandler {
      */
 
     async remove (points) {
-        return this.add(- points);
+        return this.add(-points);
     }
 
     /**

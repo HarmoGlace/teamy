@@ -72,7 +72,6 @@ class Team {
         this.color = color;
 
 
-
         this.#internalGuildId = guild;
 
         /**

@@ -7,7 +7,6 @@ const { defineUnlistedProperty } = require('../util/Util');
 class TeamsHandler extends Map {
 
 
-
     #manager
 
     /**
@@ -99,7 +98,7 @@ class TeamsHandler extends Map {
         for (const team of this.toArray()) {
             team.points.clear(recursive);
         }
-        
+
         return true;
     }
 
@@ -190,7 +189,6 @@ class TeamsHandler extends Map {
     toString () {
         return this.keys.join(', ');
     }
-
 
 
 }
