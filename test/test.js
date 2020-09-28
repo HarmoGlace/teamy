@@ -64,7 +64,6 @@ manager.client = client;
 
 
 client.once('ready', async () => {
-    manager.initialize(); // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role
     console.log(`Ready on ${client.user.username}`)
 
     const sub1 = manager.get('sub1');
@@ -73,7 +72,7 @@ client.once('ready', async () => {
 //
 client.on('message', async message => {
 
-    message.member.points.clear();
+    console.log(message.member.team, message.member.team.role)
 
 
 })
