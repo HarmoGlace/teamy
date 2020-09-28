@@ -23,9 +23,8 @@ class TeamsManager extends TeamsHandler {
      * @param {TeamResolvable[]} [options.teams = []] List of teams
      * @param {TeamsManagerType} [options.type='basic'] The type of the TeamsManager
      * @param {TeamsManagerFunctions} options.functions Functions to store and get points
-     * @param {Client} [options.client] Discord.js client used to get roles. Need the guildId option
-     * @param {String} [options.guildId] Guild id used to get roles. Need the client option
-     * @param {Boolean} [options.autoInitialize] If true it will fire the initialize method when creating the manager
+     * @param {Client} [options.client] Discord.js client used to get roles.
+     * @param {String} [options.guild] Guild id used by default to get roles. Can be overrided by Team#guild Need the client option
      * @param  {Boolean} [options.implementMember] If true it will add a team and teams properties to Discord.js GuildMembers. The client needs to be created after this manager
      */
 
