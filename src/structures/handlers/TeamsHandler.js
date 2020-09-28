@@ -46,7 +46,7 @@ class TeamsHandler extends Map {
      */
 
     get parents () {
-        return this.type === 'basic' ? this : super.filter(team => team.type === 'parent', 'parents');
+        return this.type === 'basic' ? this : this.filter(team => team.type === 'parent', 'parents');
     }
 
     /**
@@ -55,7 +55,7 @@ class TeamsHandler extends Map {
      */
 
     get subs () {
-        return this.type === 'basic' ? this : super.filter(team => team.type === 'sub', 'subs');
+        return this.type === 'basic' ? this : this.filter(team => team.type === 'sub', 'subs');
     }
 
     /**
