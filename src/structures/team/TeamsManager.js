@@ -129,7 +129,7 @@ class TeamsManager extends TeamsHandler {
 
     /**
      * Get a TeamsHandler of guilds and their teams
-     * @return {TeamsHandler<String, TeamsHandler<SubTeam|ParentTeam|Team>>}
+     * @type {TeamsHandler<String, TeamsHandler<SubTeam|ParentTeam|Team>>}
      */
 
     get guilds () {

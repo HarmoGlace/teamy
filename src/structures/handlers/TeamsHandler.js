@@ -42,7 +42,7 @@ class TeamsHandler extends Map {
 
     /**
      * All ParentTeam of this TeamsHandler
-     * @returns {TeamsHandler<ParentTeam>}
+     * @type {TeamsHandler<ParentTeam>}
      */
 
     get parents () {
@@ -51,7 +51,7 @@ class TeamsHandler extends Map {
 
     /**
      * All SubTeam of this TeamsHandler
-     * @returns {TeamsHandler<SubTeam>}
+     * @type {TeamsHandler<SubTeam>}
      */
 
     get subs () {
