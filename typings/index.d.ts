@@ -86,7 +86,8 @@ declare module 'teamy' {
 
         find(callback: TeamsHandlerCallback): TeamsHandlerStocked|null;
 
-        filter(callback: TeamsHandlerCallback): TeamsHandlerCallback[];
+        filter(callback: TeamsHandlerCallback): TeamsHandler;
+        map(callback: TeamsHandlerMapCallback): TeamsHandlerCallback[];
 
         resolve(resolvable: string): TeamsHandlerStocked;
 
@@ -95,6 +96,10 @@ declare module 'teamy' {
 
     interface TeamsHandlerCallback {
         (team: TeamsHandlerStocked): Boolean;
+    }
+
+    interface TeamsHandlerMapCallback {
+        (team: TeamsHandlerStocked): any;
     }
 
     export interface TeamsHandlerOptions {
