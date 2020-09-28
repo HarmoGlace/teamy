@@ -39,10 +39,8 @@ class TeamsManager extends TeamsHandler {
                          getTeamMembers = null
                      } = {},
                      client = null,
-                     guildId = null,
-                     autoInitialize = false,
+                     guild = null,
                      implementMember = false,
-                     alwaysPool = false
                  } = {}) {
 
         super({ base: [] });
@@ -52,14 +50,7 @@ class TeamsManager extends TeamsHandler {
         defineUnlistedProperty('_constructed', super.constructor, this);
 
         type = type.toLowerCase();
-
-        /**
-         * Whatever this manager has been initialized with the initialize method
-         * @type {Boolean}
-         */
-
-        defineUnlistedProperty('initialized', false, this);
-
+        
         /**
          * Whatever or not to always pool when getting points
          * @type {Boolean}
@@ -75,7 +66,7 @@ class TeamsManager extends TeamsHandler {
         defineUnlistedProperty('implementMember', implementMember, this);
 
         defineUnlistedProperty('client', client || null, this);
-        defineUnlistedProperty('guildId', guildId || null, this);
+        defineUnlistedProperty('guildId', guild || null, this);
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
         if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
@@ -141,8 +132,6 @@ class TeamsManager extends TeamsHandler {
 
         if (teams) this.set(teams);
 
-        if (autoInitialize) this.initialize();
-
 
     }
 
@@ -153,27 +142,6 @@ class TeamsManager extends TeamsHandler {
 
     get teamsGuild () {
         return this.client?.guilds.cache.get(this.guildId);
-    }
-
-    /**
-     * Initialize this TeamsManager : Creates a role property for each Team
-     * @returns {Boolean} true if successful
-     */
-
-    initialize () {
-        if (this.client && this.client.user && this.guildId) {
-            const guild = this.teamsGuild;
-            if (guild) {
-                for (const team of this) {
-                    if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
-                }
-                this.initialized = true;
-            }
-
-        }
-
-        return this.initialized;
-
     }
 
     set client (client) {
@@ -251,8 +219,6 @@ class TeamsManager extends TeamsHandler {
 
 
         }
-
-        if (this.initialized) this.initialize();
 
     }
 

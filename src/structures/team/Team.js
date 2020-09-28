@@ -11,6 +11,7 @@ const { defineUnlistedProperty } = require('../util/Util');
 class Team {
 
     #teamColor
+    #internalGuildId
 
     /**
      *
@@ -23,7 +24,8 @@ class Team {
         name = id,
         aliases = [],
         color = null,
-        roleId = null
+        role = null,
+        guild = null
     } = {}) {
 
         /**
@@ -69,12 +71,16 @@ class Team {
 
         this.color = color;
 
+
+
+        this.#internalGuildId = guild;
+
         /**
          * The role id of this team
          * @type {String|null}
          */
 
-        this.roleId = roleId;
+        this.roleId = role;
 
 
         /**
@@ -91,6 +97,41 @@ class Team {
 
         this.members = new TeamMembersHandler(this);
 
+    }
+
+    /**
+     * The Guild Id of this team. If not set it will use the guildId property of TeamsManager. Used to get roles
+     * @type {String|null}
+     */
+
+    get guildId () {
+        return this.#internalGuildId || this.manager.guildId;
+    }
+
+    /**
+     * Get the guild used by this Team. It is a [discord.js Guild](https://discord.js.org/#/docs/main/stable/class/Guild)
+     * @return {Guild|null}
+     */
+
+    get guild () {
+        return this.manager.client.guilds.cache.get(this.guildId) || null;
+    }
+
+    set guild (guildId) {
+        this.#internalGuildId = guildId.toString();
+    }
+
+    /**
+     * Get the Role of this team. It is a [discord.js Role](https://discord.js.org/#/docs/main/stable/class/Role)
+     * @return {Role|null}
+     */
+
+    get role () {
+        return this.guild?.roles.cache.get(this.roleId) || null;
+    }
+
+    set role (roleId) {
+        this.roleId = roleId.toString();
     }
 
     get color () {
