@@ -157,7 +157,7 @@ class TeamsManager extends TeamsHandler {
 
     /**
      * Returns the default Guild affected by this TeamsManger, if a client and a guild ID are set
-     * @return {Guild|null}
+     * @type {Guild|null}
      */
 
     get teamsGuild () {
