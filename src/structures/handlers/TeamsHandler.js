@@ -41,6 +41,24 @@ class TeamsHandler extends Map {
     }
 
     /**
+     * All ParentTeam of this TeamsHandler
+     * @returns {TeamsHandler<ParentTeam>}
+     */
+
+    get parents () {
+        return this.type === 'basic' ? this : super.filter(team => team.type === 'parent', 'parents');
+    }
+
+    /**
+     * All SubTeam of this TeamsHandler
+     * @returns {TeamsHandler<SubTeam>}
+     */
+
+    get subs () {
+        return this.type === 'basic' ? this : super.filter(team => team.type === 'sub', 'subs');
+    }
+
+    /**
      * Gets a Team with its id
      * @param {String} id Team Id
      * @returns {Team|SubTeam|ParentTeam|null} the team or null if none was found

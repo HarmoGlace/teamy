@@ -260,23 +260,7 @@ class TeamsManager extends TeamsHandler {
 
     }
 
-    /**
-     * All ParentTeam of this TeamsManager
-     * @returns {TeamsHandler}
-     */
 
-    get parents () {
-        return this.type === 'basic' ? this : super.filter(team => team.type === 'parent', 'parents');
-    }
-
-    /**
-     * All SubTeam of this TeamsManager
-     * @returns {TeamsHandler}
-     */
-
-    get subs () {
-        return this.type === 'basic' ? this : super.filter(team => team.type === 'sub', 'subs');
-    }
 
 }
 
