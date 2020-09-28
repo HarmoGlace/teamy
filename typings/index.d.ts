@@ -44,8 +44,7 @@ declare module 'teamy' {
         initialize(): boolean;
         functions: TeamsManagerFunctions;
 
-        parents: ParentTeam[]|Team[];
-        subs: SubTeam[]|Team[];
+
 
     }
 
@@ -54,7 +53,7 @@ declare module 'teamy' {
         teams?: TeamResolvable[];
         functions: TeamsManagerFunctions;
         client?: any;
-        guildId?: string;
+        guild?: string;
         implementMember?: boolean;
         autoInitialize?: boolean;
         alwaysPool: boolean;
@@ -74,6 +73,9 @@ declare module 'teamy' {
         manager?: TeamsManager|null;
         type: TeamsHandlerType|String;
 
+
+        parents: ParentTeam[]|Team[];
+        subs: SubTeam[]|Team[];
 
 
         add(team: AnyTeam): AnyTeam;
@@ -114,6 +116,9 @@ declare module 'teamy' {
         aliases: string[];
         color: number;
         roleId: string | null;
+        role: any|null;
+        guildId: string|null;
+        guild: any|null;
         points: PointsHandler;
         type: TeamType;
     }

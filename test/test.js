@@ -18,7 +18,7 @@ const manager = new TeamsManager({
             subs: [
                 {
                     id: 'sub1',
-                    roleId: '754644003961700382' // optional, used to detect member role if a client and a guildId are given
+                    role: '754644003961700382' // optional, used to detect member role if a client and a guildId are given
                 }
             ]
         },
@@ -27,7 +27,7 @@ const manager = new TeamsManager({
             subs: [
                 {
                     id: 'sub2',
-                    roleId: '754681447532593202'
+                    role: '754681447532593202'
                 }
             ]
         }
@@ -52,7 +52,7 @@ const manager = new TeamsManager({
 
         getTeamMembers: (team) => databases.member.filter(user => user.team === team.id).keyArray().map(member => team.manager.teamsGuild.members.fetch(member))
     },
-    guildId: '718743854496612406', // guildId where these teams belong to. It will be used to get roles
+    guild: '718743854496612406', // guildId where these teams belong to. It will be used to get roles
     implementMember: true
 });
 
