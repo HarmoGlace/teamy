@@ -118,7 +118,7 @@ class TeamsHandler extends Map {
      * Filter teams with a function. Same as [Array#filter](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/filter)
      * @param {function} filterFunction Function passed to filter the teams
      * @param {String} type The type of the new TeamsHandler
-     * @return {TeamsHandler<Team|ParentTeam|SubTeam>|null|*}
+     * @return {TeamsHandler<Team|ParentTeam|SubTeam|TeamMember>|null|*}
      */
 
     filter (filterFunction, type = 'custom') {
@@ -140,6 +140,15 @@ class TeamsHandler extends Map {
     resolve (resolvable) {
         resolvable = resolvable.toString().toLowerCase();
         return this.find(team => team.name.toLowerCase() === resolvable || team.id.toLowerCase() === resolvable || team.aliases.includes(resolvable)) || this.find(team => resolvable.startsWith(team.name.toLowerCase()) || resolvable.startsWith(team.id.toLowerCase())) || null;
+    }
+
+    /**
+     * Maps the TeamsHandler with a function. Same as [Array#map](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/map)
+     * @returns Array
+     */
+
+    map (...args) {
+        return this.toArray().map(...args);
     }
 
     /**

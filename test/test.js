@@ -60,6 +60,8 @@ const client = new Client();
 
 manager.client = client;
 
+console.log(manager.guilds.get('718743854496612406').subs);
+
 
 
 

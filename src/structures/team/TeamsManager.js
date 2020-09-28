@@ -128,7 +128,35 @@ class TeamsManager extends TeamsHandler {
     }
 
     /**
-     * Returns the Guild affected by this TeamsManger, if a client and a guildId are set
+     * Get a TeamsHandler of guilds and their teams
+     * @return {TeamsHandler<String, TeamsHandler<SubTeam|ParentTeam|Team>>}
+     */
+
+    get guilds () {
+
+        const guilds = new TeamsHandler({
+            base: [],
+            type: 'guilds',
+            manager: this
+        })
+
+        for (const team of this.toArray()) {
+
+            const found = guilds.get(team.guildId);
+
+            if (found) {
+                found.set(team.id, team);
+                continue;
+            }
+
+            guilds.set(team.guildId, new TeamsHandler({ base: [ [ team.id, team ] ], type: 'all', manager: this}));
+        }
+
+        return guilds;
+    }
+
+    /**
+     * Returns the default Guild affected by this TeamsManger, if a client and a guild ID are set
      * @return {Guild|null}
      */
 
