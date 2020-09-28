@@ -19,8 +19,10 @@ class SubTeam extends Team {
         super(manager, data);
 
         /**
-         * The type of this team
+         * The type of this team. Should be `sub`
+         * @constant
          * @type {TeamType}
+         * @enum {TeamType}
          */
 
         this.type = 'sub';

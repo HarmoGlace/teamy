@@ -19,7 +19,8 @@ class ParentTeam extends Team {
         super(manager, data);
 
         /**
-         * The type of this team
+         * The type of this team. Should be `parent`
+         * @constant
          * @type {String}
          * @enum {TeamType}
          */
