@@ -18,8 +18,4 @@ module.exports = {
 
     TeamMembersHandler: require('./structures/handlers/TeamMembersHandler'),
 
-    /**
-     * @deprecated Use TeamMember instead
-     */
-    GuildMemberHandler: require('./structures/team/TeamMember'),
 };

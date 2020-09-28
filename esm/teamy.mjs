@@ -15,9 +15,4 @@ export const {
     SubPointsHandler,
     ParentPointsHandler,
     TeamMembersHandler,
-
-    /**
-     * @deprecated Use TeamMember instead
-     */
-    GuildMemberHandler
 } = Teamy;
