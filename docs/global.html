@@ -394,7 +394,7 @@
             
 <tr class="deep-level-0">
     
-        <td class="name"><code>roleId</code></td>
+        <td class="name"><code>role</code></td>
     
 
     <td class="type">
@@ -422,7 +422,7 @@
         </td>
     
 
-    <td class="description last"><p>Team role ID</p></td>
+    <td class="description last"><p>Team role Id</p></td>
 </tr>
 
         
@@ -457,7 +457,42 @@
         </td>
     
 
-    <td class="description last"><p>Parent Team of this team. Only needed if this team is a SubTeam</p></td>
+    <td class="description last"><p>Parent Team of this team. Only needed if this team is a <a href="SubTeam.html">SubTeam</a></p></td>
+</tr>
+
+        
+            
+<tr class="deep-level-0">
+    
+        <td class="name"><code>subs</code></td>
+    
+
+    <td class="type">
+    
+        
+<span class="param-type">Array.&lt;<a href="SubTeam.html">SubTeam</a>></span>
+
+
+    
+    </td>
+
+    
+        <td class="attributes">
+        
+            &lt;optional><br>
+        
+
+        
+        </td>
+    
+
+    
+        <td class="default">
+        
+        </td>
+    
+
+    <td class="description last"><p>Sub Teams of this team. Only needed if this team is a <a href="ParentTeam.html">ParentTeam</a></p></td>
 </tr>
 
         
@@ -725,7 +760,7 @@
 
     
 
-    <td class="description last"><p>Used to know the team of a GuildMember. Parameter: <code>member</code>. Should return a Team or a SubTeam</p></td>
+    <td class="description last"><p>Used to know the team of a <a href="TeamMember.html">TeamMember</a>. Parameter: <code>member</code>. Should return a <a href="Team.html">Team</a> or a <a href="SubTeam.html">SubTeam</a></p></td>
 </tr>
 
         
@@ -756,7 +791,7 @@
 
     
 
-    <td class="description last"><p>Used to know the members of a team. Parameter: <code>team</code>. Should return an array of GuildMember</p></td>
+    <td class="description last"><p>Used to know the members of a <a href="Team.html">Team</a> (or <a href="ParentTeam.html">ParentTeam</a>/<a href="SubTeam.html">SubTeam</a>). Parameter: <code>team</code>. Should return an array of <a href="TeamMember.html">TeamMember</a></p></td>
 </tr>
 
         
@@ -801,7 +836,7 @@
         <p class="tag-source">
             <a href="Constants.js.html" class="button">View Source</a>
             <span>
-                <a href="Constants.js.html">Constants.js</a>, <a href="Constants.js.html#line35">line 35</a>
+                <a href="Constants.js.html">Constants.js</a>, <a href="Constants.js.html#line36">line 36</a>
             </span>
         </p>
     

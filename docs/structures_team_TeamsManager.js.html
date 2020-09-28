@@ -150,10 +150,9 @@ class TeamsManager extends TeamsHandler {
      * @param {TeamResolvable[]} [options.teams = []] List of teams
      * @param {TeamsManagerType} [options.type='basic'] The type of the TeamsManager
      * @param {TeamsManagerFunctions} options.functions Functions to store and get points
-     * @param {Client} [options.client] Discord.js client used to get roles. Need the guildId option
-     * @param {String} [options.guildId] Guild id used to get roles. Need the client option
-     * @param {Boolean} [options.autoInitialize] If true it will fire the initialize method when creating the manager
-     * @param  {Boolean} [options.implementMember] If true it will add a team and teams properties to Discord.js GuildMembers. The client needs to be created after this manager
+     * @param {Client} [options.client] Discord.js client used to get roles.
+     * @param {String} [options.guild] Guild id used by default to get roles. Can be overrided by {@link Team#guild} Need the client option
+     * @param  {Boolean} [options.implementMember] If true it will replace [Discord.js GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to {@link TeamMember}, adding team and points properties. The client needs to be created after this manager
      */
 
     constructor ({
@@ -166,10 +165,8 @@ class TeamsManager extends TeamsHandler {
                          getTeamMembers = null
                      } = {},
                      client = null,
-                     guildId = null,
-                     autoInitialize = false,
+                     guild = null,
                      implementMember = false,
-                     alwaysPool = false
                  } = {}) {
 
         super({ base: [] });
@@ -179,14 +176,7 @@ class TeamsManager extends TeamsHandler {
         defineUnlistedProperty('_constructed', super.constructor, this);
 
         type = type.toLowerCase();
-
-        /**
-         * Whatever this manager has been initialized with the initialize method
-         * @type {Boolean}
-         */
-
-        defineUnlistedProperty('initialized', false, this);
-
+        
         /**
          * Whatever or not to always pool when getting points
          * @type {Boolean}
@@ -202,10 +192,10 @@ class TeamsManager extends TeamsHandler {
         defineUnlistedProperty('implementMember', implementMember, this);
 
         defineUnlistedProperty('client', client || null, this);
-        defineUnlistedProperty('guildId', guildId || null, this);
+        defineUnlistedProperty('guildId', guild || null, this);
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
-        if (!(teams instanceof Array)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
+        if (!Array.isArray(teams)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
 
 
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager Type should be basic or advanced. Received ${type}`)
@@ -268,8 +258,6 @@ class TeamsManager extends TeamsHandler {
 
         if (teams) this.set(teams);
 
-        if (autoInitialize) this.initialize();
-
 
     }
 
@@ -280,27 +268,6 @@ class TeamsManager extends TeamsHandler {
 
     get teamsGuild () {
         return this.client?.guilds.cache.get(this.guildId);
-    }
-
-    /**
-     * Initialize this TeamsManager : Creates a role property for each Team
-     * @returns {Boolean} true if successful
-     */
-
-    initialize () {
-        if (this.client &amp;&amp; this.client.user &amp;&amp; this.guildId) {
-            const guild = this.teamsGuild;
-            if (guild) {
-                for (const team of this) {
-                    if (team.roleId) team.role = guild.roles.cache.get(team.roleId);
-                }
-                this.initialized = true;
-            }
-
-        }
-
-        return this.initialized;
-
     }
 
     set client (client) {
@@ -315,7 +282,7 @@ class TeamsManager extends TeamsHandler {
 
     add (team) {
 
-        if (typeof team !== 'object' || team instanceof Array) throw new TeamyError(`You need to specify an object`)
+        if (typeof team !== 'object' || Array.isArray(team)) throw new TeamyError(`You need to specify an object`)
         if (this.get(team.id)) throw new TeamyError(`There is already a team with id ${team.id}`);
 
         if (this.type === 'basic') {
@@ -344,7 +311,7 @@ class TeamsManager extends TeamsHandler {
                 const subs = team.subs.slice();
 
                 for (const sub of subs) {
-                    if (typeof sub !== 'object' || sub instanceof Array) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${sub.constructor.name}`);
+                    if (typeof sub !== 'object' || Array.isArray(sub)) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${sub.constructor.name}`);
 
                     if (this.get(sub.id)) throw new TeamyError(`Duplicated (Sub) team with id ${sub.id}. IDs should be unique`);
 
@@ -379,8 +346,6 @@ class TeamsManager extends TeamsHandler {
 
         }
 
-        if (this.initialized) this.initialize();
-
     }
 
     /**
@@ -409,7 +374,7 @@ class TeamsManager extends TeamsHandler {
      */
 
     set (teams) {
-        if (!(teams instanceof Array)) throw new TeamyError(`You must specify an array, instead received ${teams.constructor.name})`);
+        if (!Array.isArray(teams)) throw new TeamyError(`You must specify an array, instead received ${teams.constructor.name})`);
 
         super.clear();
 
@@ -421,23 +386,7 @@ class TeamsManager extends TeamsHandler {
 
     }
 
-    /**
-     * All ParentTeam of this TeamsManager
-     * @returns {TeamsHandler}
-     */
 
-    get parents () {
-        return this.type === 'basic' ? this : super.filter(team => team.type === 'parent', 'parents');
-    }
-
-    /**
-     * All SubTeam of this TeamsManager
-     * @returns {TeamsHandler}
-     */
-
-    get subs () {
-        return this.type === 'basic' ? this : super.filter(team => team.type === 'sub', 'subs');
-    }
 
 }
 

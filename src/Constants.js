@@ -37,8 +37,8 @@ exports.TeamsManagerType = [
  @typedef {Object} TeamsManagerFunctions
  @property setPoints {function} Used to set the points of a team. Parameters : `team` and `points`. Should return a Number
  @property getPoints {function} Used to get the points of a team. Parameter: `team`. Should return a Number
- @property [getMemberTeam] {function} Used to know the team of a GuildMember. Parameter: `member`. Should return a Team or a SubTeam
- @property [getTeamsMembers] {function} Used to know the members of a team. Parameter: `team`. Should return an array of GuildMember
+ @property [getMemberTeam] {function} Used to know the team of a {@link TeamMember}. Parameter: `member`. Should return a {@link Team} or a {@link SubTeam}
+ @property [getTeamsMembers] {function} Used to know the members of a {@link Team} (or {@link ParentTeam}/{@link SubTeam}). Parameter: `team`. Should return an array of {@link TeamMember}
  */
 
 
