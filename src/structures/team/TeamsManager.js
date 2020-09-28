@@ -49,13 +49,6 @@ class TeamsManager extends TeamsHandler {
         defineUnlistedProperty('_constructed', super.constructor, this);
 
         type = type.toLowerCase();
-        
-        /**
-         * Whatever or not to always pool when getting points
-         * @type {Boolean}
-         */
-
-        defineUnlistedProperty('alwaysPool', alwaysPool, this);
 
 
         /**
