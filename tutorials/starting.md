@@ -38,7 +38,8 @@ const manager = new TeamsManager({
                 name: 'name', // Optional, common name, it is the id by default
                 aliases: ['anotherName'], // Optional Array of string with all aliases of this team
                 color: 0x0000, // Optional Hex color of this team
-                roleId: '123456789', // Optional Role ID of this team
+                role: '123456789', // Optional Role ID of this team
+                guild: '12345', // Optional Guild ID the above role belongs to. If not provided it will use the {@link TeamsManager#defaultGuildId}
                 type: 'parent', // or 'sub'. Optional, only if you add it manually with an advanced manager
                 subs: [ // Needed only if the manager type is advanced
                         { // Team resolvable like above but without subs and type properties.
@@ -46,7 +47,7 @@ const manager = new TeamsManager({
                             name: 'name', // Optional, common name, it is the id by default
                             aliases: ['anotherName'], // Optional Array of string with all aliases of this team
                             color: 0x0000, // Optional Hex color of this team
-                            roleId: '123456789', // Optional Role ID of this team
+                            role: '123456789', // Optional Role ID of this team
                         }
                     ]
         }
@@ -58,8 +59,13 @@ You have now a basic teamy configuration.
 
 ### How can I get a team ?
 
-If you want to find a team, it is easy. You can use the `find` function on the {@link TeamsManager}. It is like the find function on an array [(see mdn)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) :
+If you want to find a team, it is easy. You can use the `find` function on the {@link TeamsManager}. It is like the find function on an array [(see mdn)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find):
 
+```js
+const found = manager.find(team => team.roleId === '1234') // returns found team
+```
+
+If you want to find with an Id, use the get method instead:
 
 ```js
 const team = manager.get('first team'); // returns 'first team' Team or null if none is found
