@@ -1,36 +1,37 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teamy | structures/team/TeamsManager.js</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Teamy | structures/team/TeamsManager.js</title>
-
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="./build/entry.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-          integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet"
-          href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
-    <link type="text/css" rel="stylesheet" href="">
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-
+  
 </head>
 
 
-<body class="layout small-header">
-<div id="stickyNavbarOverlay"></div>
 
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
 
 <div class="top-nav">
     <div class="inner">
@@ -40,19 +41,19 @@
             <span aria-hidden="true"></span>
         </a>
         <div class="logo">
-
-
-            <a href="index.html">
-                <h1 class="navbar-item">Teamy documentation</h1>
-            </a>
-
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Teamy documentation</h1>
+                </a>
+            
         </div>
         <div class="menu">
-
+            
             <div class="navigation">
                 <a
-                        href="index.html"
-                        class="link"
+                    href="index.html"
+                    class="link"
                 >
                     API Documentation
                 </a>
@@ -63,77 +64,67 @@
                     </a>
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
-
-
-                            <a class="dropdown-item" href="tutorial-starting.html">
-                                Starting
-                            </a>
-
-
+                        
+                            
+                                <a class="dropdown-item" href="tutorial-starting.html">
+                                    Starting
+                                </a>
+                            
+                        
                         </div>
                     </div>
                 </div>
-
-
-                <a
-                        class="link user-link "
-                        href="https://github.com/HarmoGlace/teamy/"
-                >
-                    Github
-                </a>
-
-                <a
-                        class="link user-link "
-                        href="https://discord.gg/CnuKPMM"
-                >
-                    Discord
-                </a>
-
-
+                 
+                    
+                        <a
+                            class="link user-link "
+                            href="https://github.com/HarmoGlace/teamy/"
+                        >
+                            Github
+                        </a>
+                    
+                        <a
+                            class="link user-link "
+                            href="https://discord.gg/CnuKPMM"
+                        >
+                            Discord
+                        </a>
+                    
+                
+                
             </div>
         </div>
     </div>
 </div>
-<div id="main">
-    <div
+    <div id="main">
+        <div
             class="sidebar "
             id="sidebarNav"
-    >
-
-        <div class="search-wrapper">
-            <input id="search" type="text" placeholder="Search docs..." class="input">
+        >
+            
+                <div class="search-wrapper">
+                    <input id="search" type="text" placeholder="Search docs..." class="input">
+                </div>
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamGuild.html">TeamGuild</a></li><li><a href="TeamMember.html">TeamMember</a></li><li><a href="TeamMembersHandler.html">TeamMembersHandler</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                
+            </nav>
         </div>
-
-        <nav>
-
-            <h2><a href="index.html">Documentation</a></h2>
-            <div class="category"><h3>Classes</h3>
-                <ul>
-                    <li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li>
-                    <li><a href="ParentTeam.html">ParentTeam</a></li>
-                    <li><a href="PointsHandler.html">PointsHandler</a></li>
-                    <li><a href="SubPointsHandler.html">SubPointsHandler</a></li>
-                    <li><a href="SubTeam.html">SubTeam</a></li>
-                    <li><a href="Team.html">Team</a></li>
-                    <li><a href="TeamMember.html">TeamMember</a></li>
-                    <li><a href="TeamMembersHandler.html">TeamMembersHandler</a></li>
-                    <li><a href="TeamsHandler.html">TeamsHandler</a></li>
-                    <li><a href="TeamsManager.html">TeamsManager</a></li>
-                </ul>
-                <h3><a href="global.html">Global</a></h3></div>
-
-        </nav>
-    </div>
-    <div class="core" id="main-content-wrapper">
-        <div class="content">
-            <header class="page-title">
-                <p>Source</p>
-                <h1>structures/team/TeamsManager.js</h1>
-            </header>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>structures/team/TeamsManager.js</h1>
+                </header>
+                
 
 
-            <section>
-                <article>
+
+    
+    <section>
+        <article>
             <pre class="prettyprint source linenums"><code>const TeamyError = require('../TeamyError');
 const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
@@ -161,7 +152,7 @@ class TeamsManager extends TeamsHandler {
      * @param {TeamsManagerFunctions} options.functions Functions to store and get points
      * @param {Client} [options.client] [Discord.js client](https://discord.js.org/#/docs/main/stable/class/Client) used to get roles.
      * @param {String} [options.guild] Guild id used by default to get roles. Can be overrided by {@link Team#guild} Need the client option
-     * @param  {Boolean} [options.implementMember] If true it will replace [Discord.js GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to {@link TeamMember}, adding team and points properties. The client needs to be created after this manager
+     * @param  {Boolean} [options.implement] If true it will replace [Discord.js GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to {@link TeamMember}, adding team and points properties. The client needs to be created after this manager
      */
 
     constructor ({
@@ -175,7 +166,7 @@ class TeamsManager extends TeamsHandler {
                      } = {},
                      client = null,
                      guild = null,
-                     implementMember = false,
+                     implement = false,
                  } = {}) {
 
         super({ base: [] });
@@ -191,10 +182,10 @@ class TeamsManager extends TeamsHandler {
          * Client option. If enabled it will add the `team` and `teams` properties on GuildMembers
          * @type {Boolean}
          */
-        defineUnlistedProperty('implementMember', implementMember, this);
+        defineUnlistedProperty('implement', implement, this);
 
         defineUnlistedProperty('client', client || null, this);
-        defineUnlistedProperty('guildId', guild || null, this);
+        defineUnlistedProperty('defaultGuildId', guild || null, this);
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
         if (!Array.isArray(teams)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
@@ -248,12 +239,14 @@ class TeamsManager extends TeamsHandler {
 
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
-        if (this.implementMember) {
+        if (this.implement) {
             const { Structures } = require('discord.js');
             const TeamMember = require('./TeamMember');
+            const TeamGuild = require('./TeamGuild');
 
 
             Structures.extend('GuildMember', (GuildMember) => TeamMember(GuildMember, this));
+            Structures.extend('Guild', (Guild) => TeamGuild(Guild, this));
 
             defineUnlistedProperty('Structures', Structures, this);
         }
@@ -285,7 +278,7 @@ class TeamsManager extends TeamsHandler {
                 continue;
             }
 
-            guilds.set(team.guildId, new TeamsHandler({ base: [ [ team.id, team ] ], type: 'all', manager: this}));
+            guilds.set(team.guildId, new TeamsHandler({ base: [ [ team.id, team ] ], type: 'all', manager: this }));
         }
 
         return guilds;
@@ -296,7 +289,7 @@ class TeamsManager extends TeamsHandler {
      * @type {Guild|null}
      */
 
-    get teamsGuild () {
+    get defaultGuild () {
         return this.client?.guilds.cache.get(this.guildId);
     }
 
@@ -417,26 +410,27 @@ class TeamsManager extends TeamsHandler {
     }
 
 
-
 }
 
 module.exports = TeamsManager;
 </code></pre>
-                </article>
-            </section>
+        </article>
+    </section>
 
 
+
+
+            </div>
+            
         </div>
-
+        <div id="side-nav" class="side-nav">
+        </div>
     </div>
-    <div id="side-nav" class="side-nav">
-    </div>
-</div>
 <script src="scripts/app.min.js"></script>
 <script>PR.prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
+<script src="scripts/linenumber.js"> </script>
 
-<script src="scripts/search.js"></script>
+<script src="scripts/search.js"> </script>
 
 </body>
 </html>
