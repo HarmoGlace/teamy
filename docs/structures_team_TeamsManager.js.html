@@ -324,8 +324,8 @@ class TeamsManager extends TeamsHandler {
             }
 
             if (team.type === 'parent') {
+
                 if (!team.hasOwnProperty('subs')) {
-                    process.emitWarning(`You didn't provide any sub teams for the ${team.id} team`);
                     team.subs = [];
                 }
 
