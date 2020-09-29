@@ -6,7 +6,11 @@ module.exports = {
     Team: require('./structures/team/Team'),
     ParentTeam: require('./structures/team/ParentTeam'),
     SubTeam: require('./structures/team/SubTeam'),
+
+    // discord.js edits
+
     TeamMember: require('./structures/team/TeamMember'),
+    TeamGuild: require('./structures/team/TeamGuild'),
 
 
     // Handlers
