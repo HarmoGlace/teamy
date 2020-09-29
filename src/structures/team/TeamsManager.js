@@ -58,7 +58,7 @@ class TeamsManager extends TeamsHandler {
         defineUnlistedProperty('implement', implement, this);
 
         defineUnlistedProperty('client', client || null, this);
-        defineUnlistedProperty('guildId', guild || null, this);
+        defineUnlistedProperty('defaultGuildId', guild || null, this);
 
         if (!setPoints || !getPoints || typeof setPoints !== 'function' || typeof getPoints !== 'function') throw new TeamyError(`Please provide setPoints and getPoints functions`);
         if (!Array.isArray(teams)) throw new TeamyError(`Parameter teams should be an array, received ${typeof teams}`);
@@ -162,7 +162,7 @@ class TeamsManager extends TeamsHandler {
      * @type {Guild|null}
      */
 
-    get teamsGuild () {
+    get defaultGuild () {
         return this.client?.guilds.cache.get(this.guildId);
     }
 
