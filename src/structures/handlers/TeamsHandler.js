@@ -143,11 +143,15 @@ class TeamsHandler extends Map {
 
     /**
      * Maps the TeamsHandler with a function. Same as [Array#map](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/map)
-     * @returns Array
+     * @returns TeamsHandler<String, *>
      */
 
-    map (...args) {
-        return this.toArray().map(...args);
+    map (mapFunction, ...globalArgs) {
+        return  new this._constructed({
+            base: this.entries.map(([id, team], ...args) => [ id, mapFunction(team, ...args) ], ...globalArgs),
+            type: 'custom',
+            manager: this.manager
+        })
     }
 
     /**
@@ -168,13 +172,21 @@ class TeamsHandler extends Map {
         return [ ...super.keys() ];
     }
 
+    get values () {
+        return [ ...super.values() ];
+    }
+
+    get entries () {
+        return [ ...super.entries() ];
+    }
+
     /**
      * Convert this TeamsManager to an Array
      * @return {Team[]|Array<ParentTeam|SubTeam>|Array<*>}
      */
 
     toArray () {
-        return [ ...super.values() ];
+        return this.values();
     }
 
     /**
