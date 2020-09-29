@@ -29,9 +29,9 @@ declare module 'teamy' {
 
         // @ts-ignore
         type: TeamsManagerType;
-        alwaysPool: boolean;
         client: any | null;
-        guildId: string | null;
+        defaultGuildId: string | null;
+        defaultGuild: any | null;
 
         add(resolvable: TeamResolvable): AnyTeam;
 
@@ -130,7 +130,7 @@ declare module 'teamy' {
         id: string;
         name: string;
         aliases: string[];
-        color: number;
+        color: number|false;
         roleId: string | null;
         role: any | null;
         guildId: string | null;
