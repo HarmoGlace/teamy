@@ -45,7 +45,7 @@ class TeamsHandler extends Map {
      */
 
     get types () {
-        return [ ...new Set(this.toArray().map(team => team?.type)) ];
+        return [ ...new Set(this.toArray().map(team => team?.type || team?.constructor?.name || typeof team)) ];
     }
 
     /**
@@ -113,26 +113,26 @@ class TeamsHandler extends Map {
 
     /**
      * Find a team with a function. Same as [Array#find](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/find)
-     * @param {function} findFunction Function passed to find a team
      * @returns {TeamsHandler<Team|ParentTeam|SubTeam>|null|*}
      */
 
-    find (findFunction) {
-        return this.toArray().find(findFunction) || null;
+    find (...args) {
+        return this.toArray().find(...args) || null;
     }
 
 
     /**
      * Filter teams with a function. Same as [Array#filter](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/filter)
      * @param {function} filterFunction Function passed to filter the teams
-     * @param {String} type The type of the new TeamsHandler
+     * @param {String|null} type The type of the new TeamsHandler
+     * @param othersArgs Others [Array#filter](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array/filter) args
      * @return {TeamsHandler<Team|ParentTeam|SubTeam|TeamMember>|null|*}
      */
 
-    filter (filterFunction, type = 'custom') {
+    filter (filterFunction, type = 'custom', ...othersArgs) {
         return new this._constructed(
             {
-                base: this.toArray().filter(filterFunction).map(team => [ team.id, team ]),
+                base: this.toArray().filter(filterFunction, ...othersArgs).map(team => [ team.id, team ]),
                 type,
                 manager: this.manager
             });
