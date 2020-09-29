@@ -152,7 +152,7 @@ class TeamsManager extends TeamsHandler {
      * @param {TeamsManagerFunctions} options.functions Functions to store and get points
      * @param {Client} [options.client] [Discord.js client](https://discord.js.org/#/docs/main/stable/class/Client) used to get roles.
      * @param {String} [options.guild] Guild id used by default to get roles. Can be overrided by {@link Team#guild} Need the client option
-     * @param  {Boolean} [options.implement] If true it will replace [Discord.js GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to {@link TeamMember}, adding team and points properties. The client needs to be created after this manager
+     * @param {Boolean} [options.implement] If true it will replace [Discord.js GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to {@link TeamMember}, adding team and points properties. It will also replace [discord.js Guild](https://discord.js.org/#/docs/main/stable/class/Guild) to {@link TeamGuild}. The client needs to be created after this manager
      */
 
     constructor ({
