@@ -196,7 +196,8 @@ declare module 'teamy' {
         name?: string;
         aliases?: string[];
         color?: number;
-        roleId?: string;
+        role?: string;
+        guild?: string;
     }
 
 
