@@ -1,6 +1,6 @@
 const SubPointsHandler = require('../handlers/SubPointsHandler');
 const PointsHandler = require('../handlers/PointsHandler');
-const SubTeam = require("./SubTeam");
+const SubTeam = require("../team/SubTeam");
 const { defineUnlistedProperty } = require('../util/Util');
 
 module.exports = (GuildMember, manager) => {

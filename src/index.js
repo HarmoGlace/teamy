@@ -9,8 +9,8 @@ module.exports = {
 
     // discord.js edits
 
-    TeamMember: require('./structures/team/TeamMember'),
-    TeamGuild: require('./structures/team/TeamGuild'),
+    TeamMember: require('./structures/implementations/TeamMember'),
+    TeamGuild: require('./structures/implementations/TeamGuild'),
 
 
     // Handlers

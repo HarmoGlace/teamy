@@ -1,4 +1,4 @@
-const SubTeam = require("./SubTeam");
+const SubTeam = require("../team/SubTeam");
 const { defineUnlistedProperty } = require('../util/Util');
 
 module.exports = (Guild, manager) => {
