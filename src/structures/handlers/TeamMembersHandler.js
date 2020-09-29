@@ -21,11 +21,11 @@ class TeamMembersHandler {
 
 
         /**
-         * The latest members recorded. It is undefined if nothing was recorded
-         * @type {TeamsHandler<TeamMember>|undefined}
+         * The latest members recorded. It is false if nothing was recorded
+         * @type {TeamsHandler<TeamMember>|false}
          */
 
-        this.latest = undefined;
+        this.latest = false;
     }
 
     /**
