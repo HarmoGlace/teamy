@@ -64,7 +64,7 @@ manager.resolve('a pretty cool team') // returns 'a pretty cool team' Team
 
 For an advanced system with parent teams and sub teams and team detection with a role (using discord.js) :
 ```js
-const { TeamsManager } = require('../src/index');
+const { TeamsManager } = require('teamy');
 const { Client } = require('discord.js');
 const client = new Client();
 const Enmap = require('enmap');
