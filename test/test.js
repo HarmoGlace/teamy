@@ -65,7 +65,6 @@ manager.client = client;
 
 client.once('ready', async () => {
     console.log(`Ready on ${client.user.username}`)
-    console.log(manager.map(team => team.color))
 
     const sub1 = manager.get('sub1');
 })
@@ -73,7 +72,7 @@ client.once('ready', async () => {
 //
 client.on('message', async message => {
 
-    console.log(message.member.team, message.member.team.role)
+    console.log(message.guild.teams)
 
 
 })

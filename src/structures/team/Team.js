@@ -104,7 +104,7 @@ class Team {
      */
 
     get guildId () {
-        return this.#internalGuildId || this.manager.guildId;
+        return this.#internalGuildId || this.manager.defaultGuildId;
     }
 
     /**
