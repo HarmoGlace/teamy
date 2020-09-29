@@ -141,11 +141,13 @@ class Team {
      */
 
     get color () {
-        return this.#teamColor || this.role?.color || null;
+        return this.#teamColor === false
+            ? this.#teamColor
+            : (this.#teamColor || (this.role?.color || this.role?.color === 0 ? this.role?.color : null));
     }
 
     set color (color) {
-        if (typeof color !== 'number') throw new TeamyError(`Team#color sets only receive strings. Instead received ${color.constructor.name}`);
+        if (typeof color !== 'number' && color !== null && color !== false) throw new TeamyError(`Team#color sets only receive strings. Instead received ${color.constructor.name}`);
         this.#teamColor = color;
     }
 }
