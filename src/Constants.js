@@ -26,7 +26,8 @@ exports.TeamsManagerType = [
  * @property {String} [name] Name of the team
  * @property {String[]} [aliases=[]] Team name aliases
  * @property {Number} [color] Team color
- * @property {String} [role] Team role Id
+ * @property {String} [role] Team [Role](https://discord.js.org/#/docs/main/stable/class/Role) Id
+ * @property {String} [guild] Team [Guild](https://discord.js.org/#/docs/main/stable/class/Guild) Id. Will use the {@link TeamsManager#defaultGuildId} by default
  * @property {ParentTeam} [parent] Parent Team of this team. Only needed if this team is a {@link SubTeam}
  * @property {SubTeam[]} [subs] Sub Teams of this team. Only needed if this team is a {@link ParentTeam}
  */
