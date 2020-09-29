@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamy | structures/handlers/ParentPointsHandler.js</title>
+  <title>Teamy | structures/implementations/TeamGuild.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -116,7 +116,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/handlers/ParentPointsHandler.js</h1>
+                    <h1>structures/implementations/TeamGuild.js</h1>
                 </header>
                 
 
@@ -125,44 +125,54 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const PointsHandler = require('./PointsHandler');
+            <pre class="prettyprint source linenums"><code>const SubTeam = require("../team/SubTeam");
+const { defineUnlistedProperty } = require('../util/Util');
 
-/**
- * Parent points handler
- */
-
-class ParentPointsHandler extends PointsHandler {
+module.exports = (Guild, manager) => {
 
     /**
-     * @extends PointsHandler
-     * @param {ParentTeam} team ParentTeam this points belong to
+     * A TeamGuild
      */
 
-    constructor (team) {
-        super(team);
-    }
+    class TeamGuild extends Guild {
 
-    /**
-     * Clear (reset) the points of this team. Use this carefully
-     * @param [resursive=true] Whatever to also clear points of sub teams
-     * @returns {Promise&lt;Number>} New team points (should be 0)
-     */
+        #internalPoints
+        #noTeamPoints
 
-    async clear (resursive = true) {
-        super.clear();
+        /**
+         * Instantiates this TeamGuild. Should not be done manually, discord.js will do it for you
+         */
 
-        if (resursive) {
-            for (const sub of this.subs) {
-                sub.points.clear();
-            }
+        constructor (...args) {
+            super(...args);
+
+            defineUnlistedProperty('manager', manager, this);
+
+            /**
+             * Defines the Type of this Class: `guild`
+             * @constant
+             * @type {String}
+             */
+
+            this.type = 'guild';
         }
 
-        return true;
+        /**
+         * The Teams belonging to this Guild
+         * @type {TeamsHandler&lt;Team|SubTeam|ParentTeam>}
+         */
+
+        get teams () {
+            return this.manager.filter(team => team.guildId === this.id);
+        }
+
     }
+
+    return TeamGuild;
 
 }
 
-module.exports = ParentPointsHandler;</code></pre>
+</code></pre>
         </article>
     </section>
 

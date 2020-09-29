@@ -55,6 +55,7 @@
                 >
                     API Documentation
                 </a>
+                
                 <div class="dropdown is-hoverable is-right">
                     <a class="dropdown-trigger link">
                         Tutorials
@@ -63,15 +64,14 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            
-                                <a class="dropdown-item" href="tutorial-starting.html">
-                                    Starting
-                                </a>
-                            
+                            <a class="dropdown-item" href="tutorial-starting.html">
+                                Starting
+                            </a>
                         
                         </div>
                     </div>
                 </div>
+                
                  
                     
                         <a
@@ -118,10 +118,6 @@
                 </header>
                 <section>
 
-<header>
-    
-</header>
-
 <article>
     <p>In this tutorial you will learn how to use teamy with node.js (v14.0.0 at least), in javascript.</p>
 <p>We will start by importing the <a href="TeamsManager.html">TeamsManager</a> class :</p>
@@ -154,7 +150,8 @@ const manager = new TeamsManager({
                 name: 'name', // Optional, common name, it is the id by default
                 aliases: ['anotherName'], // Optional Array of string with all aliases of this team
                 color: 0x0000, // Optional Hex color of this team
-                roleId: '123456789', // Optional Role ID of this team
+                role: '123456789', // Optional Role ID of this team
+                guild: '12345', // Optional Guild ID the above role belongs to. If not provided it will use the TeamsManager#defaultGuildId
                 type: 'parent', // or 'sub'. Optional, only if you add it manually with an advanced manager
                 subs: [ // Needed only if the manager type is advanced
                         { // Team resolvable like above but without subs and type properties.
@@ -162,7 +159,7 @@ const manager = new TeamsManager({
                             name: 'name', // Optional, common name, it is the id by default
                             aliases: ['anotherName'], // Optional Array of string with all aliases of this team
                             color: 0x0000, // Optional Hex color of this team
-                            roleId: '123456789', // Optional Role ID of this team
+                            role: '123456789', // Optional Role ID of this team
                         }
                     ]
         }
@@ -171,7 +168,10 @@ const manager = new TeamsManager({
 </code></pre>
 <p>You have now a basic teamy configuration.</p>
 <h3>How can I get a team ?</h3>
-<p>If you want to find a team, it is easy. You can use the <code>find</code> function on the <a href="TeamsManager.html">TeamsManager</a>. It is like the find function on an array <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">(see mdn)</a> :</p>
+<p>If you want to find a team, it is easy. You can use the <code>find</code> function on the <a href="TeamsManager.html">TeamsManager</a>. It is like the find function on an array <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">(see mdn)</a>:</p>
+<pre class="prettyprint source lang-js"><code>const found = manager.find(team => team.roleId === '1234') // returns found team
+</code></pre>
+<p>If you want to find with an Id, use the get method instead:</p>
 <pre class="prettyprint source lang-js"><code>const team = manager.get('first team'); // returns 'first team' Team or null if none is found
 </code></pre>
 <p>It will return a <a href="Team.html">Team</a> or null if none is found.</p>
