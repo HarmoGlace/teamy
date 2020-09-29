@@ -186,7 +186,7 @@ class TeamsHandler extends Map {
      */
 
     toArray () {
-        return this.values();
+        return this.values;
     }
 
     /**
