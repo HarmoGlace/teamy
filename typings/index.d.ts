@@ -24,7 +24,7 @@ declare module 'teamy' {
         type: 'member';
     }
 
-    export class TeamsManager implements TeamsHandler {
+    export class TeamsManager implements TeamsHandler<String, AnyTeam> {
         constructor(options: TeamsManagerOptions);
 
         // @ts-ignore
@@ -40,7 +40,6 @@ declare module 'teamy' {
         // @ts-ignore
         set(teams: TeamResolvable[]): this;
 
-        initialized: boolean;
         implement: boolean;
 
         initialize(): boolean;
@@ -56,8 +55,7 @@ declare module 'teamy' {
         functions: TeamsManagerFunctions;
         client?: any;
         guild?: string;
-        implementMember?: boolean;
-        autoInitialize?: boolean;
+        implement?: boolean;
         alwaysPool: boolean;
     }
 
@@ -70,7 +68,9 @@ declare module 'teamy' {
         getTeamMembers(team: AnyTeam): TeamMember[] | Promise<TeamMember[]>;
     }
 
-    export interface TeamsHandler extends Map<String, TeamsHandlerStocked> {
+
+    // @ts-ignore
+    export interface TeamsHandler<ID, anything> extends Map<String, any> {
         constructor(options: TeamsHandlerOptions): this;
 
         manager?: TeamsManager | null;
@@ -79,6 +79,11 @@ declare module 'teamy' {
 
         parents: ParentTeam[] | Team[];
         subs: SubTeam[] | Team[];
+
+        keys: String[];
+        values: any[];
+        entries: Array<Array<String|any>>;
+
 
 
         add(team: AnyTeam): AnyTeam;
@@ -89,9 +94,9 @@ declare module 'teamy' {
 
         find(callback: TeamsHandlerCallback): TeamsHandlerStocked | null;
 
-        filter(callback: TeamsHandlerCallback): TeamsHandler;
+        filter(callback: TeamsHandlerCallback): TeamsHandler<String, any>;
 
-        map(callback: TeamsHandlerMapCallback): TeamsHandlerCallback[];
+        map(callback: TeamsHandlerMapCallback): TeamsHandler<String, any>;
 
         resolve(resolvable: string): TeamsHandlerStocked;
 

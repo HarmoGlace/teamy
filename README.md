@@ -75,11 +75,11 @@ const manager = new TeamsManager({
     teams: [
             {
                 id: 'parent1',
-                roleid: '123456789', // Optional
+                role: '123456789', // Optional
                 subs: [
                     {
                         id: 'sub1',
-                        roleId: '123456789' // optional, used to detect member role if a client and a guildId are given
+                        role: '123456789' // optional, used to detect member role if a client and a guildId are given
                     }
                 ]
             },
@@ -88,7 +88,7 @@ const manager = new TeamsManager({
                 subs: [
                     {
                         id: 'sub2',
-                        roleId: '23456789'
+                        role: '23456789'
                     }
                 ]
             }
@@ -108,8 +108,6 @@ sub1.points.add(153);
 sub1.points.get() // return 153
 
 sub1.parent // returns parent Team
-
-client.once('ready', manager.initialize) // Optional, set up roles, it will enable the Team#role property. It is not needed to detect a member role)
 
 client.on('message', message => {
     const team = manager.functions.getMemberTeam(message.member); // returns the member team or null if none is found. See below example for an easier way to do it
@@ -148,8 +146,8 @@ const manager = new TeamsManager({
    
             getMemberTeam: (member, teams) => teams.find(team => member.roles.cache.has(team.roleId)
         },
-        guildId: '123456',  // guildId where all roles are from
-        implementMembers: true
+        guild: '123456',  // guildId where all roles are from
+        implement: true
 });
 
 const { Client } = require('discord.js');
