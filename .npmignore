@@ -7,3 +7,4 @@ docs/
 tutorials/
 node_modules/
 /package-lock.json
+*.lock
