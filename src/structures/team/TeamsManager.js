@@ -25,7 +25,7 @@ class TeamsManager extends TeamsHandler {
      * @param {TeamsManagerFunctions} options.functions Functions to store and get points
      * @param {Client} [options.client] [Discord.js client](https://discord.js.org/#/docs/main/stable/class/Client) used to get roles.
      * @param {String} [options.guild] Guild id used by default to get roles. Can be overrided by {@link Team#guild} Need the client option
-     * @param  {Boolean} [options.implementMember] If true it will replace [Discord.js GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to {@link TeamMember}, adding team and points properties. The client needs to be created after this manager
+     * @param  {Boolean} [options.implement] If true it will replace [Discord.js GuildMember](https://discord.js.org/#/docs/main/stable/class/GuildMember) to {@link TeamMember}, adding team and points properties. The client needs to be created after this manager
      */
 
     constructor ({
@@ -39,7 +39,7 @@ class TeamsManager extends TeamsHandler {
                      } = {},
                      client = null,
                      guild = null,
-                     implementMember = false,
+                     implement = false,
                  } = {}) {
 
         super({ base: [] });
@@ -55,7 +55,7 @@ class TeamsManager extends TeamsHandler {
          * Client option. If enabled it will add the `team` and `teams` properties on GuildMembers
          * @type {Boolean}
          */
-        defineUnlistedProperty('implementMember', implementMember, this);
+        defineUnlistedProperty('implement', implement, this);
 
         defineUnlistedProperty('client', client || null, this);
         defineUnlistedProperty('guildId', guild || null, this);
@@ -112,7 +112,7 @@ class TeamsManager extends TeamsHandler {
 
         if (![ 'basic', 'advanced' ].includes(type)) throw new TeamyError(`TeamsManager type must be basic or advanced. Instead type was ${type}`);
 
-        if (this.implementMember) {
+        if (this.implement) {
             const { Structures } = require('discord.js');
             const TeamMember = require('./TeamMember');
 

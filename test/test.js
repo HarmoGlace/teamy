@@ -53,7 +53,7 @@ const manager = new TeamsManager({
         getTeamMembers: (team) => databases.member.filter(user => user.team === team.id).keyArray().map(member => team.manager.teamsGuild.members.fetch(member))
     },
     guild: '718743854496612406', // guildId where these teams belong to. It will be used to get roles
-    implementMember: true
+    implement: true
 });
 
 const client = new Client();

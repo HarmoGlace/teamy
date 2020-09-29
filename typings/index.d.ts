@@ -41,7 +41,7 @@ declare module 'teamy' {
         set(teams: TeamResolvable[]): this;
 
         initialized: boolean;
-        implementMember: boolean;
+        implement: boolean;
 
         initialize(): boolean;
 
