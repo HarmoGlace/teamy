@@ -13,7 +13,7 @@ class TeamsHandler extends Map {
      * Initializes this TeamsHandler
      * @param {Object} options
      * @param {Array<Array<String, *>>} [options.base=[]]
-     * @param {TeamsManager} options.manager
+     * @param {TeamsManager} [options.manager]
      * @param {String} [options.type='unknown']
      */
 
@@ -37,6 +37,15 @@ class TeamsHandler extends Map {
 
     set manager (newValue) {
         return this.#manager = newValue;
+    }
+
+    /**
+     * Get all the types of data stored here
+     * @return {*[]}
+     */
+
+    get types () {
+        return [ ...new Set(this.toArray().map(team => team?.type)) ];
     }
 
     /**

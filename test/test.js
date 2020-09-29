@@ -60,6 +60,8 @@ const client = new Client();
 
 manager.client = client;
 
+console.log(manager.types)
+
 
 
 
