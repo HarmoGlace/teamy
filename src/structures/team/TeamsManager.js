@@ -197,7 +197,7 @@ class TeamsManager extends TeamsHandler {
             }
 
             if (team.type === 'parent') {
-                
+
                 if (!team.hasOwnProperty('subs')) {
                     team.subs = [];
                 }

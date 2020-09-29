@@ -41,7 +41,7 @@ class TeamsHandler extends Map {
 
     /**
      * Get all the types of data stored here
-     * @return {*[]}
+     * @type {*[]}
      */
 
     get types () {
