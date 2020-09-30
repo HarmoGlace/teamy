@@ -13,7 +13,8 @@ declare enum TeamsHandlerType {
     'all',
     'subs',
     'parents',
-    'unknown'
+    'unknown',
+    'custom'
 }
 
 declare module 'teamy' {
@@ -24,6 +25,10 @@ declare module 'teamy' {
         type: 'member';
     }
 
+    export class TeamGuild {
+        teams: AnyTeam[];
+    }
+
     export class TeamsManager implements TeamsHandler<String, AnyTeam> {
         constructor(options: TeamsManagerOptions);
 
@@ -31,7 +36,8 @@ declare module 'teamy' {
         type: TeamsManagerType;
         client: any | null;
         defaultGuildId: string | null;
-        defaultGuild: any | null;
+        defaultGuild: TeamGuild | null;
+        guilds: TeamsHandler<String, TeamsHandler<String, TeamsHandlerStocked>>;
 
         add(resolvable: TeamResolvable): AnyTeam;
 
@@ -41,8 +47,6 @@ declare module 'teamy' {
         set(teams: TeamResolvable[]): this;
 
         implement: boolean;
-
-        initialize(): boolean;
 
         functions: TeamsManagerFunctions;
 
@@ -75,6 +79,7 @@ declare module 'teamy' {
 
         manager?: TeamsManager | null;
         type: TeamsHandlerType | String;
+        array: TeamsHandlerStocked[];
 
 
         parents: ParentTeam[] | Team[];
@@ -98,21 +103,26 @@ declare module 'teamy' {
 
         map(callback: TeamsHandlerMapCallback): TeamsHandler<String, any>;
 
+        clone(): TeamsHandler<String, any>;
+
         resolve(resolvable: string): TeamsHandlerStocked;
 
-        toArray(): TeamsHandlerCallback[];
+        toData(): TeamsHandlerOptions;
+        toArray(): TeamsHandlerStocked[];
     }
 
-    interface TeamsHandlerCallback {
+    export interface TeamsHandlerCallback {
         (team: TeamsHandlerStocked): Boolean;
     }
 
-    interface TeamsHandlerMapCallback {
+    export interface TeamsHandlerMapCallback {
         (team: TeamsHandlerStocked): any;
     }
 
     export interface TeamsHandlerOptions {
         base: Array<Array<String | TeamsHandlerStocked>>;
+        type: TeamsHandlerType;
+        manager: TeamsManager;
     }
 
     export interface TeamMembersHandler {
@@ -151,7 +161,7 @@ declare module 'teamy' {
         points: SubPointsHandler;
     }
 
-    interface PointsHandler {
+    export interface PointsHandler {
         latest: number | null | undefined;
 
         get(nullable: Boolean): Promise<number | null>;
@@ -167,7 +177,7 @@ declare module 'teamy' {
         checkPoints(returnTeam: Boolean): Promise<this>;
     }
 
-    interface SubPointsHandler extends PointsHandler {
+    export interface SubPointsHandler extends PointsHandler {
         parent(): Promise<number>;
 
         current(): Promise<number>;
@@ -175,12 +185,12 @@ declare module 'teamy' {
         setLocal(points: number): Promise<number>;
     }
 
-    interface ParentPointsHandler extends PointsHandler {
+    export interface ParentPointsHandler extends PointsHandler {
 
     }
 
     type AnyTeam = Team | ParentTeam | SubTeam;
-    type TeamsHandlerStocked = AnyTeam | TeamMember;
+    type TeamsHandlerStocked = AnyTeam | TeamMember | TeamGuild;
 
 
     type ParentTeamResolvable = ParentTeamData | ParentTeam;
@@ -191,7 +201,7 @@ declare module 'teamy' {
 
     type TeamResolvable = ParentTeamResolvable | SubTeamResolvable | BasicTeamResolvable;
 
-    interface TeamData {
+    export interface TeamData {
         id: string;
         name?: string;
         aliases?: string[];
@@ -201,12 +211,12 @@ declare module 'teamy' {
     }
 
 
-    interface ParentTeamData extends TeamData {
+    export interface ParentTeamData extends TeamData {
         type?: TeamType,
         subs: TeamResolvable[]
     }
 
-    interface SubTeamData extends TeamData {
+    export interface SubTeamData extends TeamData {
         type?: TeamType,
         parent?: string | ParentTeam
     }
