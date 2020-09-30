@@ -60,8 +60,9 @@ const client = new Client();
 
 manager.client = client;
 
-manager.subs.set('okboomer', 1);
+const cloned = manager.clone();
 
+console.log(cloned)
 
 
 client.once('ready', async () => {
