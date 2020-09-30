@@ -1,3 +1,4 @@
+const TeamyError = require("../TeamyError");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
@@ -182,8 +183,18 @@ class TeamsHandler extends Map {
         return this.set(team.id, team);
     }
 
-    set (...args) {
-        return super.set(...args);
+    /**
+     * Sets a team
+     * @param {String} key The key of the value to set
+     * @param {*} value The value of the key to set
+     * @return {Map}
+     */
+
+    set (id, value) {
+
+        if (typeof id !== 'string') throw new TeamyError(`TeamsHandler#set should only receive a String as first argument. Instead received ${id?.constructor?.name || typeof id}`)
+
+        return super.set(id, value);
     }
 
     /**

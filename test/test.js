@@ -60,8 +60,7 @@ const client = new Client();
 
 manager.client = client;
 
-console.log(manager)
-
+manager.subs.set('okboomer', 1);
 
 
 
