@@ -52,7 +52,7 @@ class TeamsHandler extends Map {
      * Convert this TeamsHandler to an array
      * @type {Team[]|Array<ParentTeam|SubTeam>|Array<*>}
      */
-    
+
     get array () {
         return this.toArray();
     }
