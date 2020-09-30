@@ -203,9 +203,7 @@ class TeamsHandler extends Map {
      */
 
     clone () {
-        return new this._constructed({
-
-        });
+        return new this._constructed(this.toData());
     }
 
     get keys () {
@@ -236,7 +234,7 @@ class TeamsHandler extends Map {
 
     toData () {
         return {
-            base: this.entries(),
+            base: this.entries,
             type: this.type,
             manager: this.manager
         }
