@@ -49,6 +49,15 @@ class TeamsHandler extends Map {
     }
 
     /**
+     * Convert this TeamsHandler to an array
+     * @type {Team[]|Array<ParentTeam|SubTeam>|Array<*>}
+     */
+    
+    get array () {
+        return this.toArray();
+    }
+
+    /**
      * All ParentTeam of this TeamsHandler
      * @type {TeamsHandler<ParentTeam>}
      */
@@ -190,7 +199,7 @@ class TeamsHandler extends Map {
     }
 
     /**
-     * Convert this TeamsManager to an Array
+     * Convert this TeamsHandler to an Array
      * @return {Team[]|Array<ParentTeam|SubTeam>|Array<*>}
      */
 
