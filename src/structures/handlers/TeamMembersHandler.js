@@ -3,7 +3,7 @@ const TeamyError = require("../TeamyError");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
- * TeamMembersHandler
+ * TeamMembersHandler. Used by {@link Team#members}
  */
 
 class TeamMembersHandler {

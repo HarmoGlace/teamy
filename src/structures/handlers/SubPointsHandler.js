@@ -2,7 +2,7 @@ const PointsHandler = require('./PointsHandler');
 const TeamyError = require("../TeamyError");
 
 /**
- * Points Handler for Sub Teams
+ * SubPointsHandler, for {@link SubTeam}. Extends {@link PointsHandler}
  * @extends PointsHandler
  */
 

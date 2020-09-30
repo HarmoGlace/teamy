@@ -2,8 +2,8 @@ const TeamyError = require("../TeamyError");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
- * TeamsHandler
- * @extends Map
+ * TeamsHandler. Extends native [Map](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Map)
+ * @extends [Map]
  */
 
 class TeamsHandler extends Map {

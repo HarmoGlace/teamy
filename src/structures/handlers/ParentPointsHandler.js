@@ -1,7 +1,7 @@
 const PointsHandler = require('./PointsHandler');
 
 /**
- * Parent points handler
+ * ParentPointsHandler, for {@link ParentTeam}. Extends {@link PointsHandler}
  * @extends PointsHandler
  */
 

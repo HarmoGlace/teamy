@@ -4,7 +4,7 @@ const { defineUnlistedProperty } = require('../util/Util');
 module.exports = (Guild, manager) => {
 
     /**
-     * A TeamGuild
+     * A TeamGuild. Extends [Discord.js Guild](https://discord.js.org/#/docs/main/stable/class/Guil)
      */
 
     class TeamGuild extends Guild {

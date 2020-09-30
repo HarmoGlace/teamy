@@ -2,7 +2,7 @@ const Team = require('./Team');
 const SubPointsHandler = require('../handlers/SubPointsHandler');
 
 /**
- * A SubTeam
+ * A SubTeam. Extends {@link Team}
  * @extends Team
  */
 

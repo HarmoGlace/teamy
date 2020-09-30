@@ -2,7 +2,7 @@ const TeamyError = require("../TeamyError");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
- * Points Handler
+ * PointsHandler, for a basic {@link Team}
  */
 
 class PointsHandler {
