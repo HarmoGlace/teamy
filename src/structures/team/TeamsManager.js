@@ -7,6 +7,7 @@ const { defineUnlistedProperty } = require('../util/Util');
 
 /**
  * A TeamsManager
+ * @extends TeamsHandler
  */
 
 class TeamsManager extends TeamsHandler {

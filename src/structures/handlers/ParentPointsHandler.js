@@ -2,6 +2,7 @@ const PointsHandler = require('./PointsHandler');
 
 /**
  * Parent points handler
+ * @extends PointsHandler
  */
 
 class ParentPointsHandler extends PointsHandler {
