@@ -186,6 +186,17 @@ class TeamsHandler extends Map {
         return super.set(...args);
     }
 
+    /**
+     * Clones this TeamsHandler
+     * @return {TeamsHandler<String, Team|SubTeam|ParentTeam|TeamMember|TeamGuild|*>}
+     */
+
+    clone () {
+        return new this._constructed({
+
+        });
+    }
+
     get keys () {
         return [ ...super.keys() ];
     }
@@ -205,6 +216,19 @@ class TeamsHandler extends Map {
 
     toArray () {
         return this.values;
+    }
+
+    /**
+     * Get all the data of this TeamsHandler. Used to create a new TeamsHandler
+     * @return {Object} TeamsHandlerData
+     */
+
+    toData () {
+        return {
+            base: this.entries(),
+            type: this.type,
+            manager: this.manager
+        }
     }
 
     /**
