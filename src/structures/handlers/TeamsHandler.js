@@ -3,6 +3,7 @@ const { defineUnlistedProperty } = require('../util/Util');
 
 /**
  * TeamsHandler
+ * @extends Map
  */
 
 class TeamsHandler extends Map {
@@ -38,6 +39,15 @@ class TeamsHandler extends Map {
 
     set manager (newValue) {
         return this.#manager = newValue;
+    }
+
+    /**
+     * Get the number of items in this TeamsHandler
+     * @return {number}
+     */
+
+    get length () {
+        return super.size;
     }
 
     /**
@@ -87,6 +97,26 @@ class TeamsHandler extends Map {
     }
 
     /**
+     * See if a Team belongs to this TeamsHandler, with its id
+     * @param {String} id Team Id
+     * @return {boolean}
+     */
+
+    has (id) {
+        return super.has(id);
+    }
+
+    /**
+     * Deletes a Team here with its Id
+     * @param {String} id Team id
+     * @returns {Boolean}
+     */
+
+    delete (id) {
+        return super.delete(id);
+    }
+
+    /**
      * Teams sorted by their points
      * @returns {Team[]|ParentTeam[]|*}
      */
@@ -107,9 +137,18 @@ class TeamsHandler extends Map {
     }
 
     /**
+     * Clears all Teams belonging to this TeamsHandler
+     * @returns {Boolean} success
+     */
+
+    clear () {
+        return !!super.clear();
+    }
+
+    /**
      * Clear points of all teams
      * @param [recursive=true] Whatever enable recursively when using the clear method on all teams of these Teams
-     * @return {boolean} successful Return true if successful
+     * @returns {boolean} successful Return true if successful
      */
 
     clearAllPoints (recursive = true) {
