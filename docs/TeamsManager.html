@@ -1146,7 +1146,7 @@
         
         <span class="code-name">
             
-                add<span class="signature">(team)</span><span class="type-signature"> &rarr; {<a href="SubTeam.html">SubTeam</a>|<a href="ParentTeam.html">ParentTeam</a>|<a href="Team.html">Team</a>}</span>
+                add<span class="signature">(team)</span><span class="type-signature"> &rarr; {*}</span>
             
         </span>
     </h4>
@@ -1199,7 +1199,13 @@
   <td class="type">
   
       
-<span class="param-type"><a href="global.html#TeamResolvable">TeamResolvable</a></span>
+<span class="param-type"><a href="Team.html">Team</a></span>
+|
+
+<span class="param-type"><a href="ParentTeam.html">ParentTeam</a></span>
+|
+
+<span class="param-type"><a href="SubTeam.html">SubTeam</a></span>
 
 
   
@@ -1209,7 +1215,7 @@
 
   
 
-  <td class="description last"><p>Team to add</p></td>
+  <td class="description last"><p>The team to add</p></td>
 </tr>
 
 
@@ -1260,9 +1266,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
+            <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line180">line 180</a>
+                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line221">line 221</a>
             </span>
         </p>
     
@@ -1297,13 +1303,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type"><a href="SubTeam.html">SubTeam</a></span>
-|
-
-<span class="param-type"><a href="ParentTeam.html">ParentTeam</a></span>
-|
-
-<span class="param-type"><a href="Team.html">Team</a></span>
+<span class="param-type">*</span>
 
 
     </div>
@@ -1768,12 +1768,12 @@
 
 
     
-    <h4 class="name" id="delete">
-        <a class="href-link" href="#delete">#</a>
+    <h4 class="name" id="create">
+        <a class="href-link" href="#create">#</a>
         
         <span class="code-name">
             
-                delete<span class="signature">(id)</span><span class="type-signature"> &rarr; {Boolean}</span>
+                create<span class="signature">(teamResolvable)</span><span class="type-signature"> &rarr; {<a href="SubTeam.html">SubTeam</a>|<a href="ParentTeam.html">ParentTeam</a>|<a href="Team.html">Team</a>}</span>
             
         </span>
     </h4>
@@ -1782,7 +1782,7 @@
     
     
     <div class="description">
-        <p>Deletes a Team here with its Id</p>
+        <p>Create a team from a <a href="global.html#TeamResolvable">TeamResolvable</a> and add it to this TeamsManager</p>
     </div>
     
 
@@ -1820,13 +1820,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>id</code></td>
+      <td class="name"><code>teamResolvable</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">String</span>
+<span class="param-type"><a href="global.html#TeamResolvable">TeamResolvable</a></span>
 
 
   
@@ -1836,7 +1836,7 @@
 
   
 
-  <td class="description last"><p>Team id</p></td>
+  <td class="description last"><p>Team to add</p></td>
 </tr>
 
 
@@ -1857,11 +1857,6 @@
 
     
 
-    
-    <dt class="tag-overrides">Overrides:</dt>
-    <dd class="tag-overrides"><ul class="dummy"><li>
-        <a href="TeamsHandler.html#delete">TeamsHandler#delete</a>
-    </li></ul></dd>
     
 
     
@@ -1887,9 +1882,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
+            <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line115">line 115</a>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line180">line 180</a>
             </span>
         </p>
     
@@ -1924,7 +1919,195 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Boolean</span>
+<span class="param-type"><a href="SubTeam.html">SubTeam</a></span>
+|
+
+<span class="param-type"><a href="ParentTeam.html">ParentTeam</a></span>
+|
+
+<span class="param-type"><a href="Team.html">Team</a></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="delete">
+        <a class="href-link" href="#delete">#</a>
+        
+        <span class="code-name">
+            
+                delete<span class="signature">(teamResolvable)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Team.html">Team</a>>|Array.&lt;(<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Deletes a team and remove it from this TeamsManager</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>teamResolvable</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="global.html#TeamResolvable">TeamResolvable</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          null
+      
+      </td>
+  
+
+  <td class="description last"><p>Team to remove</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line254">line 254</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Array.&lt;<a href="Team.html">Team</a>></span>
+|
+
+<span class="param-type">Array.&lt;(<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)></span>
 
 
     </div>
@@ -2989,7 +3172,7 @@
         
         <span class="code-name">
             
-                remove<span class="signature">(team)</span><span class="type-signature"> &rarr; {Array.&lt;<a href="Team.html">Team</a>>|Array.&lt;(<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)>}</span>
+                remove<span class="signature">(id)</span><span class="type-signature"> &rarr; {Boolean}</span>
             
         </span>
     </h4>
@@ -2998,7 +3181,7 @@
     
     
     <div class="description">
-        <p>Remove a teams from this TeamsManager</p>
+        <p>Removes a Team here with its Id</p>
     </div>
     
 
@@ -3036,13 +3219,13 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>team</code></td>
+      <td class="name"><code>id</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type"><a href="global.html#TeamResolvable">TeamResolvable</a></span>
+<span class="param-type">String</span>
 
 
   
@@ -3052,7 +3235,7 @@
 
   
 
-  <td class="description last"><p>Team to remove</p></td>
+  <td class="description last"><p>Team id</p></td>
 </tr>
 
 
@@ -3073,6 +3256,11 @@
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="TeamsHandler.html#remove">TeamsHandler#remove</a>
+    </li></ul></dd>
     
 
     
@@ -3098,9 +3286,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_team_TeamsManager.js.html" class="button">View Source</a>
+            <a href="structures_handlers_TeamsHandler.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_team_TeamsManager.js.html">structures/team/TeamsManager.js</a>, <a href="structures_team_TeamsManager.js.html#line254">line 254</a>
+                <a href="structures_handlers_TeamsHandler.js.html">structures/handlers/TeamsHandler.js</a>, <a href="structures_handlers_TeamsHandler.js.html#line115">line 115</a>
             </span>
         </p>
     
@@ -3135,10 +3323,7 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Array.&lt;<a href="Team.html">Team</a>></span>
-|
-
-<span class="param-type">Array.&lt;(<a href="ParentTeam.html">ParentTeam</a>|<a href="SubTeam.html">SubTeam</a>)></span>
+<span class="param-type">Boolean</span>
 
 
     </div>

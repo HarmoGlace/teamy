@@ -60,13 +60,13 @@ const client = new Client();
 
 manager.client = client;
 
-const sub1 = manager.get('sub1');
+const sub1 = manager.get('parent1');
 
 console.log(sub1.delete());
 
 console.log(manager);
 
-console.log('sub1: ', sub1);
+// console.log('sub1: ', sub1);
 
 client.once('ready', async () => {
     console.log(`Ready on ${client.user.username}`)

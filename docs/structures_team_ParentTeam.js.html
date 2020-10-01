@@ -143,7 +143,7 @@ class ParentTeam extends Team {
      */
 
     constructor (manager, data) {
-        super(manager, data);
+        super(manager, { ...data, type: 'parent' });
 
         /**
          * The type of this team. Should be `parent`
@@ -173,6 +173,15 @@ class ParentTeam extends Team {
             manager: this.manager,
             type: 'subs'
         });
+    }
+
+    delete () {
+
+        for (const sub of this.subs.toArray()) {
+            sub.delete();
+        }
+
+        return super.delete();
     }
 }
 
