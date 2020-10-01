@@ -172,19 +172,19 @@ class TeamsManager extends TeamsHandler {
     }
 
     /**
-     * Add a Team to this TeamsManager
-     * @param {TeamResolvable} team Team to add
+     * Create a team from a {@link TeamResolvable} and add it to this TeamsManager
+     * @param {TeamResolvable} teamResolvable Team to add
      * @returns {SubTeam|ParentTeam|Team}
      */
 
-    add (team) {
+    create (teamResolvable) {
 
-        if (typeof team !== 'object' || Array.isArray(team)) throw new TeamyError(`You need to specify an object`)
-        if (this.get(team.id)) throw new TeamyError(`There is already a team with id ${team.id}`);
+        if (typeof teamResolvable !== 'object' || Array.isArray(teamResolvable)) throw new TeamyError(`You need to specify an object`)
+        if (this.get(teamResolvable.id)) throw new TeamyError(`There is already a team with id ${teamResolvable.id}`);
 
         if (this.type === 'basic') {
 
-            const teamCreated = new Team(this, team)
+            const teamCreated = new Team(this, teamResolvable)
 
             super.set(teamCreated.id, teamCreated);
 
@@ -192,20 +192,20 @@ class TeamsManager extends TeamsHandler {
 
         } else if (this.type === 'advanced') {
 
-            if (!team.hasOwnProperty('type')) {
-                if (team.subs) team.type = 'parent'
-                else team.type = 'sub'
+            if (!teamResolvable.hasOwnProperty('type')) {
+                if (teamResolvable.subs) teamResolvable.type = 'parent'
+                else teamResolvable.type = 'sub'
             }
 
-            if (team.type === 'parent') {
+            if (teamResolvable.type === 'parent') {
 
-                if (!team.hasOwnProperty('subs')) {
-                    team.subs = [];
+                if (!teamResolvable.hasOwnProperty('subs')) {
+                    teamResolvable.subs = [];
                 }
 
-                const parentTeam = new ParentTeam(this, team);
+                const parentTeam = new ParentTeam(this, teamResolvable);
 
-                const subs = team.subs.slice();
+                const subs = teamResolvable.subs.slice();
 
                 for (const sub of subs) {
                     if (typeof sub !== 'object' || Array.isArray(sub)) throw new TeamyError(`Parameter teams should be an array of objects, instead received an array of ${sub.constructor.name}`);
@@ -222,17 +222,17 @@ class TeamsManager extends TeamsHandler {
 
                 return parentTeam;
 
-            } else if (team.type === 'sub') {
+            } else if (teamResolvable.type === 'sub') {
 
-                const parentRaw = team.parentId || team.parent;
+                const parentRaw = teamResolvable.parent;
 
-                if (!parent) throw new TeamyError(`No ParentTeam provided for ${team.id} SubTeam`);
+                if (!parent) throw new TeamyError(`No ParentTeam provided for ${teamResolvable.id} SubTeam`);
 
                 const parent = parentRaw instanceof ParentTeam ? parentRaw : this.get(parentRaw);
 
-                if (!parent) throw new TeamyError(`Cannot find a ParentTeam for ${team.id} SubTeam`);
+                if (!parent) throw new TeamyError(`Cannot find a ParentTeam for ${teamResolvable.id} SubTeam`);
 
-                const subTeam = new SubTeam(this, team, parent);
+                const subTeam = new SubTeam(this, teamResolvable, parent);
 
                 super.set(subTeam.id, subTeam);
 
@@ -276,7 +276,7 @@ class TeamsManager extends TeamsHandler {
         super.clear();
 
         for (const team of teams) {
-            this.add(team);
+            this.create(team);
         }
 
         return this;
