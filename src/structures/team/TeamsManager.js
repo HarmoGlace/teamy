@@ -226,8 +226,10 @@ class TeamsManager extends TeamsHandler {
 
                 const parentRaw = teamResolvable.parent;
 
-                if (!parent) throw new TeamyError(`No ParentTeam provided for ${teamResolvable.id} SubTeam`);
+                if (!parentRaw) throw new TeamyError(`No ParentTeam provided for ${teamResolvable.id} SubTeam`);
 
+
+                
                 const parent = parentRaw instanceof ParentTeam ? parentRaw : this.get(parentRaw);
 
                 if (!parent) throw new TeamyError(`Cannot find a ParentTeam for ${teamResolvable.id} SubTeam`);
