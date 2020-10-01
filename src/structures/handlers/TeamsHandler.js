@@ -107,12 +107,12 @@ class TeamsHandler extends Map {
     }
 
     /**
-     * Deletes a Team here with its Id
+     * Removes a Team here with its Id
      * @param {String} id Team id
      * @returns {Boolean}
      */
 
-    delete (id) {
+    remove (id) {
         return super.delete(id);
     }
 
@@ -291,7 +291,6 @@ class TeamsHandler extends Map {
     toString () {
         return this.keys.join(', ');
     }
-
 
 }
 
