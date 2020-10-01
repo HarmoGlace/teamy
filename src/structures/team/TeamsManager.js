@@ -246,18 +246,24 @@ class TeamsManager extends TeamsHandler {
     }
 
     /**
-     * Remove a teams from this TeamsManager
-     * @param {TeamResolvable} team Team to remove
+     * Deletes a team and remove it from this TeamsManager
+     * @param {TeamResolvable} teamResolvable Team to remove
      * @returns {Team[]|Array<ParentTeam|SubTeam>}
      */
 
-    remove (teamRaw = null) {
+    delete (teamResolvable = null) {
 
-        const team = this.get(teamRaw) || this.get(teamRaw?.id);
+        const team = this.get(teamResolvable) || this.get(teamResolvable?.id);
 
         if (!team) throw new TeamyError(`You need to provide a valid Team to delete`);
 
-        super.delete(team.id);
+        if (team.type === 'parent') {
+            for (const sub of team.subs) {
+                sub.delete();
+            }
+        }
+
+        team.delete();
 
         return this;
 
