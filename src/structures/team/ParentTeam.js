@@ -56,6 +56,13 @@ class ParentTeam extends Team {
 
         return super.delete();
     }
+
+    toData () {
+        return {
+            ...super.toData(),
+            subs: this.subs.toArray()
+        }
+    }
 }
 
 module.exports = ParentTeam;

@@ -173,6 +173,27 @@ class Team {
         return this;
     }
 
+    /**
+     * Convert this team to an object data
+     * @returns {TeamData}
+     */
+
+    toData () {
+        return {
+            id: this.id,
+            name: this.name,
+            aliases: this.aliases,
+            type: this.type,
+            role: this.roleId,
+            color: this.color,
+            guild: this.guildId,
+        }
+    }
+
+    toString () {
+        return this.id;
+    }
+
 }
 
 module.exports = Team;

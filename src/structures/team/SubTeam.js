@@ -43,6 +43,13 @@ class SubTeam extends Team {
 
     }
 
+    toData () {
+        return {
+            ...super.toData(),
+            parent: this.parent
+        }
+    }
+
 
 }
 
