@@ -60,15 +60,18 @@ const client = new Client();
 
 manager.client = client;
 
-const cloned = manager.clone();
+const sub1 = manager.get('sub1');
 
-console.log(cloned)
+console.log(sub1.delete());
 
+console.log(manager);
+
+console.log('sub1: ', sub1);
 
 client.once('ready', async () => {
     console.log(`Ready on ${client.user.username}`)
 
-    const sub1 = manager.get('sub1');
+
 })
 
 //
