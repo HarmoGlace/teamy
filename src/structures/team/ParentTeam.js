@@ -47,6 +47,15 @@ class ParentTeam extends Team {
             type: 'subs'
         });
     }
+
+    delete () {
+
+        for (const sub of this.subs.toArray()) {
+            sub.delete();
+        }
+
+        return super.delete();
+    }
 }
 
 module.exports = ParentTeam;

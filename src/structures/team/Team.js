@@ -166,7 +166,7 @@ class Team {
      */
 
     delete () {
-        this.manager.delete(this.id);
+        this.manager.remove(this.id);
 
         this.deleted = true;
 

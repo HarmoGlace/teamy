@@ -257,12 +257,6 @@ class TeamsManager extends TeamsHandler {
 
         if (!team) throw new TeamyError(`You need to provide a valid Team to delete`);
 
-        if (team.type === 'parent') {
-            for (const sub of team.subs) {
-                sub.delete();
-            }
-        }
-
         team.delete();
 
         return this;
