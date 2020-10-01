@@ -16,7 +16,7 @@ class ParentTeam extends Team {
      */
 
     constructor (manager, data) {
-        super(manager, data);
+        super(manager, { ...data, type: 'parent' });
 
         /**
          * The type of this team. Should be `parent`

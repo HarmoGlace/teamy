@@ -16,7 +16,7 @@ class SubTeam extends Team {
      */
 
     constructor (manager, data, parent) {
-        super(manager, data);
+        super(manager, { ...data, type: 'sub' });
 
         /**
          * The type of this team. Should be `sub`
@@ -42,6 +42,8 @@ class SubTeam extends Team {
         this.points = new SubPointsHandler(this);
 
     }
+
+
 }
 
 module.exports = SubTeam;
