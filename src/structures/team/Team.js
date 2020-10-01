@@ -81,6 +81,13 @@ class Team {
 
         this.roleId = role;
 
+        /**
+         * Whatever this team is deleted
+         * @type {Boolean}
+         */
+
+        this.deleted = false;
+
 
         /**
          * The PointsHandler of this team
@@ -149,6 +156,19 @@ class Team {
     set color (color) {
         if (typeof color !== 'number' && color !== null && color !== false) throw new TeamyError(`Team#color sets only receive strings. Instead received ${color.constructor.name}`);
         this.#teamColor = color;
+    }
+
+    /**
+     * Delete this team
+     * @return {Team|SubTeam|ParentTeam}
+     */
+
+    delete () {
+        this.manager.delete(this.id);
+
+        this.deleted = true;
+
+        return this;
     }
 }
 
