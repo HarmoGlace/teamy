@@ -151,6 +151,9 @@ class TeamsHandler extends Map {
                      manager = null,
                      type = 'unknown'
                  }) {
+
+        if (!base.every(data => Array.isArray(data) &amp;&amp; data.length >= 2 &amp;&amp; typeof data[0] === 'string')) throw new TeamyError(`TeamsHandler constructor base option: please provide a Array&lt;Array&lt;String, *>>`)
+
         super(base);
 
         defineUnlistedProperty('_constructed', this.constructor, this);
