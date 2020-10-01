@@ -2,6 +2,7 @@ const TeamyError = require('../TeamyError');
 const PointsHandler = require('../handlers/PointsHandler');
 const TeamsHandler = require("../handlers/TeamsHandler");
 const TeamMembersHandler = require("../handlers/TeamMembersHandler");
+const { TeamType } = require("../../Constants");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
@@ -25,7 +26,8 @@ class Team {
         aliases = [],
         color = null,
         role = null,
-        guild = null
+        guild = null,
+        type = 'default'
     } = {}) {
 
         /**
@@ -53,7 +55,7 @@ class Team {
          * @type {String}
          */
 
-        this.type = 'default';
+        this.type = TeamType.includes(type) ? type : 'default';
 
 
         /**
@@ -170,6 +172,7 @@ class Team {
 
         return this;
     }
+
 }
 
 module.exports = Team;

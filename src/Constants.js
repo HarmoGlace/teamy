@@ -8,7 +8,13 @@
 exports.TeamsManagerType = [
     'basic',
     'advanced'
-]
+];
+
+exports.TeamType = [
+    'default',
+    'parent',
+    'sub'
+];
 
 /**
  * A TeamResolvable can be :
@@ -23,6 +29,7 @@ exports.TeamsManagerType = [
 /**
  * @typedef {Object} TeamData
  * @property {String} id Id of the team
+ * @property {String} [type] The type of the team. Default: `basic` or `parent` if the manager is advanced
  * @property {String} [name] Name of the team
  * @property {String[]} [aliases=[]] Team name aliases
  * @property {Number} [color] Team color
