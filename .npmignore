@@ -8,3 +8,5 @@ tutorials/
 node_modules/
 /package-lock.json
 *.lock
+/docs.md
+/jsdoc.json
