@@ -51,11 +51,11 @@ class TeamMembersHandler {
 
         if (returned && returned.constructor !== TeamsHandler && !Array.isArray(returned)) throw new TeamyError(`The getTeamMembers function should return a TeamsHandler / an Array of TeamMember. Instead received ${returned.constructor.name}`);
 
-        const returnedArray = returned?.constructor === TeamsHandler ? returned.toArray() : returned;
+        const returnedArray = returned instanceof TeamsHandler ? returned.toArray() : returned;
 
         if (returned) {
             for (const member of returnedArray) {
-                if (member.constructor !== TeamMember) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of TeamMember. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
+                if (!(member instanceof TeamMember)) throw new TeamyError(`The getMemberTeams function should return a TeamsHandler / an Array of TeamMember. Instead received ${returned.constructor.name} of ${member.constructor.name}`)
             }
 
             returned = new TeamsHandler({

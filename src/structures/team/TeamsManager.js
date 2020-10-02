@@ -97,7 +97,7 @@ class TeamsManager extends TeamsHandler {
 
             const returnType = this.type === 'basic' ? Team : SubTeam;
 
-            if (found !== null && found.constructor !== returnType) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found.constructor.name}`);
+            if (found !== null && !(found instanceof returnType)) throw new TeamyError(`getMemberTeam function should return a ${returnType.name} or null. Received ${found?.constructor?.name || typeof found}`);
 
             return found;
         }, this.functions);

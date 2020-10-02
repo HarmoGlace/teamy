@@ -44,7 +44,7 @@ module.exports = (GuildMember, manager) => {
         get team () {
             const found = this.manager.functions.getMemberTeam(this, this.manager.subs);
 
-            return (found && found.constructor !== SubTeam ? this.manager.get(found) : found) || null;
+            return (found && !(found instanceof  SubTeam) ? this.manager.get(found) : found) || null;
 
         }
 
