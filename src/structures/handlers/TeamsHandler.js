@@ -208,8 +208,8 @@ class TeamsHandler extends Map {
      */
 
     map (mapFunction, ...globalArgs) {
-        return  new this._constructed({
-            base: this.entries.map(([id, team], ...args) => [ id, mapFunction(team, ...args) ], ...globalArgs),
+        return new this._constructed({
+            base: this.entries.map(([ id, team ], ...args) => [ id, mapFunction(team, ...args) ], ...globalArgs),
             type: 'custom',
             manager: this.manager
         })

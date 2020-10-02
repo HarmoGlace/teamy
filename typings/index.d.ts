@@ -87,8 +87,7 @@ declare module 'teamy' {
 
         keys: String[];
         values: any[];
-        entries: Array<Array<String|any>>;
-
+        entries: Array<Array<String | any>>;
 
 
         add(team: AnyTeam): AnyTeam;
@@ -108,6 +107,7 @@ declare module 'teamy' {
         resolve(resolvable: string): TeamsHandlerStocked;
 
         toData(): TeamsHandlerOptions;
+
         toArray(): TeamsHandlerStocked[];
     }
 
@@ -140,7 +140,7 @@ declare module 'teamy' {
         id: string;
         name: string;
         aliases: string[];
-        color: number|false;
+        color: number | false;
         roleId: string | null;
         role: any | null;
         guildId: string | null;
