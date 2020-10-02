@@ -119,7 +119,7 @@ client.on('message', message => {
 **The api reference is available at [teamy.harmoglace.fr](https://teamy.harmoglace.fr)**
 
 
-##### How to have a team property on GuildMembers with implement TeamsMaager optio [optional]
+##### How to have a team property on GuildMembers with implement TeamsManager option [optional]
 Type: ```Boolean```\
 Options passed to the TeamsManager, if set to true, it will enable [team](#getmemberteam) and [teams](#getmemberteams) properties on each GuildMember.\
 For that you need to instantiate your client after creating the [TeamsManager](#teamsmanager)\
