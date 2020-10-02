@@ -98,7 +98,7 @@ const manager = new TeamsManager({
         getPoints: (team) => pointsDB.get(team.id)
     },
     client,
-    guildId: '123456789' // guildId where these teams belong to. It will be used to get roles
+    guild: '123456789' // guild Id where these teams belong to. It will be used to get roles
 });
 
 const sub1 = manager.get('sub1');
@@ -146,7 +146,7 @@ const manager = new TeamsManager({
    
             getMemberTeam: (member, teams) => teams.find(team => member.roles.cache.has(team.roleId)
         },
-        guild: '123456',  // guildId where all roles are from
+        guild: '123456',  // guild Id where all roles are from
         implement: true
 });
 
