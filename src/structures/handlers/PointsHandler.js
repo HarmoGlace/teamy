@@ -76,7 +76,7 @@ class PointsHandler {
      */
 
     async set (points) {
-        if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
+        if (Number.isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
         await this.team.manager.functions.setPoints(this.team, points);
 
