@@ -181,4 +181,4 @@ Open an issue [here](https://github.com/HarmoGlace/teamy/issues/new/choose) usin
 
 ## Support
 
-You can contact me by discord: `HarmoGlace#7746` if you need help
+Do you need help ? Join the [Teamy Discord server](https://discord.gg/eMuBJMj)
