@@ -1,4 +1,5 @@
 const TeamyError = require("../TeamyError");
+const DataFormatter = require("../util/DataFormatter");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
@@ -32,7 +33,7 @@ class PointsHandler {
     /**
      * Get the points of this team
      * @param {Boolean} [nullable=false] Whatever to return null if the provided function returns a falsy value (excepted 0)
-     * @returns {Promise<number|null>} The points of the team
+     * @returns {Promise<number|null|DataFormatter<number|null>>} The points of the team
      */
 
     async get (nullable = false) {
@@ -46,7 +47,7 @@ class PointsHandler {
 
         this.latest = found;
 
-        return found;
+        return this.manager.functions.formatPoints ? new DataFormatter(this.manager, { value: found, source: this.team }) : found;
     }
 
     /**
