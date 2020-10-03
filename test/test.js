@@ -36,7 +36,7 @@ const manager = new TeamsManager({
     functions: { // Needed. Used to save points, you can use the database that you want, here it is enmap
         setPoints: (team, points) => databases[team.type].set(team.id, points, 'points'),
         getPoints: (team) => databases[team.type].has(team.id) ? databases[team.type].get(team.id, 'points') : null,
-        formatPoints: ({value, source}) => points.toLocaleString('fr-FR'),
+        formatPoints: ({value, source}) => value.toLocaleString('fr-FR'),
 
 
         // Optional
@@ -75,6 +75,8 @@ client.once('ready', async () => {
     // console.log(`Ready on ${client.user.username}`)
 
     const sub1 = manager.get('sub1')
+
+    sub1.points.add(5411525)
 
     let points = await sub1.points.get();
 

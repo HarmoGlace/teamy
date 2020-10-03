@@ -36,18 +36,19 @@ class PointsHandler {
      * @returns {Promise<number|null|DataFormatter<number|null>>} The points of the team
      */
 
-    async get (nullable = false) {
+    async get (nullable = false, forceRaw = false) {
         let found = await this.team.manager.functions.getPoints(this.team);
 
-        if (!found && found !== 0) found = nullable ? null : 0;
 
+        if (!found && found !== 0) found = nullable ? null : 0;
         if (found) found = Number(found);
+
 
         if (Number.isNaN(found) && found !== null) throw new TeamyError(`getPoints function should only return number. Received ${found.constructor.name}`);
 
         this.latest = found;
 
-        return this.team.manager.functions.formatPoints ? new DataFormatter(this.team.manager, { value: found, source: this.team }) : found;
+        return this.team.manager.functions.formatPoints && !forceRaw ? new DataFormatter(this.team.manager, { value: found, source: this.team }) : found;
     }
 
     /**
@@ -57,7 +58,7 @@ class PointsHandler {
      */
 
     async add (points) {
-        return this.set(await this.get() + points);
+        return this.set(await this.get(null, true) + points);
     }
 
     /**
@@ -76,12 +77,12 @@ class PointsHandler {
      * @returns {Promise<Number>} New team points
      */
 
-    async set (points) {
+    async set (points, ...othersArgs) {
         if (Number.isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
         await this.team.manager.functions.setPoints(this.team, points);
 
-        return this.get();
+        return this.get(...othersArgs);
     }
 
     /**
@@ -90,7 +91,7 @@ class PointsHandler {
      */
 
     async checkPoints () {
-        const returned = await this.get(true);
+        const returned = await this.get(true, true);
         if (!returned && returned !== 0) await this.set(0);
         return this;
     }
