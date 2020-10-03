@@ -23,8 +23,8 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Promise<Number>}
      */
 
-    async parent () {
-        return this.team.parent.points.get()
+    async parent (...args) {
+        return this.team.parent.points.get(...args);
     }
 
     /**
@@ -76,7 +76,7 @@ class SubPointsHandler extends PointsHandler {
      */
 
     async clear (locally = false) {
-        return (locally ? this.setLocal : this.set).bind(this)(0)
+        return (locally ? this.setLocal : this.set).bind(this)(0);
     }
 
     /**
