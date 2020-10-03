@@ -47,7 +47,7 @@ class PointsHandler {
 
         this.latest = found;
 
-        return this.manager.functions.formatPoints ? new DataFormatter(this.manager, { value: found, source: this.team }) : found;
+        return this.team.manager.functions.formatPoints ? new DataFormatter(this.team.manager, { value: found, source: this.team }) : found;
     }
 
     /**
