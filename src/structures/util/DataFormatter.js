@@ -38,7 +38,7 @@ class DataFormatter {
 
     format (...options) {
         const method = this.manager.functions.formatPoints;
-        return method ? method({ value: this.raw, ...this.data}, ...options) : this.raw;
+        return method ? method({ value: this.raw, ...this.data }, ...options) : this.raw;
     }
 
     /**

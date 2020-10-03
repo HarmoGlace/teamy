@@ -65,9 +65,10 @@ declare module 'teamy' {
 
     export interface TeamsManagerFunctions {
         setPoints(team: Team, points: number): any;
+
         getPoints(team: Team): number | null | Promise<number | null>;
 
-        formatPoints(data: formatPointsOption, ...othersArgs: any): any;
+        formatPoints(data: formatPointsOption, ...othersArgs: any): any | Promise<any>;
 
         getMemberTeam(member: TeamMember): SubTeam | Team | null | Promise<SubTeam | Team | null>;
 
@@ -75,10 +76,27 @@ declare module 'teamy' {
     }
 
     export interface formatPointsOption {
-        points: number,
+        value: number;
         source: TeamsHandlerStocked
     }
 
+    export class DataFormatter {
+        constructor(manager: TeamsManager, options: DataFormatterOptions);
+
+        formatted: any | Promise<any>;
+
+        format(options: Object): any | Promise<any>;
+
+
+        toBoolean(): Boolean;
+
+        toTruthy(): Boolean;
+    }
+
+    export interface DataFormatterOptions {
+        value: any;
+        source?: TeamsHandlerStocked;
+    }
 
     // @ts-ignore
     export interface TeamsHandler<ID, anything> extends Map<String, any> {
@@ -171,7 +189,7 @@ declare module 'teamy' {
     export interface PointsHandler {
         latest: number | null | undefined;
 
-        get(nullable: Boolean): Promise<number | null>;
+        get(nullable: Boolean): Promise<number | null | DataFormatter>;
 
         add(points: number): Promise<number>;
 
@@ -219,12 +237,12 @@ declare module 'teamy' {
 
 
     export interface ParentTeamData extends TeamData {
-        type?: TeamType,
+        type?: TeamType;
         subs: TeamResolvable[]
     }
 
     export interface SubTeamData extends TeamData {
-        type?: TeamType,
+        type?: TeamType;
         parent?: string | ParentTeam
     }
 
