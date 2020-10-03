@@ -64,12 +64,19 @@ declare module 'teamy' {
     }
 
     export interface TeamsManagerFunctions {
-        setPoints: { (team: Team, points: number): any };
-        getPoints: { (team: Team): number | null | Promise<number | null> };
+        setPoints(team: Team, points: number): any;
+        getPoints(team: Team): number | null | Promise<number | null>;
+
+        formatPoints(data: formatPointsOption, ...othersArgs: any): any;
 
         getMemberTeam(member: TeamMember): SubTeam | Team | null | Promise<SubTeam | Team | null>;
 
         getTeamMembers(team: AnyTeam): TeamMember[] | Promise<TeamMember[]>;
+    }
+
+    export interface formatPointsOption {
+        points: number,
+        source: TeamsHandlerStocked
     }
 
 

@@ -22,4 +22,7 @@ module.exports = {
 
     TeamMembersHandler: require('./structures/handlers/TeamMembersHandler'),
 
+    // Util
+    Util: require('./structures/util/Util'),
+    DataFormatter: require('./structures/util/DataFormatter')
 };

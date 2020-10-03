@@ -35,6 +35,7 @@ class TeamsManager extends TeamsHandler {
                      functions: {
                          setPoints,
                          getPoints,
+                         formatPoints = null,
                          getMemberTeam = null,
                          getTeamMembers = null
                      } = {},
@@ -102,6 +103,8 @@ class TeamsManager extends TeamsHandler {
             return found;
         }, this.functions);
 
+
+        defineUnlistedProperty('formatPoints', formatPoints && typeof formatPoints === 'function' ? formatPoints : null, this.functions);
 
         if (getTeamMembers && typeof getTeamMembers === 'function') {
             defineUnlistedProperty('getTeamMembers', getTeamMembers, this.functions);
