@@ -55,7 +55,7 @@ declare module 'teamy' {
 
     export interface TeamsManagerOptions {
         type?: TeamsManagerType;
-        teams?: TeamData[];
+        teams?: TeamData[]|ParentTeamData[];
         functions: TeamsManagerFunctions;
         client?: any;
         guild?: string;
@@ -218,11 +218,11 @@ declare module 'teamy' {
     type TeamsHandlerStocked = AnyTeam | TeamMember | TeamGuild;
 
 
-    type ParentTeamResolvable = ParentTeamData | ParentTeam;
+    type ParentTeamResolvable = String | ParentTeam;
 
-    type SubTeamResolvable = SubTeamData | SubTeam;
+    type SubTeamResolvable = String | SubTeam;
 
-    type BasicTeamResolvable = TeamData | Team;
+    type BasicTeamResolvable = String | Team;
 
     type TeamResolvable = ParentTeamResolvable | SubTeamResolvable | BasicTeamResolvable;
 
@@ -238,7 +238,7 @@ declare module 'teamy' {
 
     export interface ParentTeamData extends TeamData {
         type?: TeamType;
-        subs: TeamResolvable[]
+        subs: SubTeamData[]
     }
 
     export interface SubTeamData extends TeamData {
