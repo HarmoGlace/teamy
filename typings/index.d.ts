@@ -55,7 +55,7 @@ declare module 'teamy' {
 
     export interface TeamsManagerOptions {
         type?: TeamsManagerType;
-        teams?: TeamResolvable[];
+        teams?: TeamData[];
         functions: TeamsManagerFunctions;
         client?: any;
         guild?: string;
@@ -230,9 +230,9 @@ declare module 'teamy' {
         id: string;
         name?: string;
         aliases?: string[];
-        color?: number;
-        role?: string;
-        guild?: string;
+        color?: number|false|null;
+        role?: string|null;
+        guild?: string|null;
     }
 
 
