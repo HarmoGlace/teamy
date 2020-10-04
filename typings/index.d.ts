@@ -76,7 +76,7 @@ declare module 'teamy' {
     }
 
     export interface formatPointsOption {
-        value: number;
+        value: number | null | Promise<number | null>;
         source: TeamsHandlerStocked
     }
 
@@ -94,7 +94,7 @@ declare module 'teamy' {
     }
 
     export interface DataFormatterOptions {
-        value: any;
+        value: any | Promise<any>;
         source?: TeamsHandlerStocked;
     }
 
