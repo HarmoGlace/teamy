@@ -170,6 +170,7 @@ exports.TeamType = [
  @typedef {Object} TeamsManagerFunctions
  @property setPoints {function} Used to set the points of a team. Parameters : `team` and `points`. Should return a Number
  @property getPoints {function} Used to get the points of a team. Parameter: `team`. Should return a Number
+ @property [formatPoints] {function} Used to format points. See {@link DataFormatter}
  @property [getMemberTeam] {function} Used to know the team of a {@link TeamMember}. Parameter: `member`. Should return a {@link Team} or a {@link SubTeam}
  @property [getTeamsMembers] {function} Used to know the members of a {@link Team} (or {@link ParentTeam}/{@link SubTeam}). Parameter: `team`. Should return an array of {@link TeamMember}
  */
