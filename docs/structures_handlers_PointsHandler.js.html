@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamGuild.html">TeamGuild</a></li><li><a href="TeamMember.html">TeamMember</a></li><li><a href="TeamMembersHandler.html">TeamMembersHandler</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="DataFormatter.html">DataFormatter</a></li><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamGuild.html">TeamGuild</a></li><li><a href="TeamMember.html">TeamMember</a></li><li><a href="TeamMembersHandler.html">TeamMembersHandler</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -126,6 +126,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>const TeamyError = require("../TeamyError");
+const DataFormatter = require("../util/DataFormatter");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**
@@ -159,21 +160,22 @@ class PointsHandler {
     /**
      * Get the points of this team
      * @param {Boolean} [nullable=false] Whatever to return null if the provided function returns a falsy value (excepted 0)
-     * @returns {Promise&lt;number|null>} The points of the team
+     * @returns {Promise&lt;number|null|DataFormatter&lt;number|null>>} The points of the team
      */
 
-    async get (nullable = false) {
+    async get (nullable = false, forceRaw = false) {
         let found = await this.team.manager.functions.getPoints(this.team);
 
-        if (!found &amp;&amp; found !== 0) found = nullable ? null : 0;
 
+        if (!found &amp;&amp; found !== 0) found = nullable ? null : 0;
         if (found) found = Number(found);
+
 
         if (Number.isNaN(found) &amp;&amp; found !== null) throw new TeamyError(`getPoints function should only return number. Received ${found.constructor.name}`);
 
         this.latest = found;
 
-        return found;
+        return this.team.manager.functions.formatPoints &amp;&amp; !forceRaw ? new DataFormatter(this.team.manager, { value: found, source: this.team }) : found;
     }
 
     /**
@@ -183,7 +185,7 @@ class PointsHandler {
      */
 
     async add (points) {
-        return this.set(await this.get() + points);
+        return this.set(await this.get(null, true) + points);
     }
 
     /**
@@ -202,12 +204,12 @@ class PointsHandler {
      * @returns {Promise&lt;Number>} New team points
      */
 
-    async set (points) {
+    async set (points, ...othersArgs) {
         if (Number.isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
         await this.team.manager.functions.setPoints(this.team, points);
 
-        return this.get();
+        return this.get(...othersArgs);
     }
 
     /**
@@ -216,7 +218,7 @@ class PointsHandler {
      */
 
     async checkPoints () {
-        const returned = await this.get(true);
+        const returned = await this.get(true, true);
         if (!returned &amp;&amp; returned !== 0) await this.set(0);
         return this;
     }

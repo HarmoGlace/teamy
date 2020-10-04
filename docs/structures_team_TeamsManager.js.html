@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamGuild.html">TeamGuild</a></li><li><a href="TeamMember.html">TeamMember</a></li><li><a href="TeamMembersHandler.html">TeamMembersHandler</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="DataFormatter.html">DataFormatter</a></li><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamGuild.html">TeamGuild</a></li><li><a href="TeamMember.html">TeamMember</a></li><li><a href="TeamMembersHandler.html">TeamMembersHandler</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -162,6 +162,7 @@ class TeamsManager extends TeamsHandler {
                      functions: {
                          setPoints,
                          getPoints,
+                         formatPoints = null,
                          getMemberTeam = null,
                          getTeamMembers = null
                      } = {},
@@ -229,6 +230,8 @@ class TeamsManager extends TeamsHandler {
             return found;
         }, this.functions);
 
+
+        defineUnlistedProperty('formatPoints', formatPoints &amp;&amp; typeof formatPoints === 'function' ? formatPoints : null, this.functions);
 
         if (getTeamMembers &amp;&amp; typeof getTeamMembers === 'function') {
             defineUnlistedProperty('getTeamMembers', getTeamMembers, this.functions);

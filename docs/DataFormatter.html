@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamy | TeamMembersHandler</title>
+  <title>Teamy | DataFormatter</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -114,7 +114,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>TeamMembersHandler</h1>
+                    <h1>DataFormatter</h1>
                 </header>
                 
 
@@ -125,9 +125,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>TeamMembersHandler<span class="signature">(team)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>DataFormatter<span class="signature">(manager, options)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description"><p>TeamMembersHandler. Used by <a href="Team.html#members">Team#members</a></p></div>
+            <div class="class-description"><p>A DataFormatter. Used to format a data given by the library</p></div>
         
     
 </header>
@@ -146,12 +146,12 @@
 
 
     
-    <h4 class="name" id="TeamMembersHandler">
-        <a class="href-link" href="#TeamMembersHandler">#</a>
+    <h4 class="name" id="DataFormatter">
+        <a class="href-link" href="#DataFormatter">#</a>
         
         <span class="code-name">
             
-                new TeamMembersHandler<span class="signature">(team)</span><span class="type-signature"></span>
+                new DataFormatter<span class="signature">(manager, options)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -160,7 +160,7 @@
     
     
     <div class="description">
-        <p>Instantiate the class</p>
+        <p>Instantiates this DataFormatter</p>
     </div>
     
 
@@ -198,7 +198,56 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>team</code></td>
+      <td class="name"><code>manager</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="TeamsManager.html">TeamsManager</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The TeamsManager that will be used to format the data</p></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>options</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The options of this DataFormatter</p></td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>value</code></td>
   
 
   <td class="type">
@@ -209,8 +258,10 @@
 
   
 
-  <td class="description last"><p>The team this TeamMembersHandler belongs to</p></td>
+  <td class="description last"><p>The value of the data to format</p></td>
 </tr>
+
+  
 
 
         
@@ -255,9 +306,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_handlers_TeamMembersHandler.js.html" class="button">View Source</a>
+            <a href="structures_util_DataFormatter.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_handlers_TeamMembersHandler.js.html">structures/handlers/TeamMembersHandler.js</a>, <a href="structures_handlers_TeamMembersHandler.js.html#line9">line 9</a>
+                <a href="structures_util_DataFormatter.js.html">structures/util/DataFormatter.js</a>, <a href="structures_util_DataFormatter.js.html#line7">line 7</a>
             </span>
         </p>
     
@@ -310,19 +361,11 @@
             
                 <div class="member">
 
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">Boolean</span>
-
-
-    </span>
-
-<h4 class="name" id="enabled">
-    <a class="href-link" href="#enabled">#</a>
+<h4 class="name" id="formatted">
+    <a class="href-link" href="#formatted">#</a>
     
     <span class="code-name">
-        enabled
+        formatted
     </span>
     
 </h4>
@@ -331,7 +374,7 @@
 
 
 <div class="description">
-    <p>Whatever this is enabled</p>
+    <p>Get the formatted data</p>
 </div>
 
 
@@ -371,89 +414,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_handlers_TeamMembersHandler.js.html" class="button">View Source</a>
+            <a href="structures_util_DataFormatter.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_handlers_TeamMembersHandler.js.html">structures/handlers/TeamMembersHandler.js</a>, <a href="structures_handlers_TeamMembersHandler.js.html#line36">line 36</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type"><a href="TeamsHandler.html">TeamsHandler</a>.&lt;<a href="TeamMember.html">TeamMember</a>></span>
-|
-
-<span class="param-type">false</span>
-
-
-    </span>
-
-<h4 class="name" id="latest">
-    <a class="href-link" href="#latest">#</a>
-    
-    <span class="code-name">
-        latest
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>The latest members recorded. It is false if nothing was recorded</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="structures_handlers_TeamMembersHandler.js.html" class="button">View Source</a>
-            <span>
-                <a href="structures_handlers_TeamMembersHandler.js.html">structures/handlers/TeamMembersHandler.js</a>, <a href="structures_handlers_TeamMembersHandler.js.html#line28">line 28</a>
+                <a href="structures_util_DataFormatter.js.html">structures/util/DataFormatter.js</a>, <a href="structures_util_DataFormatter.js.html#line29">line 29</a>
             </span>
         </p>
     
@@ -478,16 +441,12 @@
 
 
     
-    <h4 class="name" id="fetch">
-        <a class="href-link" href="#fetch">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
+    <h4 class="name" id="format">
+        <a class="href-link" href="#format">#</a>
         
         <span class="code-name">
             
-                fetch<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;(<a href="TeamsHandler.html">TeamsHandler</a>.&lt;<a href="TeamMember.html">TeamMember</a>>|null)>}</span>
+                format<span class="signature">(&hellip;options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {*|Promise.&lt;*>}</span>
             
         </span>
     </h4>
@@ -496,7 +455,190 @@
     
     
     <div class="description">
-        <p>Get the GuildMembers only of the members who belongs to this team.</p>
+        <p>Formats the data belonging to this DataFormatter</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>options</code></td>
+  
+
+  <td class="type">
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+          &lt;repeatable><br>
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>The others options that will be sent to the TeamsManager.functions.formatPoints</p></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_util_DataFormatter.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_util_DataFormatter.js.html">structures/util/DataFormatter.js</a>, <a href="structures_util_DataFormatter.js.html#line39">line 39</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">*</span>
+|
+
+<span class="param-type">Promise.&lt;*></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="toBoolean">
+        <a class="href-link" href="#toBoolean">#</a>
+        
+        <span class="code-name">
+            
+                toBoolean<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Convert this to a strict Boolean. See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">mdn Boolean function</a></p>
     </div>
     
 
@@ -545,9 +687,9 @@
 
     
         <p class="tag-source">
-            <a href="structures_handlers_TeamMembersHandler.js.html" class="button">View Source</a>
+            <a href="structures_util_DataFormatter.js.html" class="button">View Source</a>
             <span>
-                <a href="structures_handlers_TeamMembersHandler.js.html">structures/handlers/TeamMembersHandler.js</a>, <a href="structures_handlers_TeamMembersHandler.js.html#line45">line 45</a>
+                <a href="structures_util_DataFormatter.js.html">structures/util/DataFormatter.js</a>, <a href="structures_util_DataFormatter.js.html#line49">line 49</a>
             </span>
         </p>
     
@@ -582,7 +724,127 @@
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Promise.&lt;(<a href="TeamsHandler.html">TeamsHandler</a>.&lt;<a href="TeamMember.html">TeamMember</a>>|null)></span>
+<span class="param-type">boolean</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="toTruthy">
+        <a class="href-link" href="#toTruthy">#</a>
+        
+        <span class="code-name">
+            
+                toTruthy<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Convert the value stored to a boolean by checking if it is a truthy value. See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT">mdn</a></p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="structures_util_DataFormatter.js.html" class="button">View Source</a>
+            <span>
+                <a href="structures_util_DataFormatter.js.html">structures/util/DataFormatter.js</a>, <a href="structures_util_DataFormatter.js.html#line58">line 58</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">boolean</span>
 
 
     </div>

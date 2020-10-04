@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Teamy | structures/implementations/TeamGuild.js</title>
+  <title>Teamy | structures/util/DataFormatter.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -116,7 +116,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>structures/implementations/TeamGuild.js</h1>
+                    <h1>structures/util/DataFormatter.js</h1>
                 </header>
                 
 
@@ -125,54 +125,69 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const SubTeam = require("../team/SubTeam");
-const { defineUnlistedProperty } = require('../util/Util');
+            <pre class="prettyprint source linenums"><code>const { defineUnlistedProperty } = require('./Util');
 
-module.exports = (Guild, manager) => {
+/**
+ * A DataFormatter. Used to format a data given by the library
+ */
+
+class DataFormatter {
 
     /**
-     * A TeamGuild. Extends [Discord.js Guild](https://discord.js.org/#/docs/main/stable/class/Guil)
+     * Instantiates this DataFormatter
+     * @param {TeamsManager} manager The TeamsManager that will be used to format the data
+     * @param {Object} options The options of this DataFormatter
+     * @param options.value The value of the data to format
      */
 
-    class TeamGuild extends Guild {
+    constructor (manager, { value, ...othersArgs } = {}) {
+        this.raw = value;
 
-        #internalPoints
-        #noTeamPoints
+        this.data = { ...othersArgs };
 
-        /**
-         * Instantiates this TeamGuild. Should not be done manually, discord.js will do it for you
-         */
-
-        constructor (...args) {
-            super(...args);
-
-            defineUnlistedProperty('manager', manager, this);
-
-            /**
-             * Defines the Type of this Class: `guild`
-             * @constant
-             * @type {String}
-             */
-
-            this.type = 'guild';
-        }
-
-        /**
-         * The Teams belonging to this Guild
-         * @type {TeamsHandler&lt;Team|SubTeam|ParentTeam>}
-         */
-
-        get teams () {
-            return this.manager.filter(team => team.guildId === this.id);
-        }
-
+        defineUnlistedProperty('manager', manager, this);
     }
 
-    return TeamGuild;
+    /**
+     * Get the formatted data
+     * @returns {*|Promise&lt;*>}
+     */
 
+    get formatted () {
+        return this.format();
+    }
+
+    /**
+     * Formats the data belonging to this DataFormatter
+     * @param [options] The others options that will be sent to the {@link TeamsManager.functions.formatPoints}
+     * @returns {*|Promise&lt;*>}
+     */
+
+    format (...options) {
+        const method = this.manager.functions.formatPoints;
+        return method ? method({ value: this.raw, ...this.data }, ...options) : this.raw;
+    }
+
+    /**
+     * Convert this to a strict Boolean. See [mdn Boolean function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)
+     * @returns {boolean}
+     */
+
+    toBoolean () {
+        return Boolean(this.raw);
+    }
+
+    /**
+     * Convert the value stored to a boolean by checking if it is a truthy value. See [mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT)
+     * @returns {boolean}
+     */
+
+    toTruthy () {
+        return !!this.raw;
+    }
 }
 
-</code></pre>
+module.exports = DataFormatter;</code></pre>
         </article>
     </section>
 

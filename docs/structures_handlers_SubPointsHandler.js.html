@@ -108,7 +108,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamGuild.html">TeamGuild</a></li><li><a href="TeamMember.html">TeamMember</a></li><li><a href="TeamMembersHandler.html">TeamMembersHandler</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="DataFormatter.html">DataFormatter</a></li><li><a href="ParentPointsHandler.html">ParentPointsHandler</a></li><li><a href="ParentTeam.html">ParentTeam</a></li><li><a href="PointsHandler.html">PointsHandler</a></li><li><a href="SubPointsHandler.html">SubPointsHandler</a></li><li><a href="SubTeam.html">SubTeam</a></li><li><a href="Team.html">Team</a></li><li><a href="TeamGuild.html">TeamGuild</a></li><li><a href="TeamMember.html">TeamMember</a></li><li><a href="TeamMembersHandler.html">TeamMembersHandler</a></li><li><a href="TeamsHandler.html">TeamsHandler</a></li><li><a href="TeamsManager.html">TeamsManager</a></li></ul><h3><a href="global.html">Global</a></h3></div>
                 
             </nav>
         </div>
@@ -150,8 +150,8 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Promise&lt;Number>}
      */
 
-    async parent () {
-        return this.team.parent.points.get()
+    async parent (...args) {
+        return this.team.parent.points.get(...args);
     }
 
     /**
@@ -181,7 +181,7 @@ class SubPointsHandler extends PointsHandler {
     async add (points) {
         await this.team.parent.points.add(points);
 
-        await this.setLocal(await this.current() + points);
+        await this.setLocal(await this.current(null, true) + points);
 
         return this.current();
     }
@@ -203,7 +203,7 @@ class SubPointsHandler extends PointsHandler {
      */
 
     async clear (locally = false) {
-        return (locally ? this.setLocal : this.set).bind(this)(0)
+        return (locally ? this.setLocal : this.set).bind(this)(0);
     }
 
     /**
@@ -212,14 +212,14 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Promise&lt;Number>} newPoints New Points of the team
      */
 
-    async set (points) {
-        const diff = points - await this.current();
+    async set (points, ...othersArgs) {
+        const diff = points - await this.current(null, true);
 
         await this.team.parent.points.add(diff);
 
         await this.team.manager.functions.setPoints(this.team, points);
 
-        return this.get();
+        return this.get(...othersArgs);
     }
 
     /**
@@ -230,9 +230,11 @@ class SubPointsHandler extends PointsHandler {
 
     async setLocal (points) {
 
-        if (isNaN(points)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
+        const number = Number(points);
 
-        return this.team.manager.functions.setPoints(this.team, points);
+        if (Number.isNaN(number)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
+
+        return this.team.manager.functions.setPoints(this.team, number);
     }
 
 
