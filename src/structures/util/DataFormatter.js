@@ -32,7 +32,7 @@ class DataFormatter {
 
     /**
      * Formats the data belonging to this DataFormatter
-     * @param [options] The others options that will be sent to the {@link TeamsManager.functions.formatPoints}
+     * @param [options] The others options that will be sent to the [TeamsManagerFunctions.formatPoints]{@link TeamsManagerFunctions}
      * @returns {*|Promise<*>}
      */
 
