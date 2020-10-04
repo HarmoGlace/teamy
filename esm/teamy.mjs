@@ -4,7 +4,7 @@ export default Teamy;
 
 export const {
 
-    // Teams
+    // Team
 
     TeamsManager,
     Team,
@@ -12,13 +12,13 @@ export const {
     SubTeam,
 
 
-    // discord.js edits
+    // Discord.js edits
 
     TeamMember,
     TeamGuild,
 
 
-    // handlers
+    // Handlers
 
     TeamsHandler,
     PointsHandler,
@@ -26,4 +26,8 @@ export const {
     ParentPointsHandler,
 
     TeamMembersHandler,
+
+    // Util
+    Util,
+    DataFormatter
 } = Teamy;
