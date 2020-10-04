@@ -51,7 +51,7 @@ class DataFormatter {
     }
 
     /**
-     * Convert the value stored to a boolean by checking if it is a truthy value. See [mdn about truthy values](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT). Same as `!!value` where
+     * Convert the value stored to a boolean by checking if it is a truthy value. See [mdn about truthy values](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT). Same as `!!value`
      * @returns {boolean}
      */
 
