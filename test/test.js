@@ -1,4 +1,4 @@
-const { TeamsManager, TeamsHandler, DataFormatter } = require('../src/index');
+const { TeamsManager, TeamsHandler, DataFormatter } = require('teamy');
 
 
 const { Client } = require('discord.js');
@@ -35,8 +35,8 @@ const manager = new TeamsManager({
     ],
     functions: { // Needed. Used to save points, you can use the database that you want, here it is enmap
         setPoints: (team, points) => databases[team.type].set(team.id, points, 'points'),
-        getPoints: async (team) => databases[team.type].has(team.id) ? databases[team.type].get(team.id, 'points') : null,
-        // formatPoints: ({value, source}) => value.toLocaleString('fr-FR'),
+        getPoints: (team) => databases[team.type].has(team.id) ? databases[team.type].get(team.id, 'points') : null,
+        formatPoints: ({value, source}) => value.toLocaleString('fr-FR'),
 
 
         // Optional
@@ -76,11 +76,11 @@ client.once('ready', async () => {
 
     const sub1 = manager.get('sub1')
 
-    let points = sub1.points.get();
+    sub1.points.add(5411525)
 
-    console.log(points)
+    let points = await sub1.points.get();
 
-    console.log(await points)
+    console.log(points, points.formatted)
 
     // const awaited = await sub1.points.get();
     //
