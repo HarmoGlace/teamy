@@ -23,7 +23,7 @@ class DataFormatter {
 
     /**
      * Get the formatted data
-     * @returns {*|Promise<*>}
+     * @type {*|Promise<*>}
      */
 
     get formatted () {
