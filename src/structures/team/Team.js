@@ -140,7 +140,7 @@ class Team {
 
     /**
      * Color of this team, if there is one
-     * @type {*|number|null}
+     * @type {number|null|false}
      */
 
     get color () {
