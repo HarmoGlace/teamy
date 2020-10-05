@@ -48,13 +48,14 @@ class SubPointsHandler extends PointsHandler {
     /**
      * Add points to this team
      * @param {Number} points Points to add
+     * @param othersArgs Others Args that will be passed to the setPoints function
      * @returns {Promise<Number>} newPoints New points of the team
      */
 
-    async add (points) {
+    async add (points, ...othersArgs) {
         await this.team.parent.points.add(points);
 
-        await this.setLocal(await this.current(null, true) + points);
+        await this.setLocal(await this.current(null, true) + points, ...othersArgs);
 
         return this.current();
     }
@@ -62,11 +63,12 @@ class SubPointsHandler extends PointsHandler {
     /**
      * Remove points to this team
      * @param {Number} points Points to remove
+     * @param othersArgs Others Args that will be passed to the setPoints function
      * @returns {Promise<Number>} points New points of the team
      */
 
-    async remove (points) {
-        return this.add(-points);
+    async remove (points, ...othersArgs) {
+        return this.add(-points, ...othersArgs);
     }
 
     /**
@@ -83,6 +85,7 @@ class SubPointsHandler extends PointsHandler {
     /**
      * Set points of this team
      * @param {Number} points Points to set
+     * @param othersArgs Others Args that will be passed to the setPoints function
      * @returns {Promise<Number>} newPoints New Points of the team
      */
 
@@ -91,7 +94,7 @@ class SubPointsHandler extends PointsHandler {
 
         await this.team.parent.points.add(diff);
 
-        await this.team.manager.functions.setPoints(this.team, points);
+        await this.team.manager.functions.setPoints(this.team, points, ...othersArgs);
 
         return this.get(...othersArgs);
     }
