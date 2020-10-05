@@ -64,9 +64,9 @@ declare module 'teamy' {
     }
 
     export interface TeamsManagerFunctions {
-        setPoints(team: Team, points: number): any;
+        setPoints(team: Team, points: number, ...othersArgs: any): any;
 
-        getPoints(team: Team): number | null | Promise<number | null>;
+        getPoints(team: Team, ...othersArgs: any): number | null | Promise<number | null>;
 
         formatPoints(data: formatPointsOption, ...othersArgs: any): any | Promise<any>;
 

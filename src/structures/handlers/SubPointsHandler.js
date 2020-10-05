@@ -20,39 +20,47 @@ class SubPointsHandler extends PointsHandler {
 
     /**
      * Get the points of the parent team
-     * @returns {Promise<Number>}
+     * @returns {number|Promise<Number>}
      */
 
-    async parent (...args) {
+    parent (...args) {
         return this.team.parent.points.get(...args);
     }
 
     /**
      * Get the points of this team
-     * @returns {Promise<Number>}
+     * @returns {number|Promise<Number>}
      */
 
-    async current (...args) {
+    current (...args) {
         return super.get(...args);
     }
 
     /**
      * Get the points of this team
-     * @returns {Promise<Number>}
+     * @returns {number|Promise<Number>}
      */
 
-    async get (...args) {
+    get (...args) {
         return this.current(...args);
     }
 
     /**
      * Add points to this team
      * @param {Number} points Points to add
-     * @returns {Promise<Number>} newPoints New points of the team
+     * @returns {number|Promise<Number>} newPoints New points of the team
      */
 
     async add (points) {
-        await this.team.parent.points.add(points);
+        const added = this.team.parent.points.add(points);
+
+        // if (added instanceof Promise) {
+        //     return new Promise(((resolve, reject) => {
+        //         added.then(() => {
+        //             this.setLocal()
+        //         })
+        //     }))
+        // }
 
         await this.setLocal(await this.current(null, true) + points);
 
