@@ -163,8 +163,8 @@ class PointsHandler {
      * @returns {Promise&lt;number|null|DataFormatter&lt;number|null>>} The points of the team
      */
 
-    async get (nullable = false, forceRaw = false) {
-        let found = await this.team.manager.functions.getPoints(this.team);
+    async get (nullable = false, forceRaw = false, ...othersArgs) {
+        let found = await this.team.manager.functions.getPoints(this.team, ...othersArgs);
 
 
         if (!found &amp;&amp; found !== 0) found = nullable ? null : 0;
@@ -181,26 +181,29 @@ class PointsHandler {
     /**
      * Add points to the team
      * @param {number} points Points to add
+     * @param othersArgs Others Args that will be passed to the setPoints function
      * @returns {Promise&lt;Number>} New team points
      */
 
-    async add (points) {
-        return this.set(await this.get(null, true) + points);
+    async add (points, ...othersArgs) {
+        return this.set(await this.get(null, true) + points, ...othersArgs);
     }
 
     /**
      * Remove points to the team
      * @param {number} points Points to remove
+     * @param othersArgs Others Args that will be passed to the setPoints function
      * @returns {Promise&lt;Number>} New team points
      */
 
-    async remove (points) {
-        return this.add(-points);
+    remove (points, ...othersArgs) {
+        return this.add(-points, ...othersArgs);
     }
 
     /**
      * Set points to this team
      * @param {Number} points Points to set
+     * @param othersArgs Others Args that will be passed to the setPoints function
      * @returns {Promise&lt;Number>} New team points
      */
 
@@ -226,19 +229,20 @@ class PointsHandler {
     /**
      *  Clear (reset) the points of this team. Use this carefully
      * @param [recursive=true] Whatever also delete points of members who belongs to this team, if there are.
+     * @param othersArgs Others Args that will be passed to the setPoints function
      * @returns {Promise&lt;Number>} New team points (should be 0)
      */
 
-    async clear (recursive = true) {
+    async clear (recursive = true, ...othersArgs) {
 
-        const set = this.set(0);
+        const set = this.set(0, ...othersArgs);
 
         if (!recursive || !this.members?.enabled) return set;
 
         const members = await this.members.fetch();
 
         for (const member of members.toArray()) {
-            member.points.clear();
+            member.points.clear(null, ...othersArgs);
         }
 
         return set;
