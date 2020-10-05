@@ -64,15 +64,15 @@ declare module 'teamy' {
     }
 
     export interface TeamsManagerFunctions {
-        setPoints(team: Team, points: number): any;
+        setPoints(team: Team, points: number, ...othersArgs: any): any;
 
-        getPoints(team: Team): number | null | Promise<number | null>;
+        getPoints(team: Team, ...othersArgs: any): number | Promise<number | null> | null;
 
         formatPoints(data: formatPointsOption, ...othersArgs: any): any | Promise<any>;
 
         getMemberTeam(member: TeamMember): SubTeam | Team | null | Promise<SubTeam | Team | null>;
 
-        getTeamMembers(team: AnyTeam): TeamMember[] | Promise<TeamMember[]>;
+        getTeamMembers(team: AnyTeam, ...othersArgs: any): TeamMember[] | Promise<TeamMember[]>;
     }
 
     export interface formatPointsOption {

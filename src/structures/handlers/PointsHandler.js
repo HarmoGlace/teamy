@@ -36,8 +36,8 @@ class PointsHandler {
      * @returns {Promise<number|null|DataFormatter<number|null>>} The points of the team
      */
 
-    async get (nullable = false, forceRaw = false) {
-        let found = await this.team.manager.functions.getPoints(this.team);
+    async get (nullable = false, forceRaw = false, ...othersArgs) {
+        let found = await this.team.manager.functions.getPoints(this.team, ...othersArgs);
 
 
         if (!found && found !== 0) found = nullable ? null : 0;

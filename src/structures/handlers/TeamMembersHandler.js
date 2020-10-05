@@ -39,13 +39,14 @@ class TeamMembersHandler {
 
     /**
      * Get the GuildMembers only of the members who belongs to this team.
+     * @param othersArgs Others arguments that will be passed to the getTeamMembers function
      * @return {Promise<TeamsHandler<TeamMember>|null>}
      */
 
-    async fetch () {
+    async fetch (...othersArgs) {
         if (!this.enabled) return null;
 
-        let returned = await Promise.all(await this.manager.functions.getTeamMembers(this.team));
+        let returned = await Promise.all(await this.manager.functions.getTeamMembers(this.team, ...othersArgs));
 
         const TeamMember = this.manager.Structures.get('GuildMember');
 

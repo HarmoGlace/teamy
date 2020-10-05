@@ -23,7 +23,7 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Promise<Number>}
      */
 
-    async parent (...args) {
+    parent (...args) {
         return this.team.parent.points.get(...args);
     }
 
@@ -32,7 +32,7 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Promise<Number>}
      */
 
-    async current (...args) {
+    current (...args) {
         return super.get(...args);
     }
 
@@ -41,7 +41,7 @@ class SubPointsHandler extends PointsHandler {
      * @returns {Promise<Number>}
      */
 
-    async get (...args) {
+    get (...args) {
         return this.current(...args);
     }
 
@@ -72,11 +72,12 @@ class SubPointsHandler extends PointsHandler {
     /**
      * Clears the points of this SubTeam
      * @param [locally=false] Whatever to only clear points of this SubTeam without removing them from the ParentTeam. Could cause incorrect data
+     * @param othersArgs othersArgs that will be passed to the setPoints function
      * @returns {Promise<Number>}
      */
 
-    async clear (locally = false) {
-        return (locally ? this.setLocal : this.set).bind(this)(0);
+    clear (locally = false, ...othersArgs) {
+        return (locally ? this.setLocal : this.set).bind(this)(0, ...othersArgs);
     }
 
     /**
@@ -98,16 +99,17 @@ class SubPointsHandler extends PointsHandler {
     /**
      * Set points of this team only without editing parent team points. Use this carefully
      * @param {Number} points Points to set
+     * @param othersArgs othersArgs that will be passed to the setPoints function
      * @returns {*}
      */
 
-    async setLocal (points) {
+    async setLocal (points, ...othersArgs) {
 
         const number = Number(points);
 
         if (Number.isNaN(number)) throw new TeamyError(`Expected a Number, found ${points.constructor.name}`);
 
-        return this.team.manager.functions.setPoints(this.team, number);
+        return this.team.manager.functions.setPoints(this.team, number, ...othersArgs);
     }
 
 
