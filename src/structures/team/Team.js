@@ -65,12 +65,6 @@ class Team {
 
         this.aliases = aliases;
 
-
-        /**
-         * The color of this team
-         * @type {Number}
-         */
-
         this.color = color;
 
 
@@ -146,7 +140,7 @@ class Team {
 
     /**
      * Color of this team, if there is one
-     * @return {*|number|null}
+     * @type {*|number|null}
      */
 
     get color () {
