@@ -19,15 +19,16 @@ class ParentPointsHandler extends PointsHandler {
     /**
      * Clear (reset) the points of this team. Use this carefully
      * @param [resursive=true] Whatever to also clear points of sub teams
+     * @param othersArgs Others Args that will be passed to the clear function
      * @returns {Promise<Number>} New team points (should be 0)
      */
 
-    async clear (resursive = true) {
-        super.clear();
+    async clear (resursive = true, ...othersArgs) {
+        super.clear(null, ...othersArgs);
 
         if (resursive) {
             for (const sub of this.subs) {
-                sub.points.clear();
+                sub.points.clear(null, ...othersArgs);
             }
         }
 
