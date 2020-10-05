@@ -34,7 +34,7 @@ class TeamMembersHandler {
      */
 
     get enabled () {
-        return this.manager.teamsFunctions;
+        return !!this.manager.teamsFunctions;
     }
 
     /**
