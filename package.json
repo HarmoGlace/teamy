@@ -1,5 +1,5 @@
 {
-  "name": "teamy",
+  "name": "@harmoglace/teamy",
   "version": "4.1.0",
   "engines": {
     "node": ">=14.4.0"
@@ -23,10 +23,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/HarmoGlace/teamy.git"
+    "url": "git://github.com/HarmoGlace/teamy.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/harmoglace"
   },
   "keywords": [
     "teamy",
