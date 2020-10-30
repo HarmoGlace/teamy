@@ -1,4 +1,4 @@
-const TeamyError = require("../TeamyError");
+const TeamyError = require("../util/TeamyError");
 const DataFormatter = require("../util/DataFormatter");
 const { defineUnlistedProperty } = require('../util/Util');
 

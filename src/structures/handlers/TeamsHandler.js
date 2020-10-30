@@ -1,4 +1,4 @@
-const TeamyError = require("../TeamyError");
+const TeamyError = require("../util/TeamyError");
 const { defineUnlistedProperty } = require('../util/Util');
 
 /**

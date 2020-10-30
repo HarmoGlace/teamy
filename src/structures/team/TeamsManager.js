@@ -1,4 +1,4 @@
-const TeamyError = require('../TeamyError');
+const TeamyError = require('../util/TeamyError');
 const Team = require('./Team');
 const ParentTeam = require('./ParentTeam');
 const SubTeam = require('./SubTeam');

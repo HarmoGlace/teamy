@@ -1,4 +1,4 @@
-const TeamyError = require('../TeamyError');
+const TeamyError = require('../util/TeamyError');
 const PointsHandler = require('../handlers/PointsHandler');
 const TeamsHandler = require("../handlers/TeamsHandler");
 const TeamMembersHandler = require("../handlers/TeamMembersHandler");
